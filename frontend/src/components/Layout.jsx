@@ -1,9 +1,10 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { useAuth } from "../context/AuthContext";
 import { STUDENT_NAV, TEACHER_NAV } from "../config/navigation";
 import { NavIcon } from "./Icons";
+import GlassBubbles from "./GlassBubbles";
 import BackendStatus from "./BackendStatus";
 
 const LANGUAGES = [
@@ -28,7 +29,10 @@ export default function Layout() {
   };
 
   return (
-    <div className="min-h-screen bg-brand-hero">
+    <div className="min-h-screen relative overflow-hidden bg-brand-hero">
+      {/* ── Background Blurred Green Waves & Interactive Glass Bubbles ── */}
+      <GlassBubbles />
+
       {/* ── Mobile top bar ── */}
       <div className="sticky top-0 z-30 flex items-center justify-between border-b border-brand-line bg-white px-4 py-3 shadow-sm md:hidden">
         <div className="flex items-center gap-2">
@@ -174,7 +178,7 @@ export default function Layout() {
       </aside>
 
       {/* ── Main content ── */}
-      <main className="md:ml-64 min-h-screen">
+      <main className="md:ml-64 min-h-screen relative z-10">
         <div className="mx-auto max-w-5xl p-5 md:p-8 page-enter">
           <Outlet />
         </div>

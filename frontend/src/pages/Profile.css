@@ -1,75 +1,9 @@
-/* Profile Page — Green Theme */
-.profile-page { max-width: 700px; margin: 0 auto; }
-
-.profile-header { margin-bottom: 1.5rem; }
-.profile-header h1 { font-size: 1.5rem; font-weight: 900; color: #033B27; margin-bottom: 0.25rem; }
-.profile-header p  { font-size: 0.875rem; color: #668274; }
-
-.profile-card {
-  background: #fff;
-  border: 1px solid #DCEBE1;
-  border-radius: 1rem;
-  padding: 1.5rem;
-  box-shadow: 0 1px 4px rgba(8,122,69,.06);
+/* Profile Component Aesthetic Styling */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-.profile-top {
-  display: flex; align-items: center; gap: 1rem;
-  margin-bottom: 1.5rem; padding-bottom: 1.5rem;
-  border-bottom: 1px solid #DCEBE1;
+.animate-fadeIn {
+  animation: fadeIn 0.25s ease-out both;
 }
-
-.profile-avatar {
-  width: 60px; height: 60px; border-radius: 1rem;
-  background: #DDF5E6; border: 2px solid #087A45;
-  font-size: 1.5rem; font-weight: 900; color: #087A45;
-  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-}
-
-.profile-name { font-weight: 900; font-size: 1rem; color: #033B27; }
-.profile-role { font-size: 0.75rem; color: #668274; margin-top: 2px; }
-
-.profile-fields { display: flex; flex-direction: column; gap: 1rem; }
-
-.profile-field label {
-  display: block; font-size: 0.7rem; font-weight: 700; color: #668274;
-  margin-bottom: 0.375rem; text-transform: uppercase; letter-spacing: .06em;
-}
-
-.profile-field input,
-.profile-field select,
-.profile-field textarea {
-  width: 100%; border: 1px solid #DCEBE1; border-radius: 0.75rem;
-  padding: 0.625rem 0.875rem; font-size: 0.875rem; color: #033B27;
-  background: #F5FAF6; outline: none;
-  transition: border-color .15s, box-shadow .15s; box-sizing: border-box;
-}
-.profile-field input:focus,
-.profile-field select:focus,
-.profile-field textarea:focus {
-  border-color: #087A45; box-shadow: 0 0 0 3px rgba(8,122,69,.12); background: #fff;
-}
-.profile-field input:disabled,
-.profile-field select:disabled {
-  background: #F5FAF6; color: #668274; cursor: not-allowed;
-}
-
-.profile-actions {
-  display: flex; gap: .75rem; margin-top: 1.5rem;
-  padding-top: 1.5rem; border-top: 1px solid #DCEBE1; flex-wrap: wrap;
-}
-
-.btn-edit {
-  background: #087A45; color: #fff; border: none; border-radius: .75rem;
-  padding: .625rem 1.25rem; font-size: .8125rem; font-weight: 700;
-  cursor: pointer; transition: background .15s, transform .1s;
-}
-.btn-edit:hover { background: #06452D; transform: translateY(-1px); }
-.btn-edit:active { transform: scale(.97); }
-
-.btn-cancel {
-  background: #F5FAF6; color: #033B27; border: 1px solid #DCEBE1;
-  border-radius: .75rem; padding: .625rem 1.25rem; font-size: .8125rem;
-  font-weight: 600; cursor: pointer; transition: background .15s;
-}
-.btn-cancel:hover { background: #DDF5E6; border-color: #087A45; }

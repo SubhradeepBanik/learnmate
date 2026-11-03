@@ -1,7 +1,8 @@
-﻿import { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
+import GlassBubbles from "../components/GlassBubbles";
 
 export default function SignIn() {
   const { login } = useAuth();
@@ -63,9 +64,12 @@ export default function SignIn() {
   const inputCls = "w-full rounded-xl border border-brand-line bg-brand-hero px-3.5 py-2.5 text-sm text-brand-head placeholder:text-brand-muted/60 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/20 transition";
 
   return (
-    <div className="min-h-screen bg-brand-hero flex flex-col justify-between p-4 sm:p-6 page-enter">
+    <div className="min-h-screen relative overflow-hidden bg-brand-hero flex flex-col justify-between p-4 sm:p-6 page-enter">
+      {/* ── Background Blurred Green Waves & Interactive Glass Bubbles ── */}
+      <GlassBubbles />
+
       {/* Top bar */}
-      <div className="max-w-5xl w-full mx-auto flex items-center justify-between pb-4">
+      <div className="relative z-10 max-w-5xl w-full mx-auto flex items-center justify-between pb-4">
         <div className="flex items-center gap-2.5">
           <img src="/logo.png" alt="LearnMate" className="h-10 w-auto object-contain" />
         </div>
@@ -81,7 +85,7 @@ export default function SignIn() {
       </div>
 
       {/* Card */}
-      <div className="my-auto max-w-md w-full mx-auto bg-white rounded-2xl shadow-lg border border-brand-line p-6 sm:p-8 space-y-5">
+      <div className="relative z-10 my-auto max-w-md w-full mx-auto bg-white/95 backdrop-blur-md rounded-2xl shadow-xl border border-white/60 p-6 sm:p-8 space-y-5">
         {/* Logo */}
         <div className="text-center">
           <img src="/logo.png" alt="LearnMate" className="h-14 w-auto object-contain mx-auto mb-3" />
@@ -224,7 +228,7 @@ export default function SignIn() {
       </div>
 
       {/* Footer */}
-      <div className="text-center text-xs text-brand-muted py-3">
+      <div className="relative z-10 text-center text-xs text-brand-muted py-3">
         LearnMate · Dibrugarh University Bilingual Learning Platform · © 2026
       </div>
 

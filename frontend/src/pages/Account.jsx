@@ -226,7 +226,7 @@ export default function Account() {
       )}
 
       {/* Hero Header */}
-      <Hero title={` ${t("account.title")}`}>
+      <Hero title={t("account.title")}>
         <p>{t("account.subtitle")}</p>
       </Hero>
 
@@ -234,7 +234,7 @@ export default function Account() {
       <div className="rounded-2xl border border-brand-line bg-white p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-full bg-brand-tint border-2 border-brand text-brand flex items-center justify-center font-bold text-2xl shadow-inner">
-            {isTeacher ? "" : ""}
+            {isTeacher ? "T" : "S"}
           </div>
           <div>
             <div className="flex items-center gap-2">
@@ -270,7 +270,7 @@ export default function Account() {
       </div>
 
       {/* Account Settings Tabs */}
-      <div className="flex border-b border-brand-line gap-2 overflow-x-auto pb-1">
+      <div className="flex flex-wrap border-b border-brand-line gap-2 pb-1">
         <button
           onClick={() => setActiveTab("security")}
           className={`rounded-xl px-4 py-2 text-sm font-bold transition flex items-center gap-1.5 whitespace-nowrap ${

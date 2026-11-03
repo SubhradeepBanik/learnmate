@@ -1,11 +1,31 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { askQuestion, deleteDocument, getHealth, listDocuments, uploadDocument } from "../api/client";
+import { useEffect, useRef, useState } from "react";
+import { askQuestion, deleteDocument, listDocuments, uploadDocument } from "../api/client";
 import { useLanguage } from "../context/LanguageContext";
+
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL ||
+  (typeof window !== "undefined" && window.location.hostname !== "localhost"
+    ? "https://learnmate-wova.onrender.com"
+    : "http://localhost:8000");
 
 const inputCls =
   "w-full rounded-xl border border-brand-line bg-white px-3.5 py-2.5 text-sm text-brand-head placeholder:text-brand-muted/60 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand/20 transition";
 const btnCls =
   "rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all duration-200 hover:bg-brand-dark hover:shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed";
+
+// Fetch with a generous timeout — Render free tier cold starts take up to 60s
+async function fetchWithTimeout(url, options = {}, timeoutMs = 60000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { ...options, signal: controller.signal });
+    clearTimeout(id);
+    return res;
+  } catch (err) {
+    clearTimeout(id);
+    throw err;
+  }
+}
 
 export default function AskPdf() {
   const { lang, t } = useLanguage();
@@ -26,51 +46,54 @@ export default function AskPdf() {
   const [dragOver, setDragOver] = useState(false);
   const [waking, setWaking] = useState(false);
 
-  const retryRef = useRef(null);
+  const cancelledRef = useRef(false);
 
-  const refresh = useCallback(() => {
-    listDocuments().then(setDocs).catch((e) => setError(e.message));
-  }, []);
+  function refresh() {
+    listDocuments().then(setDocs).catch(() => {});
+  }
 
-  // On mount: ping /api/health to wake Render from cold start, then load docs.
-  // If health ping fails, retry up to 3 times with 10s delay (Render needs ~30s to wake).
+  // On mount: attempt to load documents with a 60s timeout (handles Render cold start).
+  // Retry up to 3 times before giving up and showing an error.
   useEffect(() => {
-    let cancelled = false;
+    cancelledRef.current = false;
     let attempt = 0;
-    const MAX_ATTEMPTS = 4;
+    const MAX = 3;
 
-    async function tryWakeAndLoad() {
+    async function load() {
       setWaking(true);
       setError("");
-      while (attempt < MAX_ATTEMPTS) {
+      while (attempt < MAX) {
         attempt++;
         try {
-          await getHealth();
-          if (cancelled) return;
+          const res = await fetchWithTimeout(
+            `${API_BASE}/api/rag/documents`,
+            {},
+            60000
+          );
+          if (cancelledRef.current) return;
+          if (!res.ok) throw new Error(`Server error ${res.status}`);
+          const data = await res.json();
+          if (cancelledRef.current) return;
+          setDocs(data);
           setWaking(false);
-          refresh();
           return;
-        } catch {
-          if (cancelled) return;
-          if (attempt < MAX_ATTEMPTS) {
-            // Wait 10s between wake attempts
-            await new Promise((res) => { retryRef.current = setTimeout(res, 10000); });
+        } catch (err) {
+          if (cancelledRef.current) return;
+          if (attempt < MAX) {
+            // Brief pause before next try
+            await new Promise((r) => setTimeout(r, 3000));
+          } else {
+            setWaking(false);
+            setError(
+              "Could not reach the AI backend. It may still be starting up — wait 30 seconds and refresh the page."
+            );
           }
         }
       }
-      if (!cancelled) {
-        setWaking(false);
-        // Last-ditch: try loading docs even if health timed out
-        refresh();
-      }
     }
 
-    tryWakeAndLoad();
-    return () => {
-      cancelled = true;
-      clearTimeout(retryRef.current);
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    load();
+    return () => { cancelledRef.current = true; };
   }, []);
 
   async function handleUpload(e) {

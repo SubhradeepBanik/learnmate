@@ -231,30 +231,73 @@ export default function AskPdf() {
           </button>
         </form>
 
-        {result && (
-          <div className="mt-6 space-y-4">
-            <div className="rounded-xl bg-brand-tint p-4">
-              <h4 className="mb-2 font-bold text-brand-head">{t("pdf.answer")}</h4>
-              <div className="whitespace-pre-wrap leading-relaxed">{result.answer}</div>
-            </div>
-            <div>
-              <h4 className="mb-2 font-bold text-brand-head">{t("pdf.sources")}</h4>
-              <ul className="space-y-2">
-                {result.sources.map((s) => (
-                  <li
-                    key={s.n}
-                    className="rounded-lg border border-brand-line p-3 text-sm"
-                  >
-                    <div className="font-semibold">
-                      [{s.n}] {s.filename} · {t("pdf.page")} {s.page}
-                    </div>
-                    <div className="mt-1 text-slate-500">{s.snippet}…</div>
-                  </li>
-                ))}
-              </ul>
-            </div>
+        {/* Answer Section / Platform */}
+        <div className="mt-8 pt-6 border-t border-brand-line">
+          <div className="flex items-center justify-between mb-3">
+            <h4 className="text-lg font-bold text-brand-head flex items-center gap-2">
+              <span>💡</span>
+              <span>{t("pdf.answer")}</span>
+            </h4>
+            {asking && (
+              <span className="flex items-center gap-2 text-xs font-semibold text-brand">
+                <span className="inline-block h-3 w-3 animate-spin rounded-full border-2 border-brand border-t-transparent" />
+                {t("pdf.ask.working")}
+              </span>
+            )}
           </div>
-        )}
+
+          {asking && (
+            <div className="rounded-2xl border-2 border-dashed border-brand/30 bg-brand-tint/40 p-6 animate-pulse space-y-3">
+              <div className="flex items-center gap-2.5 text-sm font-medium text-brand">
+                <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-brand border-t-transparent" />
+                <span>{t("pdf.answering")}</span>
+              </div>
+              <div className="h-4 bg-brand/10 rounded w-4/5"></div>
+              <div className="h-4 bg-brand/10 rounded w-11/12"></div>
+              <div className="h-4 bg-brand/10 rounded w-3/5"></div>
+            </div>
+          )}
+
+          {!asking && !result && (
+            <div className="rounded-2xl border border-dashed border-brand-line/80 bg-slate-50/50 p-8 text-center text-slate-400">
+              <div className="text-3xl mb-2">💬</div>
+              <p className="text-sm font-medium">{t("pdf.placeholderAnswer")}</p>
+            </div>
+          )}
+
+          {!asking && result && (
+            <div className="space-y-5">
+              <div className="rounded-2xl bg-brand-tint border border-brand-line p-5 shadow-xs">
+                <div className="whitespace-pre-wrap leading-relaxed text-slate-800 font-normal">
+                  {result.answer}
+                </div>
+              </div>
+
+              {result.sources && result.sources.length > 0 && (
+                <div>
+                  <h5 className="mb-3 font-semibold text-sm text-slate-600 uppercase tracking-wider">
+                    📚 {t("pdf.sources")}
+                  </h5>
+                  <ul className="grid gap-3 sm:grid-cols-2">
+                    {result.sources.map((s) => (
+                      <li
+                        key={s.n}
+                        className="rounded-xl border border-brand-line bg-white p-3.5 text-sm shadow-2xs hover:border-brand/40 transition"
+                      >
+                        <div className="font-semibold text-brand-head">
+                          [{s.n}] {s.filename} · {t("pdf.page")} {s.page}
+                        </div>
+                        <div className="mt-1.5 text-xs text-slate-600 line-clamp-3">
+                          {s.snippet}…
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </section>
     </div>
   );

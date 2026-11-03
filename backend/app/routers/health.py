@@ -26,6 +26,8 @@ def health_check():
     return {
         "status": "ok",
         "service": "LearnMate API",
+        "openrouter_configured": bool(settings.OPENROUTER_API_KEY),
+        "groq_configured": bool(settings.GROQ_API_KEY),
         "gemini_key_configured": bool(settings.GEMINI_API_KEY),
     }
 

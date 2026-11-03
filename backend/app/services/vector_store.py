@@ -26,11 +26,23 @@ def query(embedding: list[float], top_k: int, doc_id: str | None = None) -> list
         include=["documents", "metadatas", "distances"],
     )
     hits = []
-    for text, meta, distance in zip(
-        result["documents"][0], result["metadatas"][0], result["distances"][0]
-    ):
-        hits.append({**meta, "text": text, "distance": distance})
+    if result and result["documents"] and len(result["documents"]) > 0:
+        for text, meta, distance in zip(
+            result["documents"][0], result["metadatas"][0], result["distances"][0]
+        ):
+            hits.append({**meta, "text": text, "distance": distance})
     return hits
+
+
+def get_document_chunks(doc_id: str | None = None, limit: int = 20) -> list[dict]:
+    """Retrieve representative chunks from a document to generate quizzes or summaries."""
+    where_clause = {"doc_id": doc_id} if doc_id else None
+    data = _collection.get(where=where_clause, limit=limit, include=["documents", "metadatas"])
+    chunks = []
+    if data and data.get("documents"):
+        for text, meta in zip(data["documents"], data["metadatas"]):
+            chunks.append({**meta, "text": text})
+    return chunks
 
 
 def document_exists(doc_id: str) -> bool:

@@ -28,11 +28,23 @@ Rules:
 5. Explain clearly and simply, like a good teacher. Use short paragraphs or numbered steps."""
 
 LANGUAGE_RULES = {
-    "en": "Write your entire answer in English.",
+    "en": "Write your entire answer in clear academic English.",
     "as": (
-        "Write your entire answer in Assamese (অসমীয়া) using Assamese script, "
-        "with the correct letters ৰ and ৱ. Keep technical terms in English inside "
-        "brackets after the Assamese term when that helps understanding."
+        "CRITICAL INSTRUCTION - WRITE IN PURE ASSAMESE (অসমীয়া), NOT BENGALI (বাংলা):\n"
+        "Your student is an Assamese native speaker. You MUST use authentic Assamese grammar, vocabulary, and spelling.\n"
+        "Strictly avoid Bengali words and Bengali grammatical patterns:\n"
+        "- Use 'আমাৰ' (NEVER 'আমাদের')\n"
+        "- Use 'বাবে' or 'কাৰণে' (NEVER 'জন্য')\n"
+        "- Use Assamese genitive '-ৰ' / '-অৰ' (NEVER Bengali 'এর')\n"
+        "- Use 'এটা' / 'এখন' (NEVER 'একটি' or 'একটা')\n"
+        "- Use 'কয়' / 'উল্লেখ কৰে' (NEVER 'বলে')\n"
+        "- Use 'কৰা হৈছে' (NEVER 'করা হয়েছে')\n"
+        "- Use 'মাজত' (NEVER 'মাঝে')\n"
+        "- Use 'লগত' or 'সৈতে' (NEVER 'সাথে')\n"
+        "- Use 'বুজিবলৈ' / 'বুজিবৰ বাবে' (NEVER 'বোঝার জন্য')\n"
+        "- Use 'হ'ব' / 'হয়' (NEVER 'হবে')\n"
+        "- Use the authentic Assamese letters 'ৰ' and 'ৱ' correctly.\n"
+        "Keep technical computing/engineering terms in English inside square brackets after the Assamese phrase, e.g. বাক্যগঠনগত ভুল [syntax error], অৰ্থগত ভুল [semantic error]."
     ),
     "auto": "Write your answer in the same language as the student's question.",
 }

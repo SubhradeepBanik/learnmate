@@ -40,3 +40,24 @@ export const askQuestion = (payload) =>
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(payload),
   });
+
+// ---- AI Tutor ----
+export const chatWithTutor = ({ messages, docId, lang }) =>
+  request("/api/tutor/chat", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ messages, doc_id: docId || null, lang }),
+  });
+
+// ---- Quiz Studio ----
+export const generateQuiz = ({ docId, numQuestions = 5, difficulty = "medium", lang = "en" }) =>
+  request("/api/quiz/generate", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      doc_id: docId || null,
+      num_questions: Number(numQuestions),
+      difficulty,
+      lang,
+    }),
+  });

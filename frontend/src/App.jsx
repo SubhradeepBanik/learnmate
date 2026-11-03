@@ -4,10 +4,18 @@ import { STUDENT_NAV, TEACHER_NAV } from "./config/navigation";
 import AskPdf from "./pages/AskPdf";
 import ComingSoon from "./pages/ComingSoon";
 import Dashboard from "./pages/Dashboard";
+import QuizStudio from "./pages/QuizStudio";
 import TeacherDashboard from "./pages/TeacherDashboard";
+import Tutor from "./pages/Tutor";
 
-// Paths that already have a real page. Add each new feature here as you build it.
-const IMPLEMENTED = new Set(["/student", "/teacher", "/student/ask-pdf"]);
+// Paths that already have a real page.
+const IMPLEMENTED = new Set([
+  "/student",
+  "/teacher",
+  "/student/ask-pdf",
+  "/student/tutor",
+  "/student/quiz",
+]);
 
 const placeholders = (items) =>
   items
@@ -28,6 +36,8 @@ export default function App() {
 
         <Route path="/student" element={<Dashboard />} />
         <Route path="/student/ask-pdf" element={<AskPdf />} />
+        <Route path="/student/tutor" element={<Tutor />} />
+        <Route path="/student/quiz" element={<QuizStudio />} />
         {placeholders(STUDENT_NAV)}
 
         <Route path="/teacher" element={<TeacherDashboard />} />

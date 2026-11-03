@@ -23,12 +23,24 @@ export default function Dashboard() {
 
       <h2 className="mb-3 mt-8 text-xl font-bold">🚀 {t("dash.explore")}</h2>
       <div className="grid gap-4 md:grid-cols-2">
-        <Card icon="🤖" title={t("nav.tutor")}>{t("dash.cardTutor")}</Card>
-        <Card icon="📄" title={t("nav.askPdf")}>{t("dash.cardPdf")}</Card>
-        <Card icon="📚" title={t("nav.materials")}>{t("dash.cardMaterials")}</Card>
-        <Card icon="📝" title={t("nav.quiz")}>{t("dash.cardQuiz")}</Card>
-        <Card icon="🗂️" title={t("nav.flashcards")}>{t("dash.cardFlash")}</Card>
-        <Card icon="📅" title={t("nav.revision")}>{t("dash.cardRevision")}</Card>
+        <Card to="/student/tutor" icon="🤖" title={t("nav.tutor")}>
+          {t("dash.cardTutor")}
+        </Card>
+        <Card to="/student/ask-pdf" icon="📄" title={t("nav.askPdf")}>
+          {t("dash.cardPdf")}
+        </Card>
+        <Card to="/student/quiz" icon="📝" title={t("nav.quiz")}>
+          {t("dash.cardQuiz")}
+        </Card>
+        <Card to="/student/materials" icon="📚" title={t("nav.materials")}>
+          {t("dash.cardMaterials")}
+        </Card>
+        <Card to="/student/flashcards" icon="🗂️" title={t("nav.flashcards")}>
+          {t("dash.cardFlash")}
+        </Card>
+        <Card to="/student/revision" icon="📅" title={t("nav.revision")}>
+          {t("dash.cardRevision")}
+        </Card>
       </div>
 
       <h2 className="mb-2 mt-8 text-xl font-bold">📈 {t("dash.progress")}</h2>

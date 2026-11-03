@@ -7,7 +7,7 @@ from google.genai import errors as genai_errors
 from pydantic import BaseModel, Field
 
 from app.config import settings
-from app.services import rag_service, vector_store
+from app.services import llm, rag_service, vector_store
 from app.services.gemini_client import GeminiNotConfigured
 
 router = APIRouter(prefix="/api/rag", tags=["rag"])
@@ -17,6 +17,8 @@ def _to_http_error(exc: Exception) -> HTTPException:
     """Convert internal errors into clear messages for the frontend."""
     if isinstance(exc, rag_service.RagError):
         return HTTPException(status_code=exc.status_code, detail=exc.message)
+    if isinstance(exc, llm.LlmError):
+        return HTTPException(status_code=502, detail=str(exc))
     if isinstance(exc, GeminiNotConfigured):
         return HTTPException(status_code=503, detail=str(exc))
     if isinstance(exc, genai_errors.APIError):

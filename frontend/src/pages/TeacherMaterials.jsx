@@ -384,7 +384,8 @@ export default function TeacherMaterials() {
       </div>
 
       {/* Action Navigation Tabs */}
-      <div className="flex flex-wrap items-center justify-between gap-3 border-b border-brand-line pb-3">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-brand-line pb-3">
+        {/* Left Side: Browsing & Audit Tabs */}
         <div className="flex gap-2 flex-wrap items-center">
           <button
             onClick={() => {
@@ -399,21 +400,6 @@ export default function TeacherMaterials() {
           >
             <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
             Published Notes ({materials.length})
-          </button>
-
-          <button
-            onClick={() => setActiveTab("upload")}
-            className={`rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-2 ${
-              activeTab === "upload"
-                ? "bg-brand text-white shadow-md"
-                : "bg-white text-slate-700 hover:bg-brand-hero border border-brand-line"
-            }`}
-          >
-            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-            {editingId ? "Edit Note" : "Publish Notes to Students"}
           </button>
 
           <button
@@ -447,32 +433,57 @@ export default function TeacherMaterials() {
           </button>
         </div>
 
-        {/* Primary Call to Action & Student View Link */}
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => {
-              setEditingId(null);
-              setActiveTab("upload");
-            }}
-            className="rounded-xl bg-brand hover:bg-brand-dark text-white px-4 py-2 text-xs font-bold transition flex items-center gap-2 shadow-sm"
-          >
-            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-              <line x1="12" y1="5" x2="12" y2="19"></line>
-              <line x1="5" y1="12" x2="19" y2="12"></line>
-            </svg>
-            Publish New Notes
-          </button>
+        {/* Right Side: Clearly separated actions */}
+        <div className="flex items-center gap-2.5 sm:ml-auto">
           <Link
             to="/student/materials"
-            className="rounded-xl border border-brand-line bg-brand-tint px-3.5 py-2 text-xs font-bold text-brand hover:bg-brand hover:text-white transition flex items-center gap-1.5"
+            className="rounded-xl border border-brand-line bg-white hover:bg-brand-tint px-3.5 py-2 text-xs font-bold text-slate-700 hover:text-brand transition flex items-center gap-1.5 shadow-sm"
           >
             <span>View Student Section</span>
-            <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg className="w-3.5 h-3.5 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
               <line x1="10" y1="14" x2="21" y2="3"></line>
             </svg>
           </Link>
+
+          <div className="h-5 w-px bg-brand-line hidden sm:block mx-0.5" />
+
+          {/* Singular, distinct primary action button */}
+          <button
+            onClick={() => {
+              if (activeTab === "upload") {
+                setActiveTab("list");
+                setEditingId(null);
+              } else {
+                setEditingId(null);
+                setActiveTab("upload");
+              }
+            }}
+            className={`rounded-xl px-4 py-2 text-xs font-bold transition flex items-center gap-2 shadow-sm ${
+              activeTab === "upload"
+                ? "bg-slate-800 text-white hover:bg-slate-900"
+                : "bg-brand text-white hover:bg-brand-dark"
+            }`}
+          >
+            {activeTab === "upload" ? (
+              <>
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="19" y1="12" x2="5" y2="12"></line>
+                  <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>Back to Published</span>
+              </>
+            ) : (
+              <>
+                <svg className="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                  <line x1="12" y1="5" x2="12" y2="19"></line>
+                  <line x1="5" y1="12" x2="19" y2="12"></line>
+                </svg>
+                <span>Publish Notes</span>
+              </>
+            )}
+          </button>
         </div>
       </div>
 

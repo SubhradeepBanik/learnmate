@@ -535,16 +535,16 @@ export default function Flashcards() {
   return (
     <div className="space-y-6">
       {/* Hero Header */}
-      <Hero title={` ${t("flash.title")}`}>
+      <Hero title={t("flash.title")}>
         <p>{t("flash.subtitle")}</p>
       </Hero>
 
       {/* Top Metrics Bar */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Metric label={` ${t("flash.totalCards")}`} value={totalCards} />
-        <Metric label={`⭐ ${t("flash.mastered")}`} value={masteredCount} />
-        <Metric label={` ${t("flash.masteryRate")}`} value={`${masteryPercentage}%`} />
-        <Metric label={` ${t("flash.totalNotes")}`} value={totalNotes} />
+        <Metric label={t("flash.totalCards")} value={totalCards} />
+        <Metric label={t("flash.mastered")} value={masteredCount} />
+        <Metric label={t("flash.masteryRate")} value={`${masteryPercentage}%`} />
+        <Metric label={t("flash.totalNotes")} value={totalNotes} />
       </div>
 
       {/* Main Tabs Navigation */}
@@ -710,7 +710,7 @@ export default function Flashcards() {
                           : "bg-amber-100 text-amber-800 border border-amber-300"
                       }`}
                     >
-                      {currentCard?.mastered ? "⭐ Mastered" : " Learning"}
+                      {currentCard?.mastered ? "Mastered" : "Learning"}
                     </span>
                   </div>
 
@@ -733,11 +733,7 @@ export default function Flashcards() {
                               e.stopPropagation();
                               handleSpeak(currentCard?.question);
                             }}
-                            title="Listen to question"
-                            className="rounded-lg p-1.5 text-slate-400 hover:text-brand hover:bg-brand-tint transition"
-                          >
-                            
-                          </button>
+                            title="Listen to question" className="rounded-lg p-1.5 text-slate-400 hover:text-brand hover:bg-brand-tint transition"><svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><path d="M15.54 8.46a5 5 0 0 1 0 7.07" /></svg></button>
                         </div>
 
                         {/* Front Question Content */}
@@ -807,11 +803,7 @@ export default function Flashcards() {
                             <button
                               type="button"
                               onClick={() => handleSpeak(currentCard?.answer)}
-                              title="Listen to explanation"
-                              className="rounded-lg p-1.5 text-slate-400 hover:text-brand hover:bg-brand-tint transition"
-                            >
-                              
-                            </button>
+                              title="Listen to explanation" className="rounded-lg p-1.5 text-slate-400 hover:text-brand hover:bg-brand-tint transition"><svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><path d="M15.54 8.46a5 5 0 0 1 0 7.07" /></svg></button>
                           </div>
                         </div>
 
@@ -928,7 +920,7 @@ export default function Flashcards() {
                                 : "bg-slate-100 text-slate-600"
                             }`}
                           >
-                            {card.mastered ? "⭐ Mastered" : "Review"}
+                            {card.mastered ? "Mastered" : "Review"}
                           </span>
                         </div>
 

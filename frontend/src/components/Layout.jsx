@@ -49,7 +49,8 @@ export default function Layout() {
 
       {/* ── Sidebar ── */}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col overflow-y-auto bg-white border-r border-brand-line transition-transform duration-300 md:translate-x-0 ${
+        style={{ backgroundColor: '#ffffff', borderRight: '1px solid #DCEBE1' }}
+        className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col overflow-y-auto transition-transform duration-300 md:translate-x-0 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >

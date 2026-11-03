@@ -16,6 +16,7 @@ body {
   font-family: "Noto Sans Bengali", "Noto Sans", system-ui, sans-serif;
   background: #F5FAF6;
   color: #102C20;
+  color-scheme: light;
 }
 
 h1, h2, h3 {

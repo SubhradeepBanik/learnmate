@@ -210,7 +210,7 @@ def upload_pdf_material(item: PdfMaterialItem):
     now = item.uploaded_at or datetime.now().strftime("%Y-%m-%d")
 
     cursor.execute("""
-        INSERT INTO pdf_materials (id, title, subject, type, format, size, author_id, author_name, department, semester, description, file_name, faculty_notes, uploaded_at)
+        INSERT OR REPLACE INTO pdf_materials (id, title, subject, type, format, size, author_id, author_name, department, semester, description, file_name, faculty_notes, uploaded_at)
         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     """, (
         mat_id, item.title, item.subject, item.type, item.format,

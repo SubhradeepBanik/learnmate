@@ -1,53 +1,43 @@
-/* Account & Security Styles */
+/* Account Page — Green Theme */
+.account-page { max-width: 700px; margin: 0 auto; }
+.account-header { margin-bottom: 1.5rem; }
+.account-header h1 { font-size: 1.5rem; font-weight: 900; color: #033B27; margin-bottom: .25rem; }
+.account-header p  { font-size: .875rem; color: #668274; }
 
-.account-toggle {
-  position: relative;
-  display: inline-block;
-  width: 44px;
-  height: 24px;
+.account-section {
+  background: #fff; border: 1px solid #DCEBE1; border-radius: 1rem;
+  padding: 1.5rem; margin-bottom: 1rem; box-shadow: 0 1px 4px rgba(8,122,69,.06);
+}
+.account-section h2 { font-size: 1rem; font-weight: 800; color: #033B27; margin-bottom: 1rem; }
+
+.account-field { margin-bottom: 1rem; }
+.account-field label {
+  display: block; font-size: .7rem; font-weight: 700; color: #668274;
+  text-transform: uppercase; letter-spacing: .06em; margin-bottom: .375rem;
+}
+.account-field input,
+.account-field select {
+  width: 100%; border: 1px solid #DCEBE1; border-radius: .75rem;
+  padding: .625rem .875rem; font-size: .875rem; color: #033B27;
+  background: #F5FAF6; outline: none;
+  transition: border-color .15s, box-shadow .15s; box-sizing: border-box;
+}
+.account-field input:focus,
+.account-field select:focus {
+  border-color: #087A45; box-shadow: 0 0 0 3px rgba(8,122,69,.12); background: #fff;
 }
 
-.account-toggle input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+.account-btn {
+  background: #087A45; color: #fff; border: none; border-radius: .75rem;
+  padding: .625rem 1.25rem; font-size: .8125rem; font-weight: 700;
+  cursor: pointer; transition: background .15s, transform .1s;
+  display: inline-flex; align-items: center; gap: .375rem;
 }
+.account-btn:hover { background: #06452D; transform: translateY(-1px); }
 
-.account-slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #e2e8f0;
-  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 24px;
+.account-btn-danger {
+  background: #FEE2E2; color: #991B1B; border: 1px solid #FECACA;
+  border-radius: .75rem; padding: .625rem 1.25rem; font-size: .8125rem;
+  font-weight: 700; cursor: pointer; transition: background .15s;
 }
-
-.account-slider:before {
-  position: absolute;
-  content: "";
-  height: 18px;
-  width: 18px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  border-radius: 50%;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
-}
-
-input:checked + .account-slider {
-  background-color: #b51f36;
-}
-
-input:checked + .account-slider:before {
-  transform: translateX(20px);
-}
-
-.strength-bar {
-  height: 4px;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
+.account-btn-danger:hover { background: #FCA5A5; }

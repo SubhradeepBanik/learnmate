@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, Outlet, useLocation, useNavigate, Link } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { useAuth } from "../context/AuthContext";
 import { STUDENT_NAV, TEACHER_NAV } from "../config/navigation";
@@ -17,9 +17,9 @@ export default function Layout() {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
-  // Role comes from the URL path
   const role = pathname.startsWith("/teacher") ? "teacher" : "student";
   const items = role === "teacher" ? TEACHER_NAV : STUDENT_NAV;
+  const avatarLetter = user?.name ? user.name.charAt(0).toUpperCase() : (role === "teacher" ? "T" : "S");
 
   const handleSignOut = () => {
     logout();
@@ -27,89 +27,90 @@ export default function Layout() {
   };
 
   return (
-    <div className="min-h-screen">
-      {/* Mobile top bar */}
-      <div className="sticky top-0 z-30 flex items-center justify-between border-b border-brand-line bg-white px-4 py-3 md:hidden">
-        <span className="text-lg font-bold text-brand">📚 {t("app.name")}</span>
+    <div className="min-h-screen bg-brand-hero">
+      {/* ── Mobile top bar ── */}
+      <div className="sticky top-0 z-30 flex items-center justify-between border-b border-brand-line bg-white px-4 py-3 shadow-sm md:hidden">
         <div className="flex items-center gap-2">
-          <Link
-            to="/login"
-            className="text-xs bg-brand-tint border border-brand-line text-brand px-2.5 py-1 rounded-lg font-semibold"
-          >
-            {user ? "Switch" : "Sign In"}
-          </Link>
-          <button
-            onClick={() => setOpen(true)}
-            className="rounded-lg bg-brand px-3 py-1.5 text-white"
-            aria-label="Open menu"
-          >
-            ☰
-          </button>
+          <div className="w-7 h-7 rounded-lg bg-brand flex items-center justify-center flex-shrink-0">
+            <span className="text-white text-xs font-black">L</span>
+          </div>
+          <span className="text-base font-black text-brand-head">LearnMate</span>
         </div>
+        <button
+          onClick={() => setOpen(true)}
+          className="rounded-xl bg-brand-tint border border-brand-line px-3 py-1.5 text-brand text-sm font-semibold transition hover:bg-brand hover:text-white"
+          aria-label="Open menu"
+        >
+          ☰
+        </button>
       </div>
 
-      {/* Overlay for mobile */}
+      {/* ── Mobile overlay ── */}
       {open && (
-        <div
-          className="fixed inset-0 z-30 bg-black/30 md:hidden"
-          onClick={() => setOpen(false)}
-        />
+        <div className="fixed inset-0 z-30 bg-black/40 md:hidden" onClick={() => setOpen(false)} />
       )}
 
-      {/* Sidebar */}
+      {/* ── Sidebar ── */}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col overflow-y-auto border-r border-brand-line bg-brand-tint p-4 transition-transform md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col overflow-y-auto bg-white border-r border-brand-line transition-transform duration-300 md:translate-x-0 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        <div className="mb-4 text-center">
-          <h1 className="text-2xl font-bold text-brand">📚 {t("app.name")}</h1>
-          <p className="text-xs tracking-widest text-slate-400">
-            LEARN • PRACTICE • GROW
-          </p>
+        {/* Logo */}
+        <div className="px-5 py-5 border-b border-brand-line">
+          <div className="flex items-center gap-3">
+            <div className="w-9 h-9 rounded-xl bg-brand flex items-center justify-center shadow-sm flex-shrink-0">
+              <span className="text-white text-lg font-black">L</span>
+            </div>
+            <div>
+              <div className="text-base font-black text-brand-head leading-tight">LearnMate</div>
+              <div className="text-[10px] font-semibold tracking-widest text-brand-muted uppercase">
+                Learn · Practice · Grow
+              </div>
+            </div>
+          </div>
         </div>
 
-        {/* User Status Chip */}
-        <div className="mb-4 bg-white border border-brand-line rounded-xl p-3 shadow-xs">
+        {/* User chip */}
+        <div className="px-4 py-3 border-b border-brand-line">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-brand-tint text-brand border border-brand font-bold text-sm flex items-center justify-center">
-                {user?.name ? user.name.charAt(0).toUpperCase() : (role === "teacher" ? "T" : "S")}
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-brand-tint border border-brand/20 font-black text-sm text-brand flex items-center justify-center flex-shrink-0">
+                {avatarLetter}
               </div>
               <div className="overflow-hidden">
-                <div className="text-xs font-bold text-slate-800 truncate">
+                <div className="text-xs font-bold text-brand-head truncate leading-tight">
                   {user?.name || (role === "teacher" ? "Dr. Debajit Sharma" : "Student Name")}
                 </div>
-                <div className="text-[10px] text-slate-400 capitalize">
-                  {role === "teacher" ? "Faculty" : "Student"} • DU
+                <div className="text-[10px] text-brand-muted capitalize">
+                  {role === "teacher" ? "Faculty" : "Student"} · DU
                 </div>
               </div>
             </div>
-
             <button
               onClick={handleSignOut}
               title="Sign Out"
-              className="text-xs text-slate-400 hover:text-rose-600 p-1"
+              className="text-brand-muted hover:text-brand p-1.5 rounded-lg hover:bg-brand-tint transition"
             >
-              🚪
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                <polyline points="16 17 21 12 16 7"/>
+                <line x1="21" y1="12" x2="9" y2="12"/>
+              </svg>
             </button>
           </div>
         </div>
 
-        {/* Language switch */}
-        <div className="mb-4">
-          <div className="mb-1 text-xs font-semibold text-slate-500">
-            🌐 {t("sidebar.language")}
-          </div>
-          <div className="flex gap-2">
+        {/* Language */}
+        <div className="px-4 py-3 border-b border-brand-line">
+          <div className="text-[10px] font-bold text-brand-muted uppercase tracking-widest mb-2">🌐 Language</div>
+          <div className="flex gap-1.5 bg-brand-hero p-1 rounded-xl border border-brand-line">
             {LANGUAGES.map(({ code, label }) => (
               <button
                 key={code}
                 onClick={() => setLang(code)}
-                className={`flex-1 rounded-full px-3 py-1.5 text-sm font-semibold transition ${
-                  lang === code
-                    ? "bg-brand text-white"
-                    : "bg-white text-slate-700 hover:bg-brand-hero"
+                className={`flex-1 rounded-lg py-1.5 text-xs font-bold transition ${
+                  lang === code ? "bg-brand text-white shadow-sm" : "text-brand-muted hover:text-brand"
                 }`}
               >
                 {label}
@@ -118,64 +119,66 @@ export default function Layout() {
           </div>
         </div>
 
-        {/* Portal Role Switcher */}
-        <div className="mb-4">
-          <div className="mb-1 text-xs font-semibold text-slate-500">
-            👤 {t("sidebar.role")}
-          </div>
+        {/* Portal */}
+        <div className="px-4 py-3 border-b border-brand-line">
+          <div className="text-[10px] font-bold text-brand-muted uppercase tracking-widest mb-2">👤 Portal</div>
           <select
             value={role}
-            onChange={(e) => {
-              navigate(`/${e.target.value}`);
-              setOpen(false);
-            }}
-            className="w-full rounded-lg border border-brand-line bg-white px-3 py-2 text-sm"
+            onChange={(e) => { navigate(`/${e.target.value}`); setOpen(false); }}
+            className="w-full rounded-xl border border-brand-line bg-brand-hero px-3 py-2 text-sm text-brand-head font-medium focus:outline-none focus:border-brand"
           >
             <option value="student">{t("role.student")}</option>
             <option value="teacher">{t("role.teacher")}</option>
           </select>
         </div>
 
-        <div className="mb-1 text-xs font-semibold uppercase text-slate-500">
-          {t("sidebar.navigation")}
+        {/* Nav */}
+        <div className="flex-1 px-3 py-3">
+          <div className="text-[10px] font-bold text-brand-muted uppercase tracking-widest px-2 mb-2">
+            {t("sidebar.navigation")}
+          </div>
+          <nav className="space-y-0.5">
+            {items.map((item) => (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                end={item.end}
+                onClick={() => setOpen(false)}
+                className={({ isActive }) =>
+                  `flex items-center gap-2.5 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${
+                    isActive
+                      ? "bg-brand text-white shadow-sm"
+                      : "text-brand-head hover:bg-brand-tint hover:text-brand"
+                  }`
+                }
+              >
+                <span className="text-base leading-none">{item.icon}</span>
+                <span>{t(item.key)}</span>
+              </NavLink>
+            ))}
+          </nav>
         </div>
-        <nav className="flex-1 space-y-1">
-          {items.map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              end={item.end}
-              onClick={() => setOpen(false)}
-              className={({ isActive }) =>
-                `block rounded-lg px-3 py-2 text-sm font-medium transition ${
-                  isActive
-                    ? "bg-brand text-white"
-                    : "text-slate-700 hover:bg-brand-hero"
-                }`
-              }
-            >
-              {item.icon} {t(item.key)}
-            </NavLink>
-          ))}
-        </nav>
 
-        {/* Sign In / Sign Out Action */}
-        <div className="mt-3 pt-3 border-t border-brand-line space-y-2">
+        {/* Footer */}
+        <div className="px-4 py-3 border-t border-brand-line space-y-2">
           <button
             onClick={handleSignOut}
-            className="w-full rounded-lg bg-white border border-brand-line hover:bg-rose-50 hover:border-rose-200 py-1.5 text-xs font-semibold text-slate-600 hover:text-rose-700 transition flex items-center justify-center gap-1.5"
+            className="w-full flex items-center justify-center gap-2 rounded-xl border border-brand-line bg-brand-hero py-2 text-xs font-semibold text-brand-head hover:bg-brand-tint hover:border-brand/30 transition"
           >
-            <span>🚪</span> {t("auth.signOut")}
+            <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/>
+              <line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+            {t("auth.signOut")}
           </button>
-
           <BackendStatus />
         </div>
       </aside>
 
-      {/* Main content */}
-      <main className="md:ml-64">
-        <div className="mx-auto max-w-5xl p-5 md:p-8">
-          <p className="mb-6 text-sm text-slate-500">{t("app.tagline")}</p>
+      {/* ── Main content ── */}
+      <main className="md:ml-64 min-h-screen">
+        <div className="mx-auto max-w-5xl p-5 md:p-8 page-enter">
           <Outlet />
         </div>
       </main>

@@ -1,22 +1,47 @@
 @import "tailwindcss";
 
 @theme {
-  --color-brand: #b51f36;
-  --color-brand-dark: #8f1428;
-  --color-brand-head: #a71930;
-  --color-brand-tint: #fff4f5;
-  --color-brand-hero: #fff0f2;
-  --color-brand-line: #f1d9dc;
+  /* Green brand palette */
+  --color-brand:               #087A45;
+  --color-brand-dark:          #06452D;
+  --color-brand-head:          #033B27;
+  --color-brand-tint:          #DDF5E6;
+  --color-brand-hero:          #F5FAF6;
+  --color-brand-line:          #DCEBE1;
+  --color-brand-accent:        #20B86A;
+  --color-brand-muted:         #668274;
 }
 
 body {
   font-family: "Noto Sans Bengali", "Noto Sans", system-ui, sans-serif;
-  background: #ffffff;
-  color: #292929;
+  background: #F5FAF6;
+  color: #102C20;
 }
 
-h1,
-h2,
-h3 {
+h1, h2, h3 {
   color: var(--color-brand-head);
+}
+
+/* Page fade-in */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-enter {
+  animation: fadeInUp 0.22s ease-out both;
+}
+
+/* Global focus ring */
+*:focus-visible {
+  outline: 2px solid #087A45;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }

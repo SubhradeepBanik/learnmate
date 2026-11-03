@@ -13,7 +13,7 @@ export const STUDENT_NAV = [
 
 export const TEACHER_NAV = [
   { path: "/teacher", key: "nav.teacherDashboard", icon: "👨‍🏫", end: true },
-  { path: "/teacher/upload", key: "nav.upload", icon: "📚" },
+  { path: "/teacher/materials", key: "nav.materials", icon: "📚" },
   { path: "/teacher/create-quiz", key: "nav.createQuiz", icon: "📝" },
   { path: "/teacher/performance", key: "nav.performance", icon: "📊" },
   { path: "/teacher/profile", key: "nav.teacherProfile", icon: "👤" },

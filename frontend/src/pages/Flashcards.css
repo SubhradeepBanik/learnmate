@@ -1,0 +1,78 @@
+/* Flashcards & Notes Styling */
+
+.flashcard-scene {
+  perspective: 1200px;
+}
+
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  min-height: 320px;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-style: preserve-3d;
+  cursor: pointer;
+  user-select: none;
+}
+
+.flashcard-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+.flashcard-face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 1.25rem;
+  padding: 2rem;
+  box-shadow: 0 8px 24px -4px rgba(181, 31, 54, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04);
+}
+
+.flashcard-front {
+  background: #ffffff;
+  border: 2px solid #f1d9dc;
+}
+
+.flashcard-front:hover {
+  border-color: #d88390;
+}
+
+.flashcard-back {
+  background: linear-gradient(180deg, #ffffff 0%, #fff7f8 100%);
+  border: 2px solid #b51f36;
+  transform: rotateY(180deg);
+}
+
+/* Modal Backdrop */
+.modal-overlay {
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleUp {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.modal-content {
+  animation: scaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}

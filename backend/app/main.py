@@ -1,12 +1,22 @@
 """FastAPI application entry point."""
 
+from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routers import health
+from app.database import init_database
+from app.routers import health, flashcards, records
 
-app = FastAPI(title="LearnMate API", version="0.1.0")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Initialize SQLite database and seed initial data
+    init_database()
+    yield
+
+
+app = FastAPI(title="LearnMate API", version="0.1.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -17,3 +27,5 @@ app.add_middleware(
 )
 
 app.include_router(health.router)
+app.include_router(flashcards.router)
+app.include_router(records.router)

@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, Outlet, useLocation, useNavigate, Link } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
+import { useAuth } from "../context/AuthContext";
 import { STUDENT_NAV, TEACHER_NAV } from "../config/navigation";
 import BackendStatus from "./BackendStatus";
 
@@ -11,26 +12,40 @@ const LANGUAGES = [
 
 export default function Layout() {
   const { lang, setLang, t } = useLanguage();
+  const { user, logout } = useAuth();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
-  // TEMPORARY: role comes from the URL. Real login replaces this in the next step.
+  // Role comes from the URL path
   const role = pathname.startsWith("/teacher") ? "teacher" : "student";
   const items = role === "teacher" ? TEACHER_NAV : STUDENT_NAV;
+
+  const handleSignOut = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <div className="min-h-screen">
       {/* Mobile top bar */}
       <div className="sticky top-0 z-30 flex items-center justify-between border-b border-brand-line bg-white px-4 py-3 md:hidden">
         <span className="text-lg font-bold text-brand">📚 {t("app.name")}</span>
-        <button
-          onClick={() => setOpen(true)}
-          className="rounded-lg bg-brand px-3 py-1.5 text-white"
-          aria-label="Open menu"
-        >
-          ☰
-        </button>
+        <div className="flex items-center gap-2">
+          <Link
+            to="/login"
+            className="text-xs bg-brand-tint border border-brand-line text-brand px-2.5 py-1 rounded-lg font-semibold"
+          >
+            {user ? "Switch" : "Sign In"}
+          </Link>
+          <button
+            onClick={() => setOpen(true)}
+            className="rounded-lg bg-brand px-3 py-1.5 text-white"
+            aria-label="Open menu"
+          >
+            ☰
+          </button>
+        </div>
       </div>
 
       {/* Overlay for mobile */}
@@ -52,6 +67,33 @@ export default function Layout() {
           <p className="text-xs tracking-widest text-slate-400">
             LEARN • PRACTICE • GROW
           </p>
+        </div>
+
+        {/* User Status Chip */}
+        <div className="mb-4 bg-white border border-brand-line rounded-xl p-3 shadow-xs">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-brand-tint text-brand border border-brand font-bold text-sm flex items-center justify-center">
+                {user?.name ? user.name.charAt(0).toUpperCase() : (role === "teacher" ? "T" : "S")}
+              </div>
+              <div className="overflow-hidden">
+                <div className="text-xs font-bold text-slate-800 truncate">
+                  {user?.name || (role === "teacher" ? "Dr. Debajit Sharma" : "Student Name")}
+                </div>
+                <div className="text-[10px] text-slate-400 capitalize">
+                  {role === "teacher" ? "Faculty" : "Student"} • DU
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={handleSignOut}
+              title="Sign Out"
+              className="text-xs text-slate-400 hover:text-rose-600 p-1"
+            >
+              🚪
+            </button>
+          </div>
         </div>
 
         {/* Language switch */}
@@ -76,7 +118,7 @@ export default function Layout() {
           </div>
         </div>
 
-        {/* Temporary role switch */}
+        {/* Portal Role Switcher */}
         <div className="mb-4">
           <div className="mb-1 text-xs font-semibold text-slate-500">
             👤 {t("sidebar.role")}
@@ -117,7 +159,15 @@ export default function Layout() {
           ))}
         </nav>
 
-        <div className="mt-4 border-t border-brand-line pt-3">
+        {/* Sign In / Sign Out Action */}
+        <div className="mt-3 pt-3 border-t border-brand-line space-y-2">
+          <button
+            onClick={handleSignOut}
+            className="w-full rounded-lg bg-white border border-brand-line hover:bg-rose-50 hover:border-rose-200 py-1.5 text-xs font-semibold text-slate-600 hover:text-rose-700 transition flex items-center justify-center gap-1.5"
+          >
+            <span>🚪</span> {t("auth.signOut")}
+          </button>
+
           <BackendStatus />
         </div>
       </aside>

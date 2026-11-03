@@ -6,17 +6,17 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
 from app.database import init_database
-from app.routers import health, flashcards, records
+from app.routers import health, flashcards, records, quiz, rag, tutor
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Initialize SQLite database and seed initial data
+    # Initialize the local app database and seed initial data.
     init_database()
     yield
 
 
-app = FastAPI(title="LearnMate API", version="0.1.0", lifespan=lifespan)
+app = FastAPI(title="LearnMate API", version="0.3.0", lifespan=lifespan)
 
 app.add_middleware(
     CORSMiddleware,
@@ -29,3 +29,6 @@ app.add_middleware(
 app.include_router(health.router)
 app.include_router(flashcards.router)
 app.include_router(records.router)
+app.include_router(rag.router)
+app.include_router(tutor.router)
+app.include_router(quiz.router)

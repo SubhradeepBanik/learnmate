@@ -1,3 +1,8 @@
 fastapi
 uvicorn[standard]
 python-dotenv
+python-multipart
+pymupdf
+chromadb
+google-genai
+httpx

@@ -1,7 +1,6 @@
 """One shared Gemini client plus a retry helper for rate limits."""
 
 import time
-from functools import lru_cache
 
 from google import genai
 from google.genai import errors
@@ -13,8 +12,11 @@ class GeminiNotConfigured(RuntimeError):
     pass
 
 
-@lru_cache
 def get_client() -> genai.Client:
+    """Return a Gemini client using the current API key from settings.
+
+    No lru_cache — so the latest key from .env is always used after a restart.
+    """
     if not settings.GEMINI_API_KEY:
         raise GeminiNotConfigured(
             "GEMINI_API_KEY is missing. Add it to backend/.env and restart the server."

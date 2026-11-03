@@ -31,10 +31,7 @@ export default function Layout() {
       {/* ── Mobile top bar ── */}
       <div className="sticky top-0 z-30 flex items-center justify-between border-b border-brand-line bg-white px-4 py-3 shadow-sm md:hidden">
         <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-lg bg-brand flex items-center justify-center flex-shrink-0">
-            <span className="text-white text-xs font-black">L</span>
-          </div>
-          <span className="text-base font-black text-brand-head">LearnMate</span>
+          <img src="/logo.png" alt="LearnMate" className="h-8 w-auto object-contain" />
         </div>
         <button
           onClick={() => setOpen(true)}
@@ -57,18 +54,12 @@ export default function Layout() {
         }`}
       >
         {/* Logo */}
-        <div className="px-5 py-5 border-b border-brand-line">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-brand flex items-center justify-center shadow-sm flex-shrink-0">
-              <span className="text-white text-lg font-black">L</span>
-            </div>
-            <div>
-              <div className="text-base font-black text-brand-head leading-tight">LearnMate</div>
-              <div className="text-[10px] font-semibold tracking-widest text-brand-muted uppercase">
-                Learn · Practice · Grow
-              </div>
-            </div>
-          </div>
+        <div className="px-4 py-4 border-b border-brand-line">
+          <img
+            src="/logo.png"
+            alt="LearnMate"
+            className="h-10 w-auto object-contain"
+          />
         </div>
 
         {/* User chip */}

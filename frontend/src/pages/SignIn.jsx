@@ -67,15 +67,7 @@ export default function SignIn() {
       {/* Top bar */}
       <div className="max-w-5xl w-full mx-auto flex items-center justify-between pb-4">
         <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-brand flex items-center justify-center shadow-sm">
-            <span className="text-white text-lg font-black">L</span>
-          </div>
-          <div>
-            <div className="text-base font-black text-brand-head">LearnMate</div>
-            <div className="hidden sm:block text-[10px] font-semibold text-brand-muted tracking-widest uppercase">
-              Dibrugarh University
-            </div>
-          </div>
+          <img src="/logo.png" alt="LearnMate" className="h-10 w-auto object-contain" />
         </div>
         {/* Language */}
         <div className="flex gap-1 bg-white p-1 rounded-xl border border-brand-line shadow-sm">
@@ -92,9 +84,7 @@ export default function SignIn() {
       <div className="my-auto max-w-md w-full mx-auto bg-white rounded-2xl shadow-lg border border-brand-line p-6 sm:p-8 space-y-5">
         {/* Logo */}
         <div className="text-center">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-brand-tint border border-brand/10 mb-3">
-            <span className="text-2xl font-black text-brand">L</span>
-          </div>
+          <img src="/logo.png" alt="LearnMate" className="h-14 w-auto object-contain mx-auto mb-3" />
           <h2 className="text-xl font-black text-brand-head">
             {mode === "signin" ? t("auth.welcomeBack") : t("auth.register")}
           </h2>

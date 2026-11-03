@@ -23,7 +23,8 @@ class Settings:
 
     # --- Gemini (multilingual embeddings & fallback) ---
     GEMINI_API_KEY: str = os.getenv("GEMINI_API_KEY", "")
-    GEMINI_CHAT_MODEL: str = os.getenv("GEMINI_CHAT_MODEL", "gemini-3.8-flash")
+    # Use standard 1500 request/day production model by default
+    GEMINI_CHAT_MODEL: str = os.getenv("GEMINI_CHAT_MODEL", "gemini-2.5-flash")
     GEMINI_THINKING_BUDGET: int = int(os.getenv("GEMINI_THINKING_BUDGET", "0"))
     GEMINI_EMBED_MODEL: str = os.getenv("GEMINI_EMBED_MODEL", "gemini-embedding-001")
     EMBED_DIMENSIONS: int = 768
@@ -48,5 +49,3 @@ class Settings:
 
 
 settings = Settings()
-settings.UPLOAD_DIR.mkdir(exist_ok=True)
-settings.CHROMA_DIR.mkdir(exist_ok=True)

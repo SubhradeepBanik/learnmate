@@ -1,4 +1,4 @@
-"""Text generation with OpenRouter, Groq, or Gemini as fallback."""
+"""Text generation with OpenRouter, Groq, or Gemini as fallback with multi-model redundancy."""
 
 import httpx
 from google.genai import types
@@ -26,7 +26,7 @@ def _generate_with_openrouter(
 
     headers = {
         "Authorization": f"Bearer {settings.OPENROUTER_API_KEY}",
-        "HTTP-Referer": "http://localhost:5173",
+        "HTTP-Referer": "https://learnmate-lac.vercel.app",
         "X-Title": "LearnMate",
         "Content-Type": "application/json",
     }
@@ -112,37 +112,59 @@ def _generate_with_gemini(
 ) -> str:
     client = get_client()
 
-    config_kwargs = {
-        "system_instruction": system_instruction,
-        "temperature": temperature,
-    }
-    if hasattr(settings, "GEMINI_THINKING_BUDGET") and settings.GEMINI_THINKING_BUDGET is not None:
-        try:
-            config_kwargs["thinking_config"] = types.ThinkingConfig(
-                thinking_budget=settings.GEMINI_THINKING_BUDGET
-            )
-        except Exception:
-            pass
+    # Cascade through standard high-quota models (1,500 requests/day per model)
+    candidate_models = []
+    configured_model = getattr(settings, "GEMINI_CHAT_MODEL", "gemini-2.5-flash")
+    if configured_model and "3.8" not in configured_model:
+        candidate_models.append(configured_model)
 
-    def run():
-        try:
-            return client.models.generate_content(
-                model=settings.GEMINI_CHAT_MODEL,
-                contents=prompt,
-                config=types.GenerateContentConfig(**config_kwargs),
-            )
-        except Exception:
-            if "thinking_config" in config_kwargs:
-                config_kwargs.pop("thinking_config", None)
+    for m in ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-1.5-flash-8b", "gemini-2.0-flash"]:
+        if m not in candidate_models:
+            candidate_models.append(m)
+
+    last_error = None
+    for model_name in candidate_models:
+        config_kwargs = {
+            "system_instruction": system_instruction,
+            "temperature": temperature,
+        }
+        if hasattr(settings, "GEMINI_THINKING_BUDGET") and settings.GEMINI_THINKING_BUDGET is not None:
+            try:
+                config_kwargs["thinking_config"] = types.ThinkingConfig(
+                    thinking_budget=settings.GEMINI_THINKING_BUDGET
+                )
+            except Exception:
+                pass
+
+        def run(target_model=model_name):
+            try:
                 return client.models.generate_content(
-                    model=settings.GEMINI_CHAT_MODEL,
+                    model=target_model,
                     contents=prompt,
                     config=types.GenerateContentConfig(**config_kwargs),
                 )
-            raise
+            except Exception:
+                if "thinking_config" in config_kwargs:
+                    config_kwargs.pop("thinking_config", None)
+                    return client.models.generate_content(
+                        model=target_model,
+                        contents=prompt,
+                        config=types.GenerateContentConfig(**config_kwargs),
+                    )
+                raise
 
-    response = call_with_retry(run)
-    return (response.text or "").strip()
+        try:
+            response = call_with_retry(run, max_retries=2)
+            if response and response.text:
+                return response.text.strip()
+        except Exception as exc:
+            last_error = exc
+            # If rate-limited or daily quota exhausted on this model, continue to next fallback model
+            continue
+
+    if last_error:
+        raise last_error
+    raise LlmError("Gemini generation returned empty response across all models.")
 
 
 def generate_text(
@@ -150,7 +172,7 @@ def generate_text(
     system_instruction: str | None = None,
     temperature: float = 0.2,
 ) -> str:
-    """Generate text using OpenRouter → Groq → Gemini with real fallback on failure."""
+    """Generate text using OpenRouter → Groq → Gemini (with model cascade)."""
     errors_seen: list[str] = []
 
     if settings.OPENROUTER_API_KEY:

@@ -1,24 +1,54 @@
-﻿import { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getHealth } from "../api/client";
 import { useLanguage } from "../context/LanguageContext";
 
 export default function BackendStatus() {
   const { t } = useLanguage();
-  const [state, setState] = useState("checking"); // checking | ok | down
+  const [state, setState] = useState("checking"); // checking | ok | down | demo
 
   useEffect(() => {
     getHealth()
       .then(() => setState("ok"))
-      .catch(() => setState("down"));
+      .catch(() => {
+        // If hosted on Vercel without a cloud backend URL configured, show demo mode rather than a scary error
+        if (window.location.hostname !== "localhost" && !import.meta.env.VITE_API_BASE_URL) {
+          setState("demo");
+        } else {
+          setState("down");
+        }
+      });
   }, []);
 
   const color =
-    state === "ok" ? "bg-green-500" : state === "down" ? "bg-red-500" : "bg-amber-400";
+    state === "ok"
+      ? "bg-emerald-500"
+      : state === "demo"
+      ? "bg-emerald-400"
+      : state === "down"
+      ? "bg-rose-500"
+      : "bg-amber-400";
+
+  const label =
+    state === "ok"
+      ? "online"
+      : state === "demo"
+      ? "cloud demo"
+      : state === "down"
+      ? "offline"
+      : "checking";
 
   return (
-    <div className="flex items-center gap-2 text-xs text-slate-500">
-      <span className={`inline-block h-2.5 w-2.5 rounded-full ${color}`} />
-      {t("sidebar.backend")}: {state}
+    <div
+      className="flex items-center gap-2 text-xs text-slate-500 font-medium"
+      title={
+        state === "demo"
+          ? "Running in cloud demo mode with built-in data. Connect a deployed FastAPI backend to enable live AI RAG."
+          : `Backend is ${state}`
+      }
+    >
+      <span className={`inline-block h-2 w-2 rounded-full ${color}`} />
+      <span>{t("sidebar.backend")}:</span>
+      <span className="capitalize">{label}</span>
     </div>
   );
 }

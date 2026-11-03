@@ -1,5 +1,5 @@
-﻿import { useCallback, useEffect, useState } from "react";
-import { askQuestion, deleteDocument, listDocuments, uploadDocument } from "../api/client";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { askQuestion, deleteDocument, getHealth, listDocuments, uploadDocument } from "../api/client";
 import { useLanguage } from "../context/LanguageContext";
 
 const inputCls =
@@ -24,12 +24,54 @@ export default function AskPdf() {
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
   const [dragOver, setDragOver] = useState(false);
+  const [waking, setWaking] = useState(false);
+
+  const retryRef = useRef(null);
 
   const refresh = useCallback(() => {
     listDocuments().then(setDocs).catch((e) => setError(e.message));
   }, []);
 
-  useEffect(() => { refresh(); }, [refresh]);
+  // On mount: ping /api/health to wake Render from cold start, then load docs.
+  // If health ping fails, retry up to 3 times with 10s delay (Render needs ~30s to wake).
+  useEffect(() => {
+    let cancelled = false;
+    let attempt = 0;
+    const MAX_ATTEMPTS = 4;
+
+    async function tryWakeAndLoad() {
+      setWaking(true);
+      setError("");
+      while (attempt < MAX_ATTEMPTS) {
+        attempt++;
+        try {
+          await getHealth();
+          if (cancelled) return;
+          setWaking(false);
+          refresh();
+          return;
+        } catch {
+          if (cancelled) return;
+          if (attempt < MAX_ATTEMPTS) {
+            // Wait 10s between wake attempts
+            await new Promise((res) => { retryRef.current = setTimeout(res, 10000); });
+          }
+        }
+      }
+      if (!cancelled) {
+        setWaking(false);
+        // Last-ditch: try loading docs even if health timed out
+        refresh();
+      }
+    }
+
+    tryWakeAndLoad();
+    return () => {
+      cancelled = true;
+      clearTimeout(retryRef.current);
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   async function handleUpload(e) {
     e.preventDefault();
@@ -72,7 +114,14 @@ export default function AskPdf() {
         <p className="text-sm text-brand-muted mt-1">Upload PDFs and ask AI-powered questions in English or Assamese.</p>
       </div>
 
-      {error && (
+      {waking && (
+        <div className="rounded-xl border border-brand-line bg-brand-hero p-4 text-sm text-brand-muted flex items-center gap-3">
+          <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-brand border-t-transparent flex-shrink-0" />
+          <span>Connecting to AI backend — this takes up to 30 seconds on first load. Please wait...</span>
+        </div>
+      )}
+
+      {error && !waking && (
         <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
           {error}
         </div>
@@ -136,7 +185,7 @@ export default function AskPdf() {
                 <input value={topic} onChange={(e) => setTopic(e.target.value)} placeholder={t("pdf.upload.topic")} className={inputCls} />
               </div>
 
-              <button type="submit" disabled={!file || uploading} className={`${btnCls} w-full justify-center flex items-center gap-2`}>
+              <button type="submit" disabled={!file || uploading || waking} className={`${btnCls} w-full justify-center flex items-center gap-2`}>
                 {uploading ? (
                   <>
                     <span className="inline-block h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />

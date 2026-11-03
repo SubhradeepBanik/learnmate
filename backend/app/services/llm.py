@@ -150,9 +150,24 @@ def generate_text(
     system_instruction: str | None = None,
     temperature: float = 0.2,
 ) -> str:
-    """Generate text using OpenRouter first, then Groq, then Gemini."""
+    """Generate text using OpenRouter → Groq → Gemini with real fallback on failure."""
+    errors_seen: list[str] = []
+
     if settings.OPENROUTER_API_KEY:
-        return _generate_with_openrouter(prompt, system_instruction, temperature)
+        try:
+            return _generate_with_openrouter(prompt, system_instruction, temperature)
+        except LlmError as exc:
+            errors_seen.append(f"OpenRouter: {exc}")
+
     if settings.GROQ_API_KEY:
-        return _generate_with_groq(prompt, system_instruction, temperature)
-    return _generate_with_gemini(prompt, system_instruction, temperature)
+        try:
+            return _generate_with_groq(prompt, system_instruction, temperature)
+        except LlmError as exc:
+            errors_seen.append(f"Groq: {exc}")
+
+    try:
+        return _generate_with_gemini(prompt, system_instruction, temperature)
+    except Exception as exc:
+        errors_seen.append(f"Gemini: {exc}")
+
+    raise LlmError("All LLM providers failed:\n" + "\n".join(errors_seen))

@@ -253,7 +253,7 @@ export default function QuizStudio() {
                   Question {currentQuestionIdx + 1} of {activeQuiz.questions.length}
                 </span>
 
-                <div className="flex items-center gap-1.5 overflow-x-auto">
+                <div className="flex flex-wrap items-center gap-1.5 py-1">
                   {activeQuiz.questions.map((q, idx) => {
                     const isAnswered = selectedAnswers[idx] !== undefined;
                     const isCurrent = currentQuestionIdx === idx;

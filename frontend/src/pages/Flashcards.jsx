@@ -637,7 +637,7 @@ export default function Flashcards() {
             </div>
 
             {/* Subject Filter Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0">
+            <div className="flex flex-wrap items-center gap-1.5 py-1">
               <button
                 onClick={() => setSelectedSubject("all")}
                 className={`rounded-full px-3 py-1 text-xs font-semibold whitespace-nowrap transition ${
@@ -984,7 +984,7 @@ export default function Flashcards() {
             </div>
 
             {/* Subject Filter Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+            <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto py-1">
               <button
                 onClick={() => setNotesSubject("all")}
                 className={`rounded-full px-3 py-1 text-xs font-semibold whitespace-nowrap transition ${

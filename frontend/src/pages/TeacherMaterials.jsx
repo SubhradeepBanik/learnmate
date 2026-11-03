@@ -367,7 +367,7 @@ export default function TeacherMaterials() {
               <span className="absolute left-3 top-2 text-slate-400"></span>
             </div>
 
-            <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
+            <div className="flex flex-wrap items-center gap-1.5 w-full sm:w-auto py-1">
               <button
                 onClick={() => setSubjectFilter("all")}
                 className={`rounded-full px-3 py-1 text-xs font-semibold whitespace-nowrap transition ${

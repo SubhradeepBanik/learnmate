@@ -1,22 +1,37 @@
-import { useEffect, useState } from 'react'
-import { getHealth } from './api/client'
+import { Navigate, Route, Routes } from "react-router-dom";
+import Layout from "./components/Layout";
+import { STUDENT_NAV, TEACHER_NAV } from "./config/navigation";
+import ComingSoon from "./pages/ComingSoon";
+import Dashboard from "./pages/Dashboard";
+import TeacherDashboard from "./pages/TeacherDashboard";
 
-function App() {
-  const [status, setStatus] = useState('Checking backend…')
+// Every route except the two dashboards is a placeholder for now.
+// As each feature is built, swap its ComingSoon for the real page.
+const placeholders = (items, skipPath) =>
+  items
+    .filter((item) => item.path !== skipPath)
+    .map((item) => (
+      <Route
+        key={item.path}
+        path={item.path}
+        element={<ComingSoon titleKey={item.key} />}
+      />
+    ));
 
-  useEffect(() => {
-    getHealth()
-      .then(() => setStatus('Backend is connected.'))
-      .catch(() => setStatus('Backend is not running yet.'))
-  }, [])
-
+export default function App() {
   return (
-    <main>
-      <p className="eyebrow">LearnMate</p>
-      <h1>Your learning workspace starts here.</h1>
-      <p>{status}</p>
-    </main>
-  )
-}
+    <Routes>
+      <Route element={<Layout />}>
+        <Route path="/" element={<Navigate to="/student" replace />} />
 
-export default App
+        <Route path="/student" element={<Dashboard />} />
+        {placeholders(STUDENT_NAV, "/student")}
+
+        <Route path="/teacher" element={<TeacherDashboard />} />
+        {placeholders(TEACHER_NAV, "/teacher")}
+
+        <Route path="*" element={<Navigate to="/student" replace />} />
+      </Route>
+    </Routes>
+  );
+}

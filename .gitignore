@@ -1,20 +1,26 @@
-# Python
+# Python environments and cache
+backend/.venv/
 backend/venv/
 __pycache__/
-*.pyc
+*.py[cod]
+.pytest_cache/
 
-# Secrets
+# Private settings
 .env
+backend/.env
 
-# Node
+# Node / Vite
 node_modules/
 dist/
+.vite/
 
-# Future data (we'll use these later)
+# Future local data
 backend/*.db
 backend/chroma_db/
 backend/uploads/
 
-# OS/editor
+# OS and editor files
 .DS_Store
+Thumbs.db
 .vscode/
+.idea/

@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from "react";
 
 /**
- * Interactive floating glass bubbles component.
+ * Interactive floating glass bubbles component with realistic water buoyancy physics.
  * Features:
- * - Uses exact green wave wallpaper with refined, subtle blur so the luxurious folds remain visible.
- * - Continuous organic random floating (butter-smooth 60-120fps via requestAnimationFrame & GPU translate3d).
- * - Interactive physics: dynamic repulsion and reactive velocity when cursor approaches.
- * - Click interaction: spring bounce & expansion effect on direct click.
- * - Ultra-modern glassmorphism (specular sheen, refraction edge, and ambient green glow).
+ * - Ultra-soothing, tranquil motion mimicking bubbles gently floating & bobbing on calm water.
+ * - Fluid viscosity & drag (high fluid resistance prevents harsh or fast movements).
+ * - Gentle sinusoidal water swell (vertical bobbing and subtle horizontal drift).
+ * - Fluid wake cursor reaction: moving the cursor smoothly parts the water and gently nudges bubbles.
+ * - Hardware-accelerated GPU render (translate3d & rotate at 60-120fps with zero re-render overhead).
  */
 export default function GlassBubbles() {
   const containerRef = useRef(null);
@@ -16,29 +16,28 @@ export default function GlassBubbles() {
   const mouseRef = useRef({ x: -9999, y: -9999, active: false });
   const animFrameId = useRef(null);
 
-  // Initial bubble configuration
   const BUBBLE_COUNT = 8;
 
   useEffect(() => {
     const width = window.innerWidth;
     const height = window.innerHeight;
 
-    // Initialize bubble physics data
+    // Initialize bubble water-buoyancy data
     bubblesData.current = Array.from({ length: BUBBLE_COUNT }, (_, i) => {
-      const size = 90 + ((i * 37) % 110); // sizes between 90px and 200px
+      const size = 95 + ((i * 33) % 95); // sizes between 95px and 190px
       return {
         id: i,
         size,
-        // Start scattered nicely across the screen
-        x: (width * (0.1 + (i * 0.12))) % (width - size),
-        y: (height * (0.08 + (i * 0.14))) % (height - size),
-        // Base floating velocity (slow, perpetual)
-        vx: (Math.sin(i * 1.7) * 0.4 + 0.2) * (i % 2 === 0 ? 1 : -1),
-        vy: (Math.cos(i * 1.3) * 0.35 + 0.15) * (i % 3 === 0 ? 1 : -1),
-        // Per-bubble oscillation params for smooth organic drifting
-        freqX: 0.0012 + (i * 0.0003),
-        freqY: 0.0015 + (i * 0.0002),
-        phase: i * 1.1,
+        // Evenly spread across the viewport
+        x: (width * (0.08 + (i * 0.12))) % (width - size),
+        y: (height * (0.1 + (i * 0.13))) % (height - size),
+        // Very tranquil baseline water current velocity
+        vx: (Math.sin(i * 1.5) * 0.08 + 0.04) * (i % 2 === 0 ? 1 : -1),
+        vy: (Math.cos(i * 1.2) * 0.06 + 0.03) * (i % 3 === 0 ? 1 : -1),
+        // Slow water wave bobbing frequencies (subtle and rhythmic)
+        bobFreqY: 0.00075 + (i * 0.00008),
+        bobFreqX: 0.00055 + (i * 0.00006),
+        phase: i * 1.35,
         scale: 1,
         targetScale: 1,
       };
@@ -60,12 +59,11 @@ export default function GlassBubbles() {
     };
 
     const handleResize = () => {
-      // Keep bubbles inside bounds on resize
       const w = window.innerWidth;
       const h = window.innerHeight;
       bubblesData.current.forEach((b) => {
-        b.x = Math.max(0, Math.min(w - b.size, b.x));
-        b.y = Math.max(0, Math.min(h - b.size, b.y));
+        b.x = Math.max(10, Math.min(w - b.size - 10, b.x));
+        b.y = Math.max(10, Math.min(h - b.size - 10, b.y));
       });
     };
 
@@ -75,7 +73,7 @@ export default function GlassBubbles() {
 
     let lastTime = performance.now();
 
-    // Physics Animation Loop
+    // Water Physics Animation Loop
     const animate = (time) => {
       const dt = Math.min(32, time - lastTime);
       lastTime = time;
@@ -83,20 +81,19 @@ export default function GlassBubbles() {
       const w = window.innerWidth;
       const h = window.innerHeight;
       const mouse = mouseRef.current;
-      const REPEL_RADIUS = 220; // Radius where cursor exerts magnetic/repulsive force
-      const REPEL_STRENGTH = 0.55;
+      const REPEL_RADIUS = 260; // Fluid wake radius around cursor
 
       bubblesData.current.forEach((b, idx) => {
         const el = bubbleRefs.current[idx];
         if (!el) return;
 
-        // 1. Organic gentle sinusoidal force (ensures bubbles perpetually roam around)
-        const organicForceX = Math.sin(time * b.freqX + b.phase) * 0.05;
-        const organicForceY = Math.cos(time * b.freqY + b.phase) * 0.05;
-        b.vx += organicForceX;
-        b.vy += organicForceY;
+        // 1. Water Current Swell: very soft, gentle ocean/lake tidal drift
+        const waterCurrentX = Math.sin(time * 0.0004 + b.phase) * 0.008;
+        const waterCurrentY = Math.cos(time * 0.0005 + b.phase) * 0.008;
+        b.vx += waterCurrentX;
+        b.vy += waterCurrentY;
 
-        // 2. Cursor interaction physics (repel force when mouse comes near)
+        // 2. Gentle Cursor Wake: smooth water displacement when cursor nears
         if (mouse.active) {
           const centerX = b.x + b.size / 2;
           const centerY = b.y + b.size / 2;
@@ -105,11 +102,12 @@ export default function GlassBubbles() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < REPEL_RADIUS && dist > 1) {
-            const force = (1 - dist / REPEL_RADIUS) * REPEL_STRENGTH;
-            b.vx += (dx / dist) * force * 1.8;
-            b.vy += (dy / dist) * force * 1.8;
-            // Slight reactive scale expansion when near cursor
-            b.targetScale = 1.08;
+            // Smooth bell curve displacement (like parting water ripples)
+            const wakeFactor = Math.pow(1 - dist / REPEL_RADIUS, 1.8);
+            const force = wakeFactor * 0.22; // Gentle, liquid push
+            b.vx += (dx / dist) * force;
+            b.vy += (dy / dist) * force;
+            b.targetScale = 1.04;
           } else {
             b.targetScale = 1;
           }
@@ -117,52 +115,54 @@ export default function GlassBubbles() {
           b.targetScale = 1;
         }
 
-        // 3. Smooth scale interpolation
-        b.scale += (b.targetScale - b.scale) * 0.1;
+        // 3. Fluid scale dampening
+        b.scale += (b.targetScale - b.scale) * 0.05;
 
-        // 4. Natural velocity damping & speed cap (keeps drifting serene & slow)
+        // 4. Fluid Viscosity / Hydrodynamic Drag
+        // High water resistance naturally slows rapid movements down to calm drift
+        b.vx *= 0.965;
+        b.vy *= 0.965;
+
+        // Hard cap on speed to guarantee it NEVER moves fast
+        const MAX_WATER_SPEED = 0.55; // pixels per frame
         const currentSpeed = Math.sqrt(b.vx * b.vx + b.vy * b.vy);
-        const MAX_SPEED = 2.4;
-        const MIN_SPEED = 0.25;
-
-        if (currentSpeed > MAX_SPEED) {
-          b.vx = (b.vx / currentSpeed) * MAX_SPEED;
-          b.vy = (b.vy / currentSpeed) * MAX_SPEED;
+        if (currentSpeed > MAX_WATER_SPEED) {
+          b.vx = (b.vx / currentSpeed) * MAX_WATER_SPEED;
+          b.vy = (b.vy / currentSpeed) * MAX_WATER_SPEED;
         }
 
-        // Gentle friction towards baseline slow drift
-        b.vx *= 0.985;
-        b.vy *= 0.985;
-
-        if (currentSpeed < MIN_SPEED) {
-          b.vx += (Math.random() - 0.5) * 0.08;
-          b.vy += (Math.random() - 0.5) * 0.08;
-        }
-
-        // 5. Update coordinates
+        // 5. Update position along water plane
         b.x += b.vx * (dt / 16.6);
         b.y += b.vy * (dt / 16.6);
 
-        // 6. Soft boundary containment (bounce gently off viewport edges)
+        // 6. Smooth water surface containment (gentle turning before hitting viewport borders)
         const margin = 20;
         if (b.x < margin) {
           b.x = margin;
-          b.vx = Math.abs(b.vx) * 0.8;
+          b.vx = Math.abs(b.vx) * 0.7;
         } else if (b.x > w - b.size - margin) {
           b.x = w - b.size - margin;
-          b.vx = -Math.abs(b.vx) * 0.8;
+          b.vx = -Math.abs(b.vx) * 0.7;
         }
 
         if (b.y < margin) {
           b.y = margin;
-          b.vy = Math.abs(b.vy) * 0.8;
+          b.vy = Math.abs(b.vy) * 0.7;
         } else if (b.y > h - b.size - margin) {
           b.y = h - b.size - margin;
-          b.vy = -Math.abs(b.vy) * 0.8;
+          b.vy = -Math.abs(b.vy) * 0.7;
         }
 
-        // 7. Apply GPU hardware accelerated transform directly
-        el.style.transform = `translate3d(${b.x}px, ${b.y}px, 0) scale(${b.scale})`;
+        // 7. Water surface undulating bobbing offset (simulates floating on subtle water waves)
+        const bobY = Math.sin(time * b.bobFreqY + b.phase) * 12;
+        const bobX = Math.cos(time * b.bobFreqX + b.phase * 0.8) * 8;
+        const bobTilt = Math.sin(time * 0.0006 + b.phase) * 2.5; // slight 2.5 degree sway
+
+        const finalX = b.x + bobX;
+        const finalY = b.y + bobY;
+
+        // Apply hardware accelerated transform
+        el.style.transform = `translate3d(${finalX}px, ${finalY}px, 0) scale(${b.scale}) rotate(${bobTilt}deg)`;
       });
 
       animFrameId.current = requestAnimationFrame(animate);
@@ -178,13 +178,13 @@ export default function GlassBubbles() {
     };
   }, []);
 
-  // Handle direct click bounce
+  // Gentle ripple bounce on click
   const handleBubbleClick = (index) => {
     const b = bubblesData.current[index];
     if (b) {
-      b.scale = 1.35;
-      b.vx += (Math.random() - 0.5) * 3;
-      b.vy += (Math.random() - 0.5) * 3;
+      b.scale = 1.18;
+      b.vx += (Math.random() - 0.5) * 0.45;
+      b.vy += (Math.random() - 0.5) * 0.45;
     }
   };
 
@@ -203,9 +203,9 @@ export default function GlassBubbles() {
       {/* ── 2. Subtle frosted glass veil to preserve foreground text contrast ── */}
       <div className="absolute inset-0 bg-white/30 backdrop-blur-[1px]" />
 
-      {/* ── 3. Interactive Floating Glass Orbs ── */}
+      {/* ── 3. Tranquil Water-Floating Glass Bubbles ── */}
       {Array.from({ length: BUBBLE_COUNT }).map((_, i) => {
-        const size = 90 + ((i * 37) % 110);
+        const size = 95 + ((i * 33) % 95);
         return (
           <div
             key={i}
@@ -218,7 +218,7 @@ export default function GlassBubbles() {
             }}
             className="absolute top-0 left-0 pointer-events-auto cursor-pointer rounded-full backdrop-blur-md
               bg-white/20 border border-white/60 shadow-[0_12px_36px_0_rgba(8,122,69,0.22)]
-              hover:border-brand-accent hover:bg-white/35 transition-colors duration-300
+              hover:border-brand-accent hover:bg-white/35 transition-colors duration-500
               hover:shadow-[0_18px_46px_0_rgba(32,184,106,0.38)] group"
           >
             {/* Top specular highlight (glass curvature reflection) */}
@@ -232,7 +232,7 @@ export default function GlassBubbles() {
 
             {/* Bottom green refraction ring */}
             <div
-              className="absolute inset-0 rounded-full opacity-65 group-hover:opacity-100 transition-opacity"
+              className="absolute inset-0 rounded-full opacity-65 group-hover:opacity-100 transition-opacity duration-500"
               style={{
                 background:
                   "radial-gradient(circle at 68% 72%, rgba(32, 184, 106, 0.35) 0%, transparent 62%)",

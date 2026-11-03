@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+﻿import { createContext, useContext, useEffect, useState } from "react";
 import { translations } from "../i18n/translations";
 
 const LanguageContext = createContext(null);

@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+﻿import { useState, useEffect, useMemo } from "react";
 import Hero from "../components/Hero";
 import Metric from "../components/Metric";
 import { useLanguage } from "../context/LanguageContext";
@@ -180,7 +180,7 @@ export default function QuizStudio() {
                     ? "border-rose-300 bg-rose-50 text-rose-600 animate-pulse"
                     : "border-slate-200 bg-slate-50 text-slate-700"
                 }`}>
-                  ⏱️ <span>{formatTime(timeLeft)}</span>
+                   <span>{formatTime(timeLeft)}</span>
                 </div>
               )}
 
@@ -188,7 +188,7 @@ export default function QuizStudio() {
                 onClick={handleExitQuiz}
                 className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-600 hover:bg-slate-100"
               >
-                ✕ Exit Quiz
+                Exit Quiz
               </button>
             </div>
           </div>
@@ -196,7 +196,7 @@ export default function QuizStudio() {
           {/* QUIZ FINISHED RESULTS SCREEN */}
           {quizFinished && !reviewMode ? (
             <div className="rounded-2xl border border-brand-line bg-white p-8 shadow-sm text-center max-w-xl mx-auto space-y-5">
-              <span className="text-6xl inline-block">{totalScore >= activeQuiz.passingScore ? "🎉" : "📚"}</span>
+              
               <div>
                 <h3 className="text-2xl font-bold text-slate-800">
                   {totalScore >= activeQuiz.passingScore ? "Congratulations! You Passed!" : "Good Effort! Keep Practicing!"}
@@ -228,13 +228,13 @@ export default function QuizStudio() {
                   onClick={() => setReviewMode(true)}
                   className="rounded-xl bg-brand-tint border border-brand-line px-5 py-2.5 text-xs font-bold text-brand hover:bg-brand hover:text-white transition"
                 >
-                  🔍 Review All Answers
+                  Review All Answers
                 </button>
                 <button
                   onClick={() => handleStartQuiz(activeQuiz)}
                   className="rounded-xl bg-brand px-5 py-2.5 text-xs font-bold text-white hover:bg-brand-dark transition shadow"
                 >
-                  🔄 Retake Quiz
+                  Retake Quiz
                 </button>
                 <button
                   onClick={handleExitQuiz}
@@ -316,17 +316,17 @@ export default function QuizStudio() {
                         {String.fromCharCode(65 + optIdx)}
                       </div>
                       <span className="text-sm flex-1">{option}</span>
-                      {reviewMode && isCorrect && <span className="text-emerald-600 text-sm font-bold">✓ Correct</span>}
-                      {reviewMode && isSelected && !isCorrect && <span className="text-rose-600 text-sm font-bold">✗ Your Choice</span>}
+                      {reviewMode && isCorrect && <span className="text-emerald-600 text-sm font-bold"> Correct</span>}
+                      {reviewMode && isSelected && !isCorrect && <span className="text-rose-600 text-sm font-bold"> Your Choice</span>}
                     </div>
                   );
                 })}
               </div>
 
-              {/* Explanation in Review Mode */}
+              {/*Explanation in Review Mode */}
               {reviewMode && (
                 <div className="rounded-xl bg-amber-50 border border-amber-200 p-4 text-xs text-amber-900 space-y-1">
-                  <h4 className="font-bold uppercase tracking-wider text-amber-800">💡 Explanation</h4>
+                  <h4 className="font-bold uppercase tracking-wider text-amber-800">Explanation</h4>
                   <p>{activeQuiz.questions[currentQuestionIdx]?.explanation}</p>
                 </div>
               )}
@@ -338,7 +338,7 @@ export default function QuizStudio() {
                   onClick={() => setCurrentQuestionIdx((p) => p - 1)}
                   className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-xs font-bold text-slate-700 hover:bg-slate-100 disabled:opacity-40"
                 >
-                  ◀ Previous
+                  ◀Previous
                 </button>
 
                 <div className="flex items-center gap-2">
@@ -347,14 +347,14 @@ export default function QuizStudio() {
                       onClick={() => setCurrentQuestionIdx((p) => p + 1)}
                       className="rounded-xl bg-brand px-5 py-2 text-xs font-bold text-white hover:bg-brand-dark"
                     >
-                      Next ▶
+                      Next▶
                     </button>
                   ) : !reviewMode ? (
                     <button
                       onClick={handleSubmitQuiz}
                       className="rounded-xl bg-emerald-600 px-6 py-2 text-xs font-bold text-white hover:bg-emerald-700 shadow"
                     >
-                      Submit Quiz ✅
+                      Submit Quiz
                     </button>
                   ) : (
                     <button
@@ -372,16 +372,16 @@ export default function QuizStudio() {
       ) : (
         /* ================= QUIZ CATALOG VIEW ================= */
         <div className="space-y-6">
-          <Hero title={`📝 ${t("nav.quiz")}`}>
+          <Hero title={t("nav.quiz")}>
             <p>Test your conceptual understanding with timed chapter quizzes and exam prep assessments.</p>
           </Hero>
 
           {/* Metrics */}
           <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-            <Metric label="📝 Total Quizzes" value={quizzes.length} />
-            <Metric label="🎯 Pass Threshold" value="70%" />
-            <Metric label="⏱️ Avg Time" value="10 min" />
-            <Metric label="🏆 Difficulty" value="Medium" />
+            <Metric label="Total Quizzes" value={quizzes.length} />
+            <Metric label="Pass Threshold" value="70%" />
+            <Metric label="Avg Time" value="10 min" />
+            <Metric label="Difficulty" value="Medium" />
           </div>
 
           {/* Subject Filter Pills */}
@@ -424,7 +424,7 @@ export default function QuizStudio() {
                     <span className="rounded-md bg-brand-tint px-2.5 py-0.5 text-xs font-bold text-brand">
                       {quiz.subject}
                     </span>
-                    <span className="text-xs text-slate-400">⏱️ {quiz.durationMinutes} mins</span>
+                    <span className="text-xs text-slate-400"> {quiz.durationMinutes} mins</span>
                   </div>
 
                   <h3 className="font-bold text-base text-slate-800 leading-snug mb-2">
@@ -446,7 +446,7 @@ export default function QuizStudio() {
                   onClick={() => handleStartQuiz(quiz)}
                   className="w-full rounded-xl bg-brand py-2.5 text-xs font-bold text-white hover:bg-brand-dark transition shadow text-center flex items-center justify-center gap-1.5"
                 >
-                  <span>🚀</span> Start Quiz
+                  Start Quiz
                 </button>
               </div>
             ))}

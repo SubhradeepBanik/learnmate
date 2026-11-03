@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from "react";
+﻿import { useState, useEffect, useMemo } from "react";
 import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
 import Metric from "../components/Metric";
@@ -89,16 +89,16 @@ export default function RevisionPlanner() {
   return (
     <div className="space-y-6">
       {/* Hero Header */}
-      <Hero title={`📅 ${t("nav.revision")}`}>
+      <Hero title={` ${t("nav.revision")}`}>
         <p>Stay on track with spaced repetition schedules, chapter review goals, and daily study milestones.</p>
       </Hero>
 
       {/* Metrics Row */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Metric label="📋 Total Tasks" value={tasks.length} />
-        <Metric label="⏳ Pending Review" value={pendingCount} />
-        <Metric label="✅ Completed" value={completedCount} />
-        <Metric label="🔥 Completion" value={`${completionRate}%`} />
+        <Metric label=" Total Tasks" value={tasks.length} />
+        <Metric label=" Pending Review" value={pendingCount} />
+        <Metric label=" Completed" value={completedCount} />
+        <Metric label=" Completion" value={`${completionRate}%`} />
       </div>
 
       {/* Action Bar & Controls */}
@@ -131,7 +131,7 @@ export default function RevisionPlanner() {
       <div className="space-y-3">
         {filteredTasks.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center text-slate-500">
-            <p className="text-4xl mb-2">🎉</p>
+            <p className="text-4xl mb-2"></p>
             <p className="font-semibold text-slate-700">No revision tasks in this list!</p>
             <p className="text-xs text-slate-400 mt-1">Add a new revision goal to keep learning.</p>
           </div>
@@ -166,8 +166,8 @@ export default function RevisionPlanner() {
                     }`}>
                       {task.priority} Priority
                     </span>
-                    <span className="text-xs text-slate-400">📅 {task.dueDate}</span>
-                    <span className="text-xs text-slate-400">⏱️ {task.estimatedMinutes} mins</span>
+                    <span className="text-xs text-slate-400"> {task.dueDate}</span>
+                    <span className="text-xs text-slate-400"> {task.estimatedMinutes} mins</span>
                   </div>
 
                   <h4 className={`font-bold text-sm text-slate-800 ${task.completed ? "line-through text-slate-400" : ""}`}>
@@ -185,20 +185,20 @@ export default function RevisionPlanner() {
                   to="/student/flashcards"
                   className="rounded-lg bg-brand-tint border border-brand-line px-3 py-1.5 text-xs font-semibold text-brand hover:bg-brand hover:text-white transition"
                 >
-                  🗂️ Cards
+                   Cards
                 </Link>
                 <Link
                   to="/student/quiz"
                   className="rounded-lg bg-slate-100 border border-slate-200 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-200 transition"
                 >
-                  📝 Quiz
+                   Quiz
                 </Link>
                 <button
                   onClick={() => deleteTask(task.id)}
                   className="text-slate-400 hover:text-rose-600 p-1.5 text-sm"
                   title="Delete Task"
                 >
-                  🗑️
+                  
                 </button>
               </div>
             </div>

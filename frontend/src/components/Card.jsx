@@ -1,10 +1,11 @@
-import { Link } from "react-router-dom";
+﻿import { Link } from "react-router-dom";
+import { NavIcon } from "./Icons";
 
 export default function Card({ icon, title, children, to }) {
   const content = (
     <>
-      <div className="mb-3 w-10 h-10 rounded-xl bg-brand-tint border border-brand/10 flex items-center justify-center text-xl flex-shrink-0">
-        {icon}
+      <div className="mb-3 w-10 h-10 rounded-xl bg-brand-tint border border-brand/10 flex items-center justify-center flex-shrink-0 text-brand">
+        {typeof icon === "string" ? <NavIcon name={icon} className="w-5 h-5 text-brand" /> : icon}
       </div>
       <h3 className="mb-1.5 text-sm font-bold text-brand-head">{title}</h3>
       <p className="text-xs text-brand-muted leading-relaxed">{children}</p>

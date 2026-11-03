@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { useLanguage } from "../context/LanguageContext";
@@ -63,7 +63,7 @@ export default function SignIn() {
   const inputCls = "w-full rounded-xl border border-brand-line bg-brand-hero px-3.5 py-2.5 text-sm text-brand-head placeholder:text-brand-muted/60 focus:outline-none focus:border-brand focus:ring-1 focus:ring-brand/20 transition";
 
   return (
-    <div className="min-h-screen bg-brand-hero flex flex-col justify-between p-4 sm:p-6">
+    <div className="min-h-screen bg-brand-hero flex flex-col justify-between p-4 sm:p-6 page-enter">
       {/* Top bar */}
       <div className="max-w-5xl w-full mx-auto flex items-center justify-between pb-4">
         <div className="flex items-center gap-2.5">
@@ -106,16 +106,16 @@ export default function SignIn() {
         {/* Role selector */}
         <div className="grid grid-cols-2 gap-2">
           {[
-            { r: "student", emoji: "🎓", label: t("auth.roleStudent") },
-            { r: "teacher", emoji: "👨‍🏫", label: t("auth.roleTeacher") },
-          ].map(({ r, emoji, label }) => (
+            { r: "student", label: t("auth.roleStudent") },
+            { r: "teacher", label: t("auth.roleTeacher") },
+          ].map(({ r, label }) => (
             <button key={r} type="button" onClick={() => setSelectedRole(r)}
               className={`p-2.5 rounded-xl border text-xs font-bold transition flex items-center justify-center gap-1.5 ${
                 selectedRole === r
                   ? "border-brand bg-brand-tint text-brand shadow-sm"
                   : "border-brand-line bg-brand-hero text-brand-head hover:border-brand/40"
               }`}>
-              <span>{emoji}</span> {label}
+              {label}
             </button>
           ))}
         </div>
@@ -126,23 +126,23 @@ export default function SignIn() {
           <div className="grid grid-cols-2 gap-2">
             <button type="button" onClick={() => handleQuickDemo("student")}
               className="rounded-xl bg-white border border-brand-line px-2.5 py-2 text-xs font-bold text-brand-head hover:bg-brand hover:text-white hover:border-brand transition">
-              🎓 Student Demo
+              Student Demo
             </button>
             <button type="button" onClick={() => handleQuickDemo("teacher")}
               className="rounded-xl bg-white border border-brand-line px-2.5 py-2 text-xs font-bold text-brand-head hover:bg-brand hover:text-white hover:border-brand transition">
-              👨‍🏫 Faculty Demo
+              Faculty Demo
             </button>
           </div>
         </div>
 
         {error && (
-          <div className="rounded-xl bg-red-50 border border-red-200 p-3 text-red-700 text-xs font-semibold flex items-center gap-2">
-            <span>⚠️</span><span>{error}</span>
+          <div className="rounded-xl bg-red-50 border border-red-200 p-3 text-red-700 text-xs font-semibold">
+            {error}
           </div>
         )}
         {successMsg && (
-          <div className="rounded-xl bg-brand-tint border border-brand/20 p-3 text-brand text-xs font-semibold flex items-center gap-2">
-            <span>✅</span><span>{successMsg}</span>
+          <div className="rounded-xl bg-brand-tint border border-brand/20 p-3 text-brand text-xs font-semibold">
+            {successMsg}
           </div>
         )}
 
@@ -170,10 +170,10 @@ export default function SignIn() {
             </div>
             <div className="relative">
               <input type={showPassword ? "text" : "password"} required value={password} onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••" className={`${inputCls} pr-10`} />
+                placeholder="••••••••" className={`${inputCls} pr-12`} />
               <button type="button" onClick={() => setShowPassword((p) => !p)}
-                className="absolute right-3 top-2.5 text-brand-muted hover:text-brand-head text-sm transition">
-                {showPassword ? "🙈" : "👁️"}
+                className="absolute right-3 top-2.5 text-brand-muted hover:text-brand-head text-xs font-bold transition">
+                {showPassword ? "Hide" : "Show"}
               </button>
             </div>
           </div>
@@ -197,7 +197,7 @@ export default function SignIn() {
           )}
           <button type="submit"
             className="w-full rounded-xl bg-brand py-3 text-sm font-bold text-white shadow-sm hover:bg-brand-dark transition-all duration-200 hover:shadow-md active:scale-[0.98] flex items-center justify-center gap-2">
-            🚀 {mode === "signin" ? t("auth.signInBtn") : t("auth.registerBtn")}
+            {mode === "signin" ? t("auth.signInBtn") : t("auth.registerBtn")}
           </button>
         </form>
 
@@ -210,7 +210,7 @@ export default function SignIn() {
         {/* SSO */}
         <button type="button" onClick={handleGoogleSSO}
           className="w-full rounded-xl border border-brand-line bg-brand-hero py-2.5 px-4 text-xs font-bold text-brand-head hover:bg-brand-tint hover:border-brand/30 transition flex items-center justify-center gap-2">
-          <span className="text-base">🎓</span> {t("auth.googleSSO")}
+          <span>{t("auth.googleSSO")}</span>
         </button>
 
         {/* Toggle mode */}
@@ -236,7 +236,7 @@ export default function SignIn() {
             <p className="text-xs text-brand-muted">Enter your university email and we'll send an instant reset link.</p>
             {resetSuccess ? (
               <div className="rounded-xl bg-brand-tint border border-brand/20 p-3 text-brand text-xs font-semibold">
-                ✅ Password reset link sent to {resetEmail}!
+                Password reset link sent to {resetEmail}!
               </div>
             ) : (
               <form onSubmit={handleResetPassword} className="space-y-3">

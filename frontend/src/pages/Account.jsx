@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Hero from "../components/Hero";
 import Metric from "../components/Metric";
@@ -220,13 +220,13 @@ export default function Account() {
               : "bg-emerald-600"
           }`}
         >
-          <span>{toast.type === "error" ? "⚠️" : "✅"}</span>
+          <span>{toast.type === "error" ? "" : ""}</span>
           <span>{toast.message}</span>
         </div>
       )}
 
       {/* Hero Header */}
-      <Hero title={`🔐 ${t("account.title")}`}>
+      <Hero title={` ${t("account.title")}`}>
         <p>{t("account.subtitle")}</p>
       </Hero>
 
@@ -234,7 +234,7 @@ export default function Account() {
       <div className="rounded-2xl border border-brand-line bg-white p-6 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-center gap-4">
           <div className="w-14 h-14 rounded-full bg-brand-tint border-2 border-brand text-brand flex items-center justify-center font-bold text-2xl shadow-inner">
-            {isTeacher ? "👨‍🏫" : "👤"}
+            {isTeacher ? "" : ""}
           </div>
           <div>
             <div className="flex items-center gap-2">
@@ -261,7 +261,7 @@ export default function Account() {
 
         {/* Connected SSO Badge */}
         <div className="flex items-center gap-2 bg-brand-tint border border-brand-line rounded-xl px-4 py-2 text-xs">
-          <span className="text-base">🎓</span>
+          <span className="text-base"></span>
           <div>
             <div className="font-bold text-brand">{t("account.googleLinked")}</div>
             <div className="text-slate-500">{t("account.connected")} via SSO</div>
@@ -311,7 +311,7 @@ export default function Account() {
           {/* Change Password Card */}
           <div className="rounded-2xl border border-brand-line bg-white p-6 shadow-sm">
             <h3 className="text-lg font-bold text-brand-head mb-1 flex items-center gap-2">
-              🔑 {t("account.passwordTitle")}
+               {t("account.passwordTitle")}
             </h3>
             <p className="text-xs text-slate-500 mb-4">
               Ensure your account uses a secure password with letters, numbers, and symbols.
@@ -403,7 +403,7 @@ export default function Account() {
             <div>
               <div className="flex items-center gap-2">
                 <h3 className="text-lg font-bold text-brand-head">
-                  🛡️ {t("account.twoFactorTitle")}
+                   {t("account.twoFactorTitle")}
                 </h3>
                 <span
                   className={`rounded-full px-2.5 py-0.5 text-xs font-bold ${
@@ -437,7 +437,7 @@ export default function Account() {
             <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
               <div>
                 <h3 className="text-lg font-bold text-brand-head flex items-center gap-2">
-                  💻 {t("account.sessionsTitle")}
+                   {t("account.sessionsTitle")}
                 </h3>
                 <p className="text-xs text-slate-500">{t("account.sessionsDesc")}</p>
               </div>
@@ -447,7 +447,7 @@ export default function Account() {
                   onClick={handleLogoutOthers}
                   className="rounded-lg border border-rose-300 bg-rose-50 px-3 py-1.5 text-xs font-bold text-rose-700 hover:bg-rose-100 transition whitespace-nowrap self-start sm:self-auto"
                 >
-                  🚫 {t("account.logoutAll")}
+                   {t("account.logoutAll")}
                 </button>
               )}
             </div>
@@ -456,7 +456,7 @@ export default function Account() {
               {sessions.map((sess) => (
                 <div key={sess.id} className="p-4 flex items-center justify-between bg-white hover:bg-slate-50 transition">
                   <div className="flex items-center gap-3">
-                    <span className="text-2xl">{sess.device.includes("Android") ? "📱" : "💻"}</span>
+                    <span className="text-2xl">{sess.device.includes("Android") ? "" : ""}</span>
                     <div>
                       <div className="flex items-center gap-2">
                         <span className="text-sm font-bold text-slate-800">{sess.device}</span>
@@ -487,7 +487,7 @@ export default function Account() {
         <div className="rounded-2xl border border-brand-line bg-white p-6 shadow-sm space-y-6">
           <div>
             <h3 className="text-lg font-bold text-brand-head mb-1 flex items-center gap-2">
-              🔔 {t("account.notifTitle")}
+               {t("account.notifTitle")}
             </h3>
             <p className="text-xs text-slate-500">
               Control what alerts you receive for study reminders, streaks, and updates.
@@ -500,31 +500,31 @@ export default function Account() {
                 key: "quizAlerts",
                 title: t("account.quizAlerts"),
                 desc: "Get notified when new quizzes are posted or assignment deadlines approach.",
-                icon: "📝",
+                icon: "",
               },
               {
                 key: "revisionAlerts",
                 title: t("account.revisionAlerts"),
                 desc: "Receive smart active-recall alerts when flashcard reviews are due.",
-                icon: "📅",
+                icon: "",
               },
               {
                 key: "streakAlerts",
                 title: t("account.streakAlerts"),
                 desc: "Daily reminders to keep your learning streak and study habits on track.",
-                icon: "🔥",
+                icon: "",
               },
               {
                 key: "soundEffects",
                 title: t("account.soundEffects"),
                 desc: "Play celebratory sound effects when completing cards or quizzes.",
-                icon: "🎵",
+                icon: "",
               },
               {
                 key: "emailUpdates",
                 title: t("account.emailUpdates"),
                 desc: "Receive a consolidated weekly performance and study summary via email.",
-                icon: "📧",
+                icon: "",
               },
             ].map(({ key, title, desc, icon }) => (
               <div key={key} className="p-4 flex items-center justify-between gap-4 bg-white">
@@ -556,7 +556,7 @@ export default function Account() {
           {/* Privacy Level */}
           <div className="rounded-2xl border border-brand-line bg-white p-6 shadow-sm">
             <h3 className="text-lg font-bold text-brand-head mb-1 flex items-center gap-2">
-              🛡️ {t("account.privacyTitle")}
+               {t("account.privacyTitle")}
             </h3>
             <p className="text-xs text-slate-500 mb-4">
               Manage your profile visibility on leaderboards and class study groups.
@@ -582,7 +582,7 @@ export default function Account() {
                 >
                   <div className="flex items-center justify-between mb-1">
                     <span className="font-bold text-sm text-slate-800">{opt.title}</span>
-                    {profileVisibility === opt.id && <span className="text-brand">✓</span>}
+                    {profileVisibility === opt.id && <span className="text-brand"></span>}
                   </div>
                   <p className="text-xs text-slate-500">{opt.desc}</p>
                 </div>
@@ -594,7 +594,7 @@ export default function Account() {
           <div className="rounded-2xl border border-brand-line bg-white p-6 shadow-sm flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h3 className="text-lg font-bold text-brand-head flex items-center gap-2">
-                📦 {t("account.exportData")}
+                 {t("account.exportData")}
               </h3>
               <p className="text-xs text-slate-500 mt-1 max-w-xl">
                 {t("account.exportDesc")}
@@ -605,14 +605,14 @@ export default function Account() {
               onClick={handleExportData}
               className="rounded-xl bg-brand px-5 py-2.5 text-xs font-bold text-white shadow hover:bg-brand-dark transition whitespace-nowrap flex items-center gap-2"
             >
-              <span>💾</span> {t("account.exportData")}
+              <span></span> {t("account.exportData")}
             </button>
           </div>
 
           {/* Danger Zone */}
           <div className="rounded-2xl border border-rose-200 bg-rose-50/50 p-6 shadow-sm">
             <h3 className="text-lg font-bold text-rose-800 mb-1 flex items-center gap-2">
-              ⚠️ {t("account.dangerTitle")}
+               {t("account.dangerTitle")}
             </h3>
             <p className="text-xs text-rose-600 mb-4">
               Irreversible account actions. Proceed with caution.
@@ -653,7 +653,7 @@ export default function Account() {
       {is2faModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 modal-overlay">
           <div className="modal-content max-w-md w-full bg-white rounded-2xl shadow-2xl p-6 border border-brand-line text-center">
-            <span className="text-4xl mb-2 inline-block">📲</span>
+            <span className="text-4xl mb-2 inline-block"></span>
             <h3 className="text-xl font-bold text-brand-head mb-2">
               Set Up Authenticator App
             </h3>
@@ -663,7 +663,7 @@ export default function Account() {
 
             {/* QR Mockup */}
             <div className="mx-auto w-40 h-40 bg-slate-100 border-2 border-dashed border-slate-300 rounded-xl flex flex-col items-center justify-center p-3 mb-4">
-              <span className="text-5xl">🏁</span>
+              <span className="text-5xl"></span>
               <span className="font-mono text-[10px] text-slate-500 mt-2">
                 LM-2FA-AUTH-CODE
               </span>

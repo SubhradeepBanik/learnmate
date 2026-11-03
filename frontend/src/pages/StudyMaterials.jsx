@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+﻿import { useState, useMemo, useEffect } from "react";
 import Hero from "../components/Hero";
 import Metric from "../components/Metric";
 import { useLanguage } from "../context/LanguageContext";
@@ -120,16 +120,16 @@ export default function StudyMaterials() {
   return (
     <div className="space-y-6">
       {/* Hero Header */}
-      <Hero title={`📚 ${t("nav.materials")}`}>
+      <Hero title={` ${t("nav.materials")}`}>
         <p>Access and download lecture slides, reference notes, and lab manuals verified by faculty.</p>
       </Hero>
 
       {/* Metrics Row */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Metric label="📁 Total Materials" value={materials.length} />
-        <Metric label="🏷️ Subjects Covered" value={subjects.length} />
+        <Metric label=" Total Materials" value={materials.length} />
+        <Metric label=" Subjects Covered" value={subjects.length} />
         <Metric label="⭐ Bookmarked" value={bookmarkedCount} />
-        <Metric label="📥 Downloads Today" value="12" />
+        <Metric label=" Downloads Today" value="12" />
       </div>
 
       {/* Search & Tabs Controls */}
@@ -167,7 +167,7 @@ export default function StudyMaterials() {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full rounded-xl border border-brand-line bg-white px-3.5 py-2 pl-9 text-sm focus:outline-none focus:border-brand"
           />
-          <span className="absolute left-3 top-2 text-slate-400">🔍</span>
+          <span className="absolute left-3 top-2 text-slate-400"></span>
         </div>
       </div>
 
@@ -222,7 +222,7 @@ export default function StudyMaterials() {
       {/* Materials Grid */}
       {filteredMaterials.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center text-slate-500">
-          <p className="text-4xl mb-2">📚</p>
+          <p className="text-4xl mb-2"></p>
           <p className="font-semibold text-slate-700">No study materials found</p>
           <p className="text-xs text-slate-400 mt-1">Try adjusting your filters or search terms.</p>
         </div>
@@ -250,7 +250,7 @@ export default function StudyMaterials() {
                         mat.bookmarked ? "text-amber-500 scale-110" : "text-slate-300 hover:text-amber-400"
                       }`}
                     >
-                      ★
+                      
                     </button>
                   </div>
                 </div>
@@ -268,12 +268,12 @@ export default function StudyMaterials() {
                 {/* Metadata */}
                 <div className="space-y-1 text-[11px] text-slate-400 border-t border-slate-100 pt-2 mb-3">
                   <div className="flex items-center justify-between">
-                    <span>👨‍🏫 {mat.author}</span>
-                    <span>📦 {mat.size}</span>
+                    <span> {mat.author}</span>
+                    <span> {mat.size}</span>
                   </div>
                   <div className="flex items-center justify-between">
-                    <span>🏛️ {mat.semester}</span>
-                    <span>📅 {mat.date}</span>
+                    <span> {mat.semester}</span>
+                    <span> {mat.date}</span>
                   </div>
                 </div>
               </div>
@@ -284,13 +284,13 @@ export default function StudyMaterials() {
                   onClick={() => setPreviewMaterial(mat)}
                   className="flex-1 rounded-xl bg-brand-tint border border-brand-line px-3 py-1.5 text-xs font-bold text-brand hover:bg-brand hover:text-white transition text-center"
                 >
-                  👁️ Preview
+                   Preview
                 </button>
                 <button
                   onClick={() => handleDownload(mat)}
                   className="flex-1 rounded-xl bg-brand px-3 py-1.5 text-xs font-bold text-white hover:bg-brand-dark transition text-center flex items-center justify-center gap-1"
                 >
-                  📥 Download
+                   Download
                 </button>
               </div>
             </div>
@@ -315,7 +315,7 @@ export default function StudyMaterials() {
                 onClick={() => setPreviewMaterial(null)}
                 className="text-slate-400 hover:text-slate-700 text-2xl font-bold leading-none p-1"
               >
-                ✕
+                
               </button>
             </div>
 
@@ -333,7 +333,7 @@ export default function StudyMaterials() {
               </div>
 
               <div className="bg-brand-tint border border-brand-line p-3 rounded-xl">
-                <h5 className="font-bold text-brand mb-1">💡 Faculty Recommendation</h5>
+                <h5 className="font-bold text-brand mb-1"> Faculty Recommendation</h5>
                 <p>Reviewed and recommended for B.Tech CSE 3rd Semester Mid-Semester & End-Semester examinations.</p>
               </div>
             </div>
@@ -352,7 +352,7 @@ export default function StudyMaterials() {
                 }}
                 className="rounded-xl bg-brand px-5 py-2 text-xs font-bold text-white hover:bg-brand-dark flex items-center gap-1.5"
               >
-                📥 Download Material
+                 Download Material
               </button>
             </div>
           </div>

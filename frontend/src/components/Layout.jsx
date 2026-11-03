@@ -1,8 +1,9 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
 import { useLanguage } from "../context/LanguageContext";
 import { useAuth } from "../context/AuthContext";
 import { STUDENT_NAV, TEACHER_NAV } from "../config/navigation";
+import { NavIcon } from "./Icons";
 import BackendStatus from "./BackendStatus";
 
 const LANGUAGES = [
@@ -35,10 +36,14 @@ export default function Layout() {
         </div>
         <button
           onClick={() => setOpen(true)}
-          className="rounded-xl bg-brand-tint border border-brand-line px-3 py-1.5 text-brand text-sm font-semibold transition hover:bg-brand hover:text-white"
+          className="rounded-xl bg-brand-tint border border-brand-line p-2 text-brand text-sm font-semibold transition hover:bg-brand hover:text-white"
           aria-label="Open menu"
         >
-          ☰
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="4" x2="20" y1="12" y2="12" />
+            <line x1="4" x2="20" y1="6" y2="6" />
+            <line x1="4" x2="20" y1="18" y2="18" />
+          </svg>
         </button>
       </div>
 
@@ -95,7 +100,7 @@ export default function Layout() {
 
         {/* Language */}
         <div className="px-4 py-3 border-b border-brand-line">
-          <div className="text-[10px] font-bold text-brand-muted uppercase tracking-widest mb-2">🌐 Language</div>
+          <div className="text-[10px] font-bold text-brand-muted uppercase tracking-widest mb-2">Language</div>
           <div className="flex gap-1.5 bg-brand-hero p-1 rounded-xl border border-brand-line">
             {LANGUAGES.map(({ code, label }) => (
               <button
@@ -113,7 +118,7 @@ export default function Layout() {
 
         {/* Portal */}
         <div className="px-4 py-3 border-b border-brand-line">
-          <div className="text-[10px] font-bold text-brand-muted uppercase tracking-widest mb-2">👤 Portal</div>
+          <div className="text-[10px] font-bold text-brand-muted uppercase tracking-widest mb-2">Portal</div>
           <select
             value={role}
             onChange={(e) => { navigate(`/${e.target.value}`); setOpen(false); }}
@@ -144,7 +149,7 @@ export default function Layout() {
                   }`
                 }
               >
-                <span className="text-base leading-none">{item.icon}</span>
+                <NavIcon name={item.icon} className="w-4 h-4 flex-shrink-0" />
                 <span>{t(item.key)}</span>
               </NavLink>
             ))}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+﻿import { useEffect, useState } from "react";
 import { generateQuiz, listDocuments } from "../api/client";
 import { useLanguage } from "../context/LanguageContext";
 
@@ -64,7 +64,7 @@ export default function QuizStudio() {
   }
 
   function handleSelectOption(optionIndex) {
-    if (showExplanation) return; // Prevent changing after revealing
+    if (showExplanation) return;
     setSelectedOption(optionIndex);
     setShowExplanation(true);
 
@@ -95,13 +95,12 @@ export default function QuizStudio() {
   const currentQ = questions[currentIndex];
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6">
+    <div className="max-w-4xl mx-auto space-y-6 page-enter">
       {/* Header */}
       <div className="flex items-center justify-between border-b border-brand-line pb-4">
         <div>
-          <h2 className="text-2xl font-bold flex items-center gap-2">
-            <span>📝</span>
-            <span>{t("quiz.title")}</span>
+          <h2 className="text-2xl font-bold text-brand-head">
+            {t("quiz.title")}
           </h2>
           <p className="text-sm text-slate-500 mt-1">{t("quiz.subtitle")}</p>
         </div>
@@ -109,14 +108,14 @@ export default function QuizStudio() {
 
       {error && (
         <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm text-red-700">
-          ⚠️ {error}
+          {error}
         </div>
       )}
 
-      {/* Screen 1: Quiz Configuration Card (shown when no active quiz) */}
+      {/* Screen 1: Quiz Configuration Card */}
       {questions.length === 0 && (
         <div className="rounded-2xl border border-brand-line bg-white p-6 shadow-xs space-y-5">
-          <h3 className="text-lg font-bold text-brand-head">🎯 Customize Your Quiz</h3>
+          <h3 className="text-lg font-bold text-brand-head">Customize Your Quiz</h3>
 
           <form onSubmit={handleGenerate} className="space-y-4">
             <div className="grid gap-4 sm:grid-cols-2">
@@ -132,7 +131,7 @@ export default function QuizStudio() {
                   <option value="">{t("quiz.allMaterials")}</option>
                   {docs.map((d) => (
                     <option key={d.doc_id} value={d.doc_id}>
-                      📄 {d.filename} ({d.chunks} chunks)
+                      {d.filename} ({d.chunks} chunks)
                     </option>
                   ))}
                 </select>
@@ -140,7 +139,7 @@ export default function QuizStudio() {
 
               <div>
                 <label className="block text-xs font-semibold text-slate-500 mb-1.5">
-                  🌐 Language
+                  Language
                 </label>
                 <select
                   value={quizLang}
@@ -201,7 +200,7 @@ export default function QuizStudio() {
 
           {docs.length === 0 && (
             <p className="text-xs text-amber-700 bg-amber-50 p-3 rounded-lg border border-amber-200">
-              💡 {t("quiz.noMaterials")}
+              {t("quiz.noMaterials")}
             </p>
           )}
         </div>
@@ -217,7 +216,7 @@ export default function QuizStudio() {
                 .replace("{current}", currentIndex + 1)
                 .replace("{total}", questions.length)}
             </span>
-            <span className="text-brand">Score: {score}</span>
+            <span className="text-brand font-bold">Score: {score}</span>
           </div>
 
           <div className="w-full h-2 rounded-full bg-slate-100 overflow-hidden">
@@ -261,9 +260,9 @@ export default function QuizStudio() {
                     className={`w-full text-left p-4 rounded-xl border-2 transition-all flex items-start justify-between gap-3 ${optClass}`}
                   >
                     <span>{opt}</span>
-                    {showExplanation && isCorrect && <span className="text-green-600 font-bold">✓</span>}
+                    {showExplanation && isCorrect && <span className="text-green-600 font-bold">Correct</span>}
                     {showExplanation && isSelected && !isCorrect && (
-                      <span className="text-red-500 font-bold">✕</span>
+                      <span className="text-red-500 font-bold">Incorrect</span>
                     )}
                   </button>
                 );
@@ -290,7 +289,7 @@ export default function QuizStudio() {
                 </div>
                 {currentQ.source && (
                   <div className="mt-2 text-xs text-slate-500">
-                    📖 {t("quiz.source")} {currentQ.source}
+                    {t("quiz.source")} {currentQ.source}
                   </div>
                 )}
               </div>
@@ -303,7 +302,7 @@ export default function QuizStudio() {
                 onClick={() => setQuestions([])}
                 className="text-xs text-slate-500 hover:text-brand"
               >
-                ✕ Cancel quiz
+                Cancel quiz
               </button>
 
               {showExplanation && (
@@ -323,8 +322,6 @@ export default function QuizStudio() {
       {/* Screen 3: Final Results Screen */}
       {quizFinished && (
         <div className="rounded-2xl border border-brand-line bg-white p-8 text-center shadow-xs space-y-6">
-          <div className="text-5xl">🏆</div>
-
           <div>
             <h3 className="text-2xl font-bold text-brand-head">{t("quiz.score")}</h3>
             <div className="text-4xl font-extrabold text-slate-900 my-2">
@@ -332,10 +329,10 @@ export default function QuizStudio() {
             </div>
             <p className="text-sm text-slate-600">
               {score / questions.length >= 0.8
-                ? "Outstanding mastery! You really understand this material! 🌟"
+                ? "Outstanding mastery! You really understand this material."
                 : score / questions.length >= 0.5
-                ? "Good job! A little more practice and you will master it! 💪"
-                : "Keep going! Review the study materials with your AI Tutor and try again! 📚"}
+                ? "Good job! A little more practice and you will master it."
+                : "Keep going! Review the study materials with your AI Tutor and try again."}
             </p>
           </div>
 
@@ -344,13 +341,13 @@ export default function QuizStudio() {
               onClick={handleRestart}
               className="rounded-xl border border-brand px-5 py-2.5 text-sm font-semibold text-brand hover:bg-brand-tint transition"
             >
-              🔄 {t("quiz.restart")}
+              {t("quiz.restart")}
             </button>
             <button
               onClick={() => setQuestions([])}
               className="rounded-xl bg-brand px-6 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-brand-dark transition"
             >
-              ✨ {t("quiz.newQuiz")}
+              {t("quiz.newQuiz")}
             </button>
           </div>
         </div>

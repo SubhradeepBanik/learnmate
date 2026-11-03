@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+﻿import { useState, useEffect } from "react";
 import Hero from "../components/Hero";
 import Metric from "../components/Metric";
 import { useLanguage } from "../context/LanguageContext";
@@ -153,21 +153,21 @@ export default function TeacherCreateQuiz() {
   return (
     <div className="space-y-6">
       {/* Hero */}
-      <Hero title={`📝 ${t("nav.createQuiz")}`}>
+      <Hero title={` ${t("nav.createQuiz")}`}>
         <p>Design interactive multiple choice quizzes, set custom timers and thresholds, and publish assessments.</p>
       </Hero>
 
       {/* Metrics */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Metric label="📝 Total Quizzes" value={quizzes.length} />
-        <Metric label="👥 Available To" value="48 Students" />
-        <Metric label="🎯 Default Passing" value="70%" />
-        <Metric label="⚡ Questions in Draft" value={questions.length} />
+        <Metric label=" Total Quizzes" value={quizzes.length} />
+        <Metric label=" Available To" value="48 Students" />
+        <Metric label=" Default Passing" value="70%" />
+        <Metric label=" Questions in Draft" value={questions.length} />
       </div>
 
       {feedback && (
         <div className="rounded-xl bg-emerald-50 border border-emerald-300 p-4 text-emerald-800 text-xs font-semibold flex items-center gap-2">
-          <span>✅</span>
+          <span></span>
           <span>{feedback}</span>
         </div>
       )}
@@ -270,7 +270,7 @@ export default function TeacherCreateQuiz() {
                     onClick={() => handleRemoveQuestion(qIdx)}
                     className="text-xs text-rose-600 hover:text-rose-800 font-semibold"
                   >
-                    ✕ Remove Question
+                     Remove Question
                   </button>
                 )}
               </div>
@@ -337,7 +337,7 @@ export default function TeacherCreateQuiz() {
             type="submit"
             className="rounded-xl bg-brand px-8 py-3 text-sm font-bold text-white hover:bg-brand-dark transition shadow-lg flex items-center gap-2"
           >
-            <span>🚀</span> Publish Quiz to Students
+            <span></span> Publish Quiz to Students
           </button>
         </div>
       </form>

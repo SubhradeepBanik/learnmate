@@ -1,4 +1,4 @@
-// Shared Mock Data and LocalStorage helpers for LearnMate
+﻿// Shared Mock Data and LocalStorage helpers for LearnMate
 
 export const INITIAL_MATERIALS = [
   {

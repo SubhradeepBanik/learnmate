@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+﻿import { useState, useMemo, useEffect } from "react";
 import Hero from "../components/Hero";
 import Metric from "../components/Metric";
 import { useLanguage } from "../context/LanguageContext";
@@ -65,16 +65,16 @@ export default function TeacherPerformance() {
   return (
     <div className="space-y-6">
       {/* Hero */}
-      <Hero title={`📊 ${t("nav.performance")}`}>
+      <Hero title={` ${t("nav.performance")}`}>
         <p>Monitor cohort learning velocity, identify students needing academic assistance, and export performance reports.</p>
       </Hero>
 
       {/* Top Metrics Row */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Metric label="👥 Total Students" value="48" />
-        <Metric label="🎯 Class Average" value={`${classAvg}%`} />
-        <Metric label="📅 Avg Attendance" value="89%" />
-        <Metric label="⚠️ Needs Assistance" value={atRiskCount} />
+        <Metric label=" Total Students" value="48" />
+        <Metric label=" Class Average" value={`${classAvg}%`} />
+        <Metric label=" Avg Attendance" value="89%" />
+        <Metric label=" Needs Assistance" value={atRiskCount} />
       </div>
 
       {/* Subject-Wise Class Performance Overview */}
@@ -127,14 +127,14 @@ export default function TeacherPerformance() {
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full rounded-xl border border-brand-line bg-white px-3.5 py-2 pl-9 text-xs focus:outline-none focus:border-brand"
               />
-              <span className="absolute left-3 top-2 text-slate-400">🔍</span>
+              <span className="absolute left-3 top-2 text-slate-400"></span>
             </div>
 
             <button
               onClick={handleExportCSV}
               className="rounded-xl bg-brand px-4 py-2 text-xs font-bold text-white hover:bg-brand-dark transition shadow whitespace-nowrap flex items-center gap-1.5"
             >
-              <span>📥</span> Export CSV
+              <span></span> Export CSV
             </button>
           </div>
         </div>

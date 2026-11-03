@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+﻿import { useState, useEffect, useMemo, useCallback } from "react";
 import Hero from "../components/Hero";
 import Metric from "../components/Metric";
 import { useLanguage } from "../context/LanguageContext";
@@ -535,16 +535,16 @@ export default function Flashcards() {
   return (
     <div className="space-y-6">
       {/* Hero Header */}
-      <Hero title={`🗂️ ${t("flash.title")}`}>
+      <Hero title={` ${t("flash.title")}`}>
         <p>{t("flash.subtitle")}</p>
       </Hero>
 
       {/* Top Metrics Bar */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Metric label={`🗂️ ${t("flash.totalCards")}`} value={totalCards} />
+        <Metric label={` ${t("flash.totalCards")}`} value={totalCards} />
         <Metric label={`⭐ ${t("flash.mastered")}`} value={masteredCount} />
-        <Metric label={`📈 ${t("flash.masteryRate")}`} value={`${masteryPercentage}%`} />
-        <Metric label={`📝 ${t("flash.totalNotes")}`} value={totalNotes} />
+        <Metric label={` ${t("flash.masteryRate")}`} value={`${masteryPercentage}%`} />
+        <Metric label={` ${t("flash.totalNotes")}`} value={totalNotes} />
       </div>
 
       {/* Main Tabs Navigation */}
@@ -602,7 +602,7 @@ export default function Flashcards() {
             title="Reset to default items"
             className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-medium text-slate-500 hover:bg-slate-50 transition"
           >
-            🔄 Reset
+             Reset
           </button>
         </div>
       </div>
@@ -622,7 +622,7 @@ export default function Flashcards() {
                     : "text-slate-600 hover:bg-slate-100"
                 }`}
               >
-                🎯 {t("flash.studyMode")}
+                 {t("flash.studyMode")}
               </button>
               <button
                 onClick={() => setViewMode("browse")}
@@ -632,7 +632,7 @@ export default function Flashcards() {
                     : "text-slate-600 hover:bg-slate-100"
                 }`}
               >
-                🗂️ {t("flash.browseMode")}
+                 {t("flash.browseMode")}
               </button>
             </div>
 
@@ -669,7 +669,7 @@ export default function Flashcards() {
             <div className="space-y-4">
               {filteredCards.length === 0 ? (
                 <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center">
-                  <p className="text-4xl mb-2">🗂️</p>
+                  <p className="text-4xl mb-2"></p>
                   <p className="font-semibold text-slate-700">{t("flash.noCards")}</p>
                   <button
                     onClick={() => openNewCardModal()}
@@ -710,7 +710,7 @@ export default function Flashcards() {
                           : "bg-amber-100 text-amber-800 border border-amber-300"
                       }`}
                     >
-                      {currentCard?.mastered ? "⭐ Mastered" : "🔄 Learning"}
+                      {currentCard?.mastered ? "⭐ Mastered" : " Learning"}
                     </span>
                   </div>
 
@@ -736,7 +736,7 @@ export default function Flashcards() {
                             title="Listen to question"
                             className="rounded-lg p-1.5 text-slate-400 hover:text-brand hover:bg-brand-tint transition"
                           >
-                            🔊
+                            
                           </button>
                         </div>
 
@@ -757,7 +757,7 @@ export default function Flashcards() {
                                   onClick={(e) => e.stopPropagation()}
                                   className="rounded-lg bg-amber-50 border border-amber-200 p-2.5 text-xs text-amber-900 inline-block text-left"
                                 >
-                                  💡 <span className="font-semibold">Hint:</span> {currentCard.hint}
+                                   <span className="font-semibold">Hint:</span> {currentCard.hint}
                                 </div>
                               ) : (
                                 <button
@@ -777,7 +777,7 @@ export default function Flashcards() {
 
                         {/* Front Footer */}
                         <div className="border-t border-slate-100 pt-3 text-center text-xs text-slate-400 font-medium">
-                          {t("flash.flipHint")} 🔄
+                          {t("flash.flipHint")} 
                         </div>
                       </div>
 
@@ -810,7 +810,7 @@ export default function Flashcards() {
                               title="Listen to explanation"
                               className="rounded-lg p-1.5 text-slate-400 hover:text-brand hover:bg-brand-tint transition"
                             >
-                              🔊
+                              
                             </button>
                           </div>
                         </div>
@@ -826,7 +826,7 @@ export default function Flashcards() {
 
                         {/* Back Footer */}
                         <div className="border-t border-brand-line pt-3 text-center text-xs text-brand font-medium">
-                          {t("flash.flipHint")} 🔄
+                          {t("flash.flipHint")} 
                         </div>
                       </div>
                     </div>
@@ -881,7 +881,7 @@ export default function Flashcards() {
                   </div>
 
                   <p className="text-center text-xs text-slate-400">
-                    💡 Shortcut: <kbd className="bg-slate-100 px-1 py-0.5 rounded border">Space</kbd> = Flip,{" "}
+                     Shortcut: <kbd className="bg-slate-100 px-1 py-0.5 rounded border">Space</kbd> = Flip,{" "}
                     <kbd className="bg-slate-100 px-1 py-0.5 rounded border">→</kbd> = Next,{" "}
                     <kbd className="bg-slate-100 px-1 py-0.5 rounded border">←</kbd> = Prev
                   </p>
@@ -902,7 +902,7 @@ export default function Flashcards() {
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full rounded-xl border border-brand-line bg-white px-4 py-2.5 text-sm pl-10 focus:outline-none focus:border-brand"
                 />
-                <span className="absolute left-3 top-2.5 text-slate-400">🔍</span>
+                <span className="absolute left-3 top-2.5 text-slate-400"></span>
               </div>
 
               {filteredCards.length === 0 ? (
@@ -988,7 +988,7 @@ export default function Flashcards() {
                 onChange={(e) => setNotesSearch(e.target.value)}
                 className="w-full rounded-xl border border-brand-line bg-white px-3.5 py-2 text-sm pl-9 focus:outline-none focus:border-brand"
               />
-              <span className="absolute left-3 top-2 text-slate-400">🔍</span>
+              <span className="absolute left-3 top-2 text-slate-400"></span>
             </div>
 
             {/* Subject Filter Pills */}
@@ -1022,7 +1022,7 @@ export default function Flashcards() {
           {/* Notes Grid */}
           {filteredNotes.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center text-slate-500">
-              <p className="text-4xl mb-2">📝</p>
+              <p className="text-4xl mb-2"></p>
               <p className="font-semibold text-slate-700">{t("flash.noNotes")}</p>
               <button
                 onClick={() => openNewNoteModal()}
@@ -1079,7 +1079,7 @@ export default function Flashcards() {
                         onClick={() => setReadingNote(note)}
                         className="rounded-lg bg-brand-tint px-3 py-1.5 text-xs font-bold text-brand hover:bg-brand hover:text-white transition flex items-center gap-1"
                       >
-                        👁️ {t("flash.readNote")}
+                         {t("flash.readNote")}
                       </button>
 
                       <button
@@ -1128,7 +1128,7 @@ export default function Flashcards() {
                   {readingNote.title}
                 </h2>
                 <div className="flex flex-wrap items-center gap-2 mt-2">
-                  <span className="text-xs text-slate-500">📅 {readingNote.createdAt}</span>
+                  <span className="text-xs text-slate-500"> {readingNote.createdAt}</span>
                   {readingNote.tags?.map((tag) => (
                     <span
                       key={tag}
@@ -1144,7 +1144,7 @@ export default function Flashcards() {
                 onClick={() => setReadingNote(null)}
                 className="text-slate-400 hover:text-slate-700 text-2xl font-bold p-1 leading-none"
               >
-                ✕
+                
               </button>
             </div>
 
@@ -1153,7 +1153,7 @@ export default function Flashcards() {
               {readingNote.summary && (
                 <div className="rounded-xl bg-amber-50 border border-amber-200 p-4 text-amber-900">
                   <h4 className="font-bold text-xs uppercase tracking-wider mb-1">
-                    📌 Key Takeaway
+                     Key Takeaway
                   </h4>
                   <p>{readingNote.summary}</p>
                 </div>
@@ -1171,13 +1171,13 @@ export default function Flashcards() {
                   onClick={() => handleCopyNote(readingNote.content)}
                   className="rounded-lg bg-white border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-100 transition"
                 >
-                  {copyFeedback ? "✅ " + t("flash.copied") : "📋 " + t("flash.copy")}
+                  {copyFeedback ? " " + t("flash.copied") : " " + t("flash.copy")}
                 </button>
                 <button
                   onClick={() => handleDownloadNote(readingNote)}
                   className="rounded-lg bg-white border border-slate-300 px-3 py-1.5 text-xs font-medium text-slate-700 hover:bg-slate-100 transition"
                 >
-                  💾 {t("flash.download")}
+                   {t("flash.download")}
                 </button>
               </div>
 
@@ -1189,7 +1189,7 @@ export default function Flashcards() {
                   }}
                   className="rounded-lg bg-brand px-3.5 py-1.5 text-xs font-semibold text-white hover:bg-brand-dark transition"
                 >
-                  ⚡ {t("flash.turnToCard")}
+                   {t("flash.turnToCard")}
                 </button>
                 <button
                   onClick={() => setReadingNote(null)}

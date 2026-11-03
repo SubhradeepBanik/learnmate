@@ -1,4 +1,4 @@
-import { useState, useMemo, useEffect } from "react";
+﻿import { useState, useMemo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
 import Metric from "../components/Metric";
@@ -112,16 +112,16 @@ export default function ResultsProgress() {
   return (
     <div className="space-y-6">
       {/* Hero Header */}
-      <Hero title={`📈 ${t("nav.results")}`}>
+      <Hero title={` ${t("nav.results")}`}>
         <p>Track your academic growth, exam readiness, and chapter mastery across all subjects.</p>
       </Hero>
 
       {/* Top Metrics Row */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Metric label="📝 Quizzes Taken" value={totalQuizzes} />
-        <Metric label="🎯 Average Score" value={`${avgScore}%`} />
-        <Metric label="🏆 Highest Score" value={`${highestScore}%`} />
-        <Metric label="✅ Pass Rate" value={`${passRate}%`} />
+        <Metric label=" Quizzes Taken" value={totalQuizzes} />
+        <Metric label=" Average Score" value={`${avgScore}%`} />
+        <Metric label=" Highest Score" value={`${highestScore}%`} />
+        <Metric label=" Pass Rate" value={`${passRate}%`} />
       </div>
 
       {/* Subject-Wise Mastery Meters */}

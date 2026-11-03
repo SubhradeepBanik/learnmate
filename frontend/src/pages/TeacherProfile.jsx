@@ -1,4 +1,4 @@
-import { useState } from "react";
+﻿import { useState } from "react";
 import Hero from "../components/Hero";
 import Metric from "../components/Metric";
 import { useLanguage } from "../context/LanguageContext";
@@ -59,15 +59,15 @@ export default function TeacherProfile() {
 
   return (
     <div className="space-y-6">
-      <Hero title={`👨‍🏫 ${t("nav.teacherProfile")}`}>
+      <Hero title={` ${t("nav.teacherProfile")}`}>
         <p>Manage your faculty credentials, academic background, and office communication details.</p>
       </Hero>
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Metric label="📚 Active Courses" value="2" />
-        <Metric label="👥 Total Students" value="48" />
-        <Metric label="📄 Published Notes" value="6" />
-        <Metric label="🏛️ Department" value="CSE" />
+        <Metric label=" Active Courses" value="2" />
+        <Metric label=" Total Students" value="48" />
+        <Metric label=" Published Notes" value="6" />
+        <Metric label=" Department" value="CSE" />
       </div>
 
       <div className="profile-card">

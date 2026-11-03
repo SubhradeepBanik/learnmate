@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from "react";
+﻿import { useEffect, useRef, useState } from "react";
 import { chatWithTutor, listDocuments } from "../api/client";
 import { useLanguage } from "../context/LanguageContext";
+import { NavIcon } from "../components/Icons";
 
 export default function Tutor() {
   const { lang, t } = useLanguage();
@@ -39,12 +40,14 @@ export default function Tutor() {
   }
 
   return (
-    <div className="flex flex-col h-[calc(100vh-140px)] max-h-[850px] space-y-4">
+    <div className="flex flex-col h-[calc(100vh-140px)] max-h-[850px] space-y-4 page-enter">
       {/* Header */}
       <div className="rounded-2xl border border-brand-line bg-white p-4 shadow-sm flex-shrink-0">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-xl text-white shadow-sm">🤖</div>
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-brand text-white shadow-sm">
+              <NavIcon name="tutor" className="w-5 h-5 text-white" />
+            </div>
             <div>
               <h2 className="text-base font-black text-brand-head">{t("tutor.title")}</h2>
               <p className="text-xs text-brand-muted">{t("tutor.subtitle")}</p>
@@ -52,21 +55,20 @@ export default function Tutor() {
           </div>
           <div className="flex flex-wrap items-center gap-2 text-xs">
             <div className="flex items-center gap-1.5 bg-brand-hero border border-brand-line rounded-xl px-2.5 py-1.5">
-              <span className="text-brand-muted">📄</span>
+              <NavIcon name="askPdf" className="w-3.5 h-3.5 text-brand-muted" />
               <select value={selectedDocId} onChange={(e) => setSelectedDocId(e.target.value)} className="bg-transparent font-medium text-brand-head outline-none cursor-pointer text-xs">
                 <option value="">{t("tutor.allDocs")}</option>
                 {docs.map((doc) => <option key={doc.doc_id} value={doc.doc_id}>{doc.filename}</option>)}
               </select>
             </div>
             <div className="flex items-center gap-1.5 bg-brand-hero border border-brand-line rounded-xl px-2.5 py-1.5">
-              <span className="text-brand-muted">🌐</span>
               <select value={chatLang} onChange={(e) => setChatLang(e.target.value)} className="bg-transparent font-medium text-brand-head outline-none cursor-pointer text-xs">
                 <option value="en">English</option>
                 <option value="as">অসমীয়া</option>
               </select>
             </div>
             <button onClick={handleClear} className="rounded-xl border border-brand-line bg-brand-hero px-2.5 py-1.5 text-brand-head hover:bg-brand-tint hover:border-brand/30 transition text-xs font-semibold">
-              🔄 {t("tutor.clear")}
+              {t("tutor.clear")}
             </button>
           </div>
         </div>
@@ -74,7 +76,7 @@ export default function Tutor() {
 
       {error && (
         <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700 flex items-center gap-2 flex-shrink-0">
-          ⚠️ {error}
+          {error}
         </div>
       )}
 
@@ -83,7 +85,9 @@ export default function Tutor() {
         {messages.map((m, idx) => (
           <div key={idx} className={`flex items-start gap-3 ${m.role === "user" ? "justify-end" : "justify-start"}`}>
             {m.role === "assistant" && (
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-brand-tint border border-brand/20 text-sm">🤖</div>
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-brand-tint border border-brand/20">
+                <NavIcon name="tutor" className="w-4 h-4 text-brand" />
+              </div>
             )}
             <div className={`max-w-[85%] rounded-2xl p-4 text-sm leading-relaxed ${
               m.role === "user"
@@ -93,11 +97,11 @@ export default function Tutor() {
               <div className="whitespace-pre-wrap">{m.content}</div>
               {m.sources && m.sources.length > 0 && (
                 <div className="mt-3 pt-3 border-t border-brand-line/50">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-brand-muted block mb-1.5">📚 Sources:</span>
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-brand-muted block mb-1.5">Sources:</span>
                   <div className="flex flex-wrap gap-1.5">
                     {m.sources.map((s) => (
                       <span key={s.n} className="inline-flex items-center gap-1 rounded-lg bg-white border border-brand-line px-2 py-0.5 text-[11px] text-brand font-medium">
-                        📄 {s.filename} (p.{s.page})
+                        {s.filename} (p.{s.page})
                       </span>
                     ))}
                   </div>
@@ -105,13 +109,17 @@ export default function Tutor() {
               )}
             </div>
             {m.role === "user" && (
-              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-brand-tint border border-brand/20 text-sm font-bold text-brand">👤</div>
+              <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-brand-tint border border-brand/20">
+                <NavIcon name="profile" className="w-4 h-4 text-brand" />
+              </div>
             )}
           </div>
         ))}
         {loading && (
           <div className="flex items-start gap-3">
-            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-brand-tint border border-brand/20 text-sm">🤖</div>
+            <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-xl bg-brand-tint border border-brand/20">
+              <NavIcon name="tutor" className="w-4 h-4 text-brand" />
+            </div>
             <div className="rounded-2xl rounded-tl-sm bg-brand-hero border border-brand-line p-4">
               <div className="flex items-center gap-2 text-xs font-semibold text-brand">
                 <span className="inline-block h-3.5 w-3.5 animate-spin rounded-full border-2 border-brand border-t-transparent" />
@@ -125,7 +133,7 @@ export default function Tutor() {
 
       {/* Quick prompts */}
       <div className="flex flex-wrap items-center gap-2 flex-shrink-0">
-        <span className="text-xs font-bold text-brand-muted">💡 Prompts:</span>
+        <span className="text-xs font-bold text-brand-muted">Prompts:</span>
         {[t("tutor.suggest1"), t("tutor.suggest2"), t("tutor.suggest3")].map((s, i) => (
           <button key={i} onClick={() => setInput(s)}
             className="rounded-xl border border-brand-line bg-brand-hero px-3 py-1.5 text-xs font-medium text-brand-head hover:bg-brand-tint hover:border-brand/30 transition">
@@ -143,7 +151,7 @@ export default function Tutor() {
         />
         <button type="submit" disabled={loading || !input.trim()}
           className="rounded-xl bg-brand px-6 py-3 text-sm font-bold text-white shadow-sm hover:bg-brand-dark transition-all duration-200 hover:shadow-md active:scale-95 disabled:opacity-50">
-          {loading ? "…" : `🚀 ${t("tutor.send")}`}
+          {loading ? "…" : t("tutor.send")}
         </button>
       </form>
     </div>

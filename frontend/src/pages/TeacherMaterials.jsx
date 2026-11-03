@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useRef } from "react";
+﻿import { useState, useEffect, useMemo, useRef } from "react";
 import { Link } from "react-router-dom";
 import Hero from "../components/Hero";
 import Metric from "../components/Metric";
@@ -179,7 +179,7 @@ export default function TeacherMaterials() {
       };
 
       setMaterials((prev) => [newMaterial, ...prev]);
-      showToast(`✅ "${form.title}" stored in database! Students can now access it.`);
+      showToast(` "${form.title}" stored in database! Students can now access it.`);
     }
 
     // Reset Form
@@ -223,7 +223,7 @@ export default function TeacherMaterials() {
 
   // Delete action (deletes from SQLite Database + localStorage)
   const handleDelete = async (id, title) => {
-    if (confirm(`Are you sure you want to delete "${title}"? It will be removed from database and student library.`)) {
+    if (confirm(`Are you sure you want to delete "${title}"It will be removed from database and student library.`)) {
       await deletePdfMaterial(id);
       setMaterials((prev) => prev.filter((m) => m.id !== id));
       showToast(`Removed "${title}" from database.`);
@@ -269,13 +269,13 @@ export default function TeacherMaterials() {
             toast.type === "error" ? "bg-rose-600" : "bg-emerald-600"
           }`}
         >
-          <span>{toast.type === "error" ? "⚠️" : "✅"}</span>
+          <span>{toast.type === "error" ? "" : ""}</span>
           <span>{toast.message}</span>
         </div>
       )}
 
       {/* Hero Header */}
-      <Hero title={`📚 Teacher Study Materials Studio`}>
+      <Hero title={` Teacher Study Materials Studio`}>
         <p>
           Upload and organize courseware, slide decks, and reference guides stored in the database. Uploaded documents are immediately accessible in the{" "}
           <Link to="/student/materials" className="font-bold underline text-brand hover:text-brand-dark">
@@ -286,10 +286,10 @@ export default function TeacherMaterials() {
 
       {/* Metrics Row */}
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <Metric label="📁 Database Documents" value={materials.length} />
-        <Metric label="👥 Enrolled Students" value="48" />
-        <Metric label="📥 Student Downloads" value={pdfHistory.length > 0 ? pdfHistory.length : 184} />
-        <Metric label="🏛️ Target Cohort" value="B.Tech CSE 3rd Sem" />
+        <Metric label=" Database Documents" value={materials.length} />
+        <Metric label=" Enrolled Students" value="48" />
+        <Metric label=" Student Downloads" value={pdfHistory.length > 0 ? pdfHistory.length : 184} />
+        <Metric label=" Target Cohort" value="B.Tech CSE 3rd Sem" />
       </div>
 
       {/* Tabs Header */}
@@ -306,7 +306,7 @@ export default function TeacherMaterials() {
                 : "bg-white text-slate-700 hover:bg-brand-hero border border-brand-line"
             }`}
           >
-            <span>📂</span> Published ({materials.length})
+            <span></span> Published ({materials.length})
           </button>
 
           <button
@@ -317,7 +317,7 @@ export default function TeacherMaterials() {
                 : "bg-white text-slate-700 hover:bg-brand-hero border border-brand-line"
             }`}
           >
-            <span>📤</span> {editingId ? "Edit Document" : "Upload to Database"}
+            <span></span> {editingId ? "Edit Document" : "Upload to Database"}
           </button>
 
           <button
@@ -328,7 +328,7 @@ export default function TeacherMaterials() {
                 : "bg-white text-slate-700 hover:bg-brand-hero border border-brand-line"
             }`}
           >
-            <span>📜</span> PDF Download Audit ({pdfHistory.length})
+            <span></span> PDF Download Audit ({pdfHistory.length})
           </button>
 
           <button
@@ -339,7 +339,7 @@ export default function TeacherMaterials() {
                 : "bg-white text-slate-700 hover:bg-brand-hero border border-brand-line"
             }`}
           >
-            <span>👁️</span> Student Preview
+            <span></span> Student Preview
           </button>
         </div>
 
@@ -348,7 +348,7 @@ export default function TeacherMaterials() {
           to="/student/materials"
           className="rounded-xl border border-brand-line bg-brand-tint px-3.5 py-2 text-xs font-bold text-brand hover:bg-brand hover:text-white transition flex items-center gap-1.5"
         >
-          <span>🔗</span> View Student Page
+          <span></span> View Student Page
         </Link>
       </div>
 
@@ -364,7 +364,7 @@ export default function TeacherMaterials() {
                 onChange={(e) => setSearch(e.target.value)}
                 className="w-full rounded-xl border border-brand-line bg-white px-3.5 py-2 text-xs pl-9 focus:outline-none focus:border-brand"
               />
-              <span className="absolute left-3 top-2 text-slate-400">🔍</span>
+              <span className="absolute left-3 top-2 text-slate-400"></span>
             </div>
 
             <div className="flex items-center gap-1.5 overflow-x-auto w-full sm:w-auto pb-1 sm:pb-0">
@@ -396,7 +396,7 @@ export default function TeacherMaterials() {
 
           {filteredMaterials.length === 0 ? (
             <div className="rounded-2xl border border-dashed border-slate-300 bg-white p-12 text-center text-slate-500">
-              <p className="text-4xl mb-2">📚</p>
+              <p className="text-4xl mb-2"></p>
               <p className="font-semibold text-slate-700">No materials match your search.</p>
               <button
                 onClick={() => setActiveTab("upload")}
@@ -446,21 +446,21 @@ export default function TeacherMaterials() {
                             className="rounded bg-slate-100 hover:bg-brand hover:text-white px-2 py-1 text-[11px] font-semibold transition"
                             title="Download file"
                           >
-                            📥
+                            
                           </button>
                           <button
                             onClick={() => handleEdit(mat)}
                             className="rounded bg-slate-100 hover:bg-slate-200 px-2 py-1 text-[11px] font-semibold transition text-slate-700"
                             title="Edit details"
                           >
-                            ✏️ Edit
+                             Edit
                           </button>
                           <button
                             onClick={() => handleDelete(mat.id, mat.title)}
                             className="rounded bg-rose-50 hover:bg-rose-100 px-2 py-1 text-[11px] font-semibold transition text-rose-700"
                             title="Delete"
                           >
-                            🗑️
+                            
                           </button>
                         </td>
                       </tr>
@@ -479,7 +479,7 @@ export default function TeacherMaterials() {
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
               <h3 className="font-bold text-lg text-brand-head">
-                {editingId ? "✏️ Edit Course Material in DB" : "📤 Upload & Store Study Material in Database"}
+                {editingId ? " Edit Course Material in DB" : " Upload & Store Study Material in Database"}
               </h3>
               <p className="text-xs text-slate-500 mt-0.5">
                 Saved into SQLite <code>pdf_materials</code> table and synchronized directly with the student library.
@@ -493,7 +493,7 @@ export default function TeacherMaterials() {
                 }}
                 className="text-xs text-slate-500 hover:text-slate-800"
               >
-                ✕ Cancel Edit
+                 Cancel Edit
               </button>
             )}
           </div>
@@ -508,7 +508,7 @@ export default function TeacherMaterials() {
                 onClick={() => fileInputRef.current?.click()}
                 className="border-2 border-dashed border-brand-line bg-brand-tint/40 hover:bg-brand-tint/70 p-6 rounded-2xl text-center cursor-pointer transition flex flex-col items-center justify-center space-y-2"
               >
-                <span className="text-3xl">📁</span>
+                <span className="text-3xl"></span>
                 <div className="text-xs font-bold text-brand">
                   {selectedFile ? `Selected: ${selectedFile.name}` : "Click to select a document from your computer"}
                 </div>
@@ -651,7 +651,7 @@ export default function TeacherMaterials() {
                 type="submit"
                 className="rounded-xl bg-brand px-7 py-2.5 text-xs font-bold text-white hover:bg-brand-dark transition shadow-md flex items-center gap-2"
               >
-                <span>🚀</span> {editingId ? "Update in Database" : "Save & Publish to Database"}
+                <span></span> {editingId ? "Update in Database" : "Save & Publish to Database"}
               </button>
             </div>
           </form>
@@ -663,7 +663,7 @@ export default function TeacherMaterials() {
         <div className="rounded-2xl border border-brand-line bg-white p-6 shadow-sm space-y-4">
           <div className="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
-              <h3 className="font-bold text-lg text-brand-head">📜 Student PDF Access & Download Audit Log</h3>
+              <h3 className="font-bold text-lg text-brand-head"> Student PDF Access & Download Audit Log</h3>
               <p className="text-xs text-slate-500">
                 Live records stored in SQLite <code>pdf_history</code> table when students download or inspect course materials.
               </p>
@@ -717,7 +717,7 @@ export default function TeacherMaterials() {
         <div className="space-y-4">
           <div className="bg-emerald-50 border border-emerald-300 rounded-2xl p-4 flex items-center justify-between gap-3 text-xs text-emerald-900">
             <div className="flex items-center gap-2">
-              <span className="text-xl">👁️</span>
+              <span className="text-xl"></span>
               <div>
                 <strong>Live Synchronized Student View:</strong> Below is how your published materials appear to students in <code>/student/materials</code>.
               </div>
@@ -756,12 +756,12 @@ export default function TeacherMaterials() {
 
                   <div className="space-y-1 text-[11px] text-slate-400 border-t border-slate-100 pt-2 mb-3">
                     <div className="flex items-center justify-between">
-                      <span>👨‍🏫 {mat.author}</span>
-                      <span>📦 {mat.size}</span>
+                      <span> {mat.author}</span>
+                      <span> {mat.size}</span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span>🏛️ {mat.semester}</span>
-                      <span>📅 {mat.date}</span>
+                      <span> {mat.semester}</span>
+                      <span> {mat.date}</span>
                     </div>
                   </div>
                 </div>
@@ -771,7 +771,7 @@ export default function TeacherMaterials() {
                     onClick={() => handleDownload(mat)}
                     className="w-full rounded-xl bg-brand py-2 text-xs font-bold text-white hover:bg-brand-dark transition text-center flex items-center justify-center gap-1.5"
                   >
-                    📥 Student Download Simulator
+                     Student Download Simulator
                   </button>
                 </div>
               </div>

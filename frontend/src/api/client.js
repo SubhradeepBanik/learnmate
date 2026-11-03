@@ -1,14 +1,28 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000';
+const rawUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const API_BASE_URL = rawUrl.trim().replace(/\/+$/, "");
 
-// Health Check
+// Health Check with retry and timeout support
 export async function getHealth() {
-  const response = await fetch(`${API_BASE_URL}/api/health`).catch(() =>
-    fetch(`${API_BASE_URL}/health`)
-  );
-  if (!response.ok) {
-    throw new Error(`Health check failed: ${response.status}`);
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 9000);
+
+    const res = await fetch(`${API_BASE_URL}/api/health`, {
+      signal: controller.signal,
+    }).catch(() =>
+      fetch(`${API_BASE_URL}/health`, { signal: controller.signal })
+    );
+
+    clearTimeout(timeoutId);
+
+    if (!res || !res.ok) {
+      throw new Error(`Health check failed: ${res ? res.status : "Network error"}`);
+    }
+    return await res.json();
+  } catch (err) {
+    console.warn(`Backend health check failed for ${API_BASE_URL}:`, err.message);
+    throw err;
   }
-  return response.json();
 }
 
 // ===================== STUDENT & TEACHER RECORDS =====================
@@ -154,7 +168,8 @@ export async function recordPdfAccess(accessLogData) {
 
 // Shared request helper for the RAG, AI Tutor, and generated quiz endpoints.
 async function request(path, options = {}) {
-  const response = await fetch(path, options);
+  const fullUrl = path.startsWith("http") ? path : `${API_BASE_URL}${path}`;
+  const response = await fetch(fullUrl, options);
   if (!response.ok) {
     let message = `Request failed: ${response.status}`;
     try {

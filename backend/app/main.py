@@ -18,13 +18,29 @@ async def lifespan(app: FastAPI):
 
 app = FastAPI(title="LearnMate API", version="0.3.0", lifespan=lifespan)
 
+# Allow Vercel deployments, localhost, and custom frontend domains
+origins = list(set(settings.FRONTEND_ORIGINS + [
+    "https://learnmate-lac.vercel.app",
+    "http://localhost:5173",
+    "http://localhost:3000",
+]))
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.FRONTEND_ORIGINS,
+    allow_origins=origins,
+    allow_origin_regex=r"https://.*\.vercel\.app|http://localhost:\d+",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/")
+def root():
+    return {"status": "ok", "message": "LearnMate API is running"}
+
+@app.get("/health")
+def root_health():
+    return {"status": "ok", "service": "LearnMate API"}
 
 app.include_router(health.router)
 app.include_router(flashcards.router)

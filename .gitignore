@@ -1,0 +1,20 @@
+# Python
+backend/venv/
+__pycache__/
+*.pyc
+
+# Secrets
+.env
+
+# Node
+node_modules/
+dist/
+
+# Future data (we'll use these later)
+backend/*.db
+backend/chroma_db/
+backend/uploads/
+
+# OS/editor
+.DS_Store
+.vscode/

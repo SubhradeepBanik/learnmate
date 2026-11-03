@@ -1,4 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
+import { useAuth } from "./context/AuthContext";
 import Layout from "./components/Layout";
 import { STUDENT_NAV, TEACHER_NAV } from "./config/navigation";
 import AskPdf from "./pages/AskPdf";
@@ -19,6 +20,13 @@ import TeacherProfile from "./pages/TeacherProfile";
 import TeacherCreateQuiz from "./pages/TeacherCreateQuiz";
 import SignIn from "./pages/SignIn";
 
+/** Redirects unauthenticated users to /login */
+function ProtectedRoute({ children }) {
+  const { isAuthenticated } = useAuth();
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+  return children;
+}
+
 const placeholders = (items, skipPaths = []) => {
   const skipList = Array.isArray(skipPaths) ? skipPaths : [skipPaths];
   return items
@@ -31,9 +39,18 @@ const placeholders = (items, skipPaths = []) => {
 export default function App() {
   return (
     <Routes>
+      {/* Public routes */}
       <Route path="/login" element={<SignIn />} />
       <Route path="/signin" element={<Navigate to="/login" replace />} />
-      <Route element={<Layout />}>
+
+      {/* All other routes require authentication */}
+      <Route
+        element={
+          <ProtectedRoute>
+            <Layout />
+          </ProtectedRoute>
+        }
+      >
         <Route path="/" element={<Navigate to="/student" replace />} />
         <Route path="/student" element={<Dashboard />} />
         <Route path="/student/profile" element={<Profile />} />

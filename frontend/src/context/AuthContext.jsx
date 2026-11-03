@@ -24,12 +24,13 @@ const DEFAULT_DEMO_USERS = {
 };
 
 export function AuthProvider({ children }) {
+  // Start as null — user must always sign in; localStorage restores a previous session
   const [user, setUser] = useState(() => {
     try {
       const saved = localStorage.getItem("learnmate_auth_user");
-      return saved ? JSON.parse(saved) : DEFAULT_DEMO_USERS.student;
+      return saved ? JSON.parse(saved) : null;
     } catch {
-      return DEFAULT_DEMO_USERS.student;
+      return null;
     }
   });
 
@@ -76,6 +77,7 @@ export function AuthProvider({ children }) {
         login,
         logout,
         setUser,
+        DEFAULT_DEMO_USERS,
       }}
     >
       {children}

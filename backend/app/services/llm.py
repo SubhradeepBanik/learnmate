@@ -112,13 +112,13 @@ def _generate_with_gemini(
 ) -> str:
     client = get_client()
 
-    # Cascade through standard high-quota models (1,500 requests/day per model)
+    # Cascade through active high-quota models verified for this API key
     candidate_models = []
-    configured_model = getattr(settings, "GEMINI_CHAT_MODEL", "gemini-2.5-flash")
-    if configured_model and "3.8" not in configured_model:
+    configured_model = getattr(settings, "GEMINI_CHAT_MODEL", "gemini-3.5-flash")
+    if configured_model and configured_model not in candidate_models:
         candidate_models.append(configured_model)
 
-    for m in ["gemini-2.5-flash", "gemini-1.5-flash", "gemini-1.5-flash-8b", "gemini-2.0-flash"]:
+    for m in ["gemini-3.5-flash", "gemini-3.6-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.8-flash"]:
         if m not in candidate_models:
             candidate_models.append(m)
 

@@ -13,8 +13,8 @@ const inputCls =
 const btnCls =
   "rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all duration-200 hover:bg-brand-dark hover:shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed";
 
-// Fetch with a generous timeout — Render free tier cold starts take up to 60s
-async function fetchWithTimeout(url, options = {}, timeoutMs = 60000) {
+// Fetch with a generous timeout — Render free tier cold starts can take 60–90s
+async function fetchWithTimeout(url, options = {}, timeoutMs = 90000) {
   const controller = new AbortController();
   const id = setTimeout(() => controller.abort(), timeoutMs);
   try {
@@ -52,12 +52,13 @@ export default function AskPdf() {
     listDocuments().then(setDocs).catch(() => {});
   }
 
-  // On mount: attempt to load documents with a 60s timeout (handles Render cold start).
-  // Retry up to 3 times before giving up and showing an error.
+  // On mount: wake Render (free tier cold start can take up to 90s) then load docs.
+  // Strategy: send a lightweight /api/health ping first with a 90s timeout,
+  // then load docs. Retry the whole sequence up to 4 times.
   useEffect(() => {
     cancelledRef.current = false;
     let attempt = 0;
-    const MAX = 3;
+    const MAX = 4;
 
     async function load() {
       setWaking(true);
@@ -65,10 +66,15 @@ export default function AskPdf() {
       while (attempt < MAX) {
         attempt++;
         try {
+          // Step 1: wake the server with a cheap health ping (90s timeout)
+          await fetchWithTimeout(`${API_BASE}/api/health`, {}, 90000);
+          if (cancelledRef.current) return;
+
+          // Step 2: load documents now that the server is warm
           const res = await fetchWithTimeout(
             `${API_BASE}/api/rag/documents`,
             {},
-            60000
+            30000
           );
           if (cancelledRef.current) return;
           if (!res.ok) throw new Error(`Server error ${res.status}`);
@@ -80,12 +86,11 @@ export default function AskPdf() {
         } catch (err) {
           if (cancelledRef.current) return;
           if (attempt < MAX) {
-            // Brief pause before next try
-            await new Promise((r) => setTimeout(r, 3000));
+            await new Promise((r) => setTimeout(r, 5000));
           } else {
             setWaking(false);
             setError(
-              "Could not reach the AI backend. It may still be starting up — wait 30 seconds and refresh the page."
+              "The AI backend is taking too long to start. Please refresh the page and wait 60 seconds."
             );
           }
         }

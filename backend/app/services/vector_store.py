@@ -1,10 +1,13 @@
-"""ChromaDB wrapper. All vector database code lives here."""
+"""ChromaDB wrapper. All vector database code lives here.
+
+Uses in-memory ChromaDB so the RAG feature works on ephemeral hosts like
+Render's free tier (no persistent disk). Documents are stored for the
+lifetime of the process only — uploaded PDFs are re-indexed on each session.
+"""
 
 import chromadb
 
-from app.config import settings
-
-_client = chromadb.PersistentClient(path=str(settings.CHROMA_DIR))
+_client = chromadb.EphemeralClient()
 _collection = _client.get_or_create_collection(
     name="study_materials",
     embedding_function=None,            # we supply our own Gemini vectors

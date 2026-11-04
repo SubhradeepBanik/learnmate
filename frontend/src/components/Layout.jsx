@@ -34,14 +34,13 @@ export default function Layout() {
       <GlassBubbles />
 
       {/* ── Mobile top bar ── */}
-      <div className="sticky top-0 z-30 flex items-center justify-between border-b border-[#1B4332]/20 bg-[#143D2B] px-4 py-3 shadow-md md:hidden">
-        <div className="flex items-center gap-2">
-          <img src="/logo.png" alt="LearnMate" className="h-8 w-auto object-contain brightness-0 invert" />
-          <span className="text-xs font-bold uppercase tracking-wider text-[#A3BFA8]">LearnMate</span>
+      <div className="sticky top-0 z-30 flex items-center justify-between border-b border-[#1B4332]/30 bg-[#143D2B] px-4 py-2.5 shadow-md md:hidden">
+        <div className="rounded-xl bg-[#F4F7F2] border border-[#A3BFA8]/50 px-3 py-1 shadow-sm flex items-center justify-center">
+          <img src="/logo.png" alt="LearnMate" className="h-6 w-auto object-contain max-w-[130px]" />
         </div>
         <button
           onClick={() => setOpen(true)}
-          className="rounded-xl bg-[#1B4332] border border-[#A3BFA8]/30 p-2 text-[#F5F7F2] text-sm font-semibold transition-all hover:bg-[#A3BFA8] hover:text-[#143D2B] active:scale-95"
+          className="rounded-xl bg-[#1B4332] border border-[#A3BFA8]/30 p-2 text-[#F4F7F2] text-sm font-semibold transition-all hover:bg-[#A3BFA8] hover:text-[#143D2B] active:scale-95"
           aria-label="Open menu"
         >
           <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -59,25 +58,24 @@ export default function Layout() {
 
       {/* ── Sidebar (Forest Green & Sage Redesign) ── */}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col overflow-y-auto bg-gradient-to-b from-[#143D2B] to-[#1B4332] text-[#F5F7F2] border-r border-[#A3BFA8]/20 shadow-xl transition-transform duration-300 ease-out md:translate-x-0 ${
+        className={`fixed inset-y-0 left-0 z-40 flex w-64 flex-col overflow-y-auto bg-gradient-to-b from-[#143D2B] to-[#1B4332] text-[#F4F7F2] border-r border-[#A3BFA8]/20 shadow-xl transition-transform duration-300 ease-out md:translate-x-0 ${
           open ? "translate-x-0" : "-translate-x-full"
         }`}
       >
-        {/* Logo Header */}
-        <div className="px-5 py-4 border-b border-[#A3BFA8]/15 flex items-center justify-between">
-          <div className="flex items-center gap-2.5">
-            <div className="w-9 h-9 rounded-xl bg-[#A3BFA8]/20 border border-[#A3BFA8]/40 flex items-center justify-center p-1.5 shadow-inner">
-              <img src="/logo.png" alt="LearnMate" className="h-full w-auto object-contain brightness-0 invert" />
-            </div>
-            <div>
-              <span className="text-base font-black tracking-tight text-[#F5F7F2] block leading-none">LearnMate</span>
-              <span className="text-[10px] font-semibold tracking-wider text-[#A3BFA8] uppercase">AI Study Platform</span>
-            </div>
+        {/* Logo Header with high-contrast subtle container */}
+        <div className="px-4 py-4 border-b border-[#A3BFA8]/15 flex items-center justify-between">
+          <div className="rounded-2xl bg-[#F4F7F2] border border-[#A3BFA8]/50 px-3.5 py-1.5 shadow-md flex items-center justify-center transition-transform hover:scale-[1.02]">
+            <img
+              src="/logo.png"
+              alt="LearnMate"
+              className="h-8 w-auto object-contain max-w-[160px]"
+            />
           </div>
           {/* Mobile close button */}
           <button
             onClick={() => setOpen(false)}
-            className="md:hidden text-[#A3BFA8] hover:text-[#F5F7F2] p-1 rounded-lg transition"
+            className="md:hidden text-[#A3BFA8] hover:text-[#F4F7F2] p-1.5 rounded-lg hover:bg-white/10 transition"
+            aria-label="Close menu"
           >
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <line x1="18" y1="6" x2="6" y2="18" />
@@ -94,10 +92,10 @@ export default function Layout() {
                 {avatarLetter}
               </div>
               <div className="overflow-hidden">
-                <div className="text-xs font-bold text-[#F5F7F2] truncate leading-tight">
+                <div className="text-xs font-bold text-[#F4F7F2] truncate leading-tight">
                   {user?.name || (role === "teacher" ? "Dr. Debajit Sharma" : "Student Name")}
                 </div>
-                <div className="text-[10px] font-medium text-[#A3BFA8] capitalize">
+                <div className="text-[10px] font-medium text-[#C4D8CC] capitalize">
                   {role === "teacher" ? "Faculty" : "Student"} · Dibrugarh Univ.
                 </div>
               </div>
@@ -105,7 +103,7 @@ export default function Layout() {
             <button
               onClick={handleSignOut}
               title="Sign Out"
-              className="text-[#A3BFA8] hover:text-[#F5F7F2] hover:bg-[#1B4332] p-1.5 rounded-lg transition flex-shrink-0"
+              className="text-[#C4D8CC] hover:text-[#F4F7F2] hover:bg-white/10 p-1.5 rounded-lg transition flex-shrink-0"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
@@ -129,7 +127,7 @@ export default function Layout() {
                 className={`flex-1 rounded-lg py-1.5 text-xs font-bold transition-all duration-200 ${
                   lang === code
                     ? "bg-[#A3BFA8] text-[#143D2B] shadow-sm font-extrabold"
-                    : "text-[#DDE8DC]/70 hover:text-[#F5F7F2] hover:bg-white/5"
+                    : "text-[#C4D8CC] hover:text-[#F4F7F2] hover:bg-white/5"
                 }`}
               >
                 {label}
@@ -146,7 +144,7 @@ export default function Layout() {
           <select
             value={role}
             onChange={(e) => { navigate(`/${e.target.value}`); setOpen(false); }}
-            className="w-full rounded-xl border border-[#A3BFA8]/30 bg-[#143D2B]/80 px-3 py-1.5 text-xs text-[#F5F7F2] font-semibold focus:outline-none focus:border-[#A3BFA8] transition cursor-pointer"
+            className="w-full rounded-xl border border-[#A3BFA8]/30 bg-[#143D2B]/80 px-3 py-1.5 text-xs text-[#F4F7F2] font-semibold focus:outline-none focus:border-[#A3BFA8] transition cursor-pointer"
           >
             <option value="student" className="bg-[#143D2B] text-white">{t("role.student")}</option>
             <option value="teacher" className="bg-[#143D2B] text-white">{t("role.teacher")}</option>
@@ -172,8 +170,8 @@ export default function Layout() {
                       isActive
                         ? "bg-gradient-to-r from-[#A3BFA8] to-[#DDE8DC] text-[#143D2B] font-extrabold shadow-md shadow-[#143D2B]/40"
                         : isAskPdf
-                        ? "text-[#F5F7F2] bg-[#A3BFA8]/10 border border-[#A3BFA8]/30 hover:bg-[#A3BFA8]/20 hover:text-white"
-                        : "text-[#DDE8DC]/80 hover:bg-white/10 hover:text-[#F5F7F2]"
+                        ? "text-[#F4F7F2] bg-[#A3BFA8]/15 border border-[#A3BFA8]/35 hover:bg-[#A3BFA8]/25 hover:text-white"
+                        : "text-[#C4D8CC] hover:bg-white/10 hover:text-[#F4F7F2]"
                     }`
                   }
                 >
@@ -205,7 +203,7 @@ export default function Layout() {
         <div className="px-4 py-3 border-t border-[#A3BFA8]/15 space-y-2">
           <button
             onClick={handleSignOut}
-            className="w-full flex items-center justify-center gap-2 rounded-xl border border-[#A3BFA8]/20 bg-white/5 py-2 text-xs font-bold text-[#DDE8DC] hover:bg-[#A3BFA8] hover:text-[#143D2B] hover:border-[#A3BFA8] transition-all duration-200 active:scale-95"
+            className="w-full flex items-center justify-center gap-2 rounded-xl border border-[#A3BFA8]/20 bg-white/5 py-2 text-xs font-bold text-[#C4D8CC] hover:bg-[#A3BFA8] hover:text-[#143D2B] hover:border-[#A3BFA8] transition-all duration-200 active:scale-95"
           >
             <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { uploadDocument, askQuestion, listDocuments } from "../api/client";
 import { useLanguage } from "../context/LanguageContext";
+import MarkdownRenderer from "./MarkdownRenderer";
 
 export default function DashboardAskPdfBar() {
   const { lang, t } = useLanguage();
@@ -254,36 +255,59 @@ export default function DashboardAskPdfBar() {
           </div>
         )}
 
-        {/* AI Answer Card (Interactive Output) */}
+        {/* AI Answer Card (Interactive Output with Full Markdown & LaTeX) */}
         {result && (
-          <div className="mt-4 rounded-2xl bg-white/95 backdrop-blur-md border border-[#A3BFA8]/50 p-4 sm:p-5 shadow-lg animate-fadeIn text-[#143D2B]">
-            <div className="flex items-center justify-between border-b border-[#DDE8DC] pb-2.5 mb-3">
-              <div className="flex items-center gap-2">
-                <span className="w-2.5 h-2.5 rounded-full bg-[#1B4332] animate-pulse" />
-                <h3 className="text-xs font-black uppercase tracking-wider text-[#143D2B]">AI Tutor Explanation</h3>
+          <div className="mt-5 rounded-3xl bg-white border border-[#A3BFA8]/50 p-5 sm:p-7 shadow-xl animate-fadeIn text-[#143D2E]">
+            {/* Header */}
+            <div className="flex items-center justify-between border-b border-[#DDE8DC] pb-3 mb-4">
+              <div className="flex items-center gap-2.5">
+                <span className="flex h-6 w-6 items-center justify-center rounded-lg bg-[#DDE8DC] text-[#1B4332]">
+                  <span className="h-2 w-2 rounded-full bg-[#1B4332] animate-pulse" />
+                </span>
+                <div>
+                  <h3 className="text-xs font-black uppercase tracking-wider text-[#143D2B]">
+                    AI Tutor Explanation
+                  </h3>
+                  <p className="text-[11px] text-[#557466] font-medium">Synthesized from uploaded curriculum materials</p>
+                </div>
               </div>
               <button
                 onClick={() => setResult(null)}
-                className="text-xs font-semibold text-[#52796F] hover:text-[#143D2B] transition"
+                className="text-xs font-bold text-[#557466] hover:text-[#143D2B] bg-[#DDE8DC]/40 hover:bg-[#DDE8DC] px-2.5 py-1 rounded-lg transition"
               >
-                Close
+                ✕ Close
               </button>
             </div>
 
-            <p className="text-xs sm:text-sm leading-relaxed whitespace-pre-wrap font-normal text-[#143D2B]">
-              {result.answer}
-            </p>
+            {/* Markdown + LaTeX Rendered Body */}
+            <div className="py-1">
+              <MarkdownRenderer content={result.answer} />
+            </div>
 
             {/* Cited Sources */}
             {result.sources && result.sources.length > 0 && (
-              <div className="mt-3.5 pt-3 border-t border-[#DDE8DC]">
-                <div className="text-[10px] font-bold uppercase tracking-wider text-[#52796F] mb-1.5">
-                  Verified PDF Sources:
+              <div className="mt-5 pt-4 border-t border-[#DDE8DC]">
+                <div className="text-[10px] font-bold uppercase tracking-wider text-[#557466] mb-2">
+                  Verified Passage Sources:
                 </div>
-                <div className="flex flex-wrap gap-2">
+                <div className="grid gap-2 sm:grid-cols-2">
                   {result.sources.map((s) => (
-                    <div key={s.n} className="rounded-lg bg-[#DDE8DC]/60 border border-[#A3BFA8]/40 px-2.5 py-1 text-[11px] font-semibold text-[#143D2B]">
-                      [{s.n}] {s.filename} (Page {s.page})
+                    <div
+                      key={s.n}
+                      className="rounded-xl bg-[#F5F7F2] border border-[#DDE8DC] p-2.5 text-xs text-[#173D2E] shadow-sm hover:border-[#A3BFA8] transition"
+                    >
+                      <div className="font-bold text-[#143D2B] flex items-center gap-1.5 mb-1">
+                        <span className="px-1.5 py-0.5 rounded-md bg-[#DDE8DC] text-[10px] text-[#1B4332] font-black">
+                          [{s.n}]
+                        </span>
+                        <span className="truncate">{s.filename}</span>
+                        <span className="text-[#557466] font-semibold">· Page {s.page}</span>
+                      </div>
+                      {s.snippet && (
+                        <p className="text-[11px] text-[#557466] line-clamp-2 leading-relaxed">
+                          {s.snippet}…
+                        </p>
+                      )}
                     </div>
                   ))}
                 </div>

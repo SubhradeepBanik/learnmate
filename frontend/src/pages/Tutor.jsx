@@ -1,7 +1,8 @@
-﻿import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { chatWithTutor, listDocuments } from "../api/client";
 import { useLanguage } from "../context/LanguageContext";
 import { NavIcon } from "../components/Icons";
+import MarkdownRenderer from "../components/MarkdownRenderer";
 
 export default function Tutor() {
   const { lang, t } = useLanguage();
@@ -91,16 +92,20 @@ export default function Tutor() {
             )}
             <div className={`max-w-[85%] rounded-2xl p-4 text-sm leading-relaxed ${
               m.role === "user"
-                ? "bg-brand text-white rounded-tr-sm shadow-sm"
-                : "bg-brand-hero border border-brand-line text-brand-head rounded-tl-sm"
+                ? "bg-[#1B4332] text-white rounded-tr-sm shadow-sm"
+                : "bg-white border border-[#DDE8DC] text-[#173D2E] rounded-tl-sm shadow-sm"
             }`}>
-              <div className="whitespace-pre-wrap">{m.content}</div>
+              {m.role === "assistant" ? (
+                <MarkdownRenderer content={m.content} />
+              ) : (
+                <div className="whitespace-pre-wrap">{m.content}</div>
+              )}
               {m.sources && m.sources.length > 0 && (
-                <div className="mt-3 pt-3 border-t border-brand-line/50">
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-brand-muted block mb-1.5">Sources:</span>
+                <div className="mt-3 pt-3 border-t border-[#DDE8DC]">
+                  <span className="text-[11px] font-bold uppercase tracking-wider text-[#557466] block mb-1.5">Sources:</span>
                   <div className="flex flex-wrap gap-1.5">
                     {m.sources.map((s) => (
-                      <span key={s.n} className="inline-flex items-center gap-1 rounded-lg bg-white border border-brand-line px-2 py-0.5 text-[11px] text-brand font-medium">
+                      <span key={s.n} className="inline-flex items-center gap-1 rounded-lg bg-[#F5F7F2] border border-[#DDE8DC] px-2 py-0.5 text-[11px] text-[#1B4332] font-medium">
                         {s.filename} (p.{s.page})
                       </span>
                     ))}

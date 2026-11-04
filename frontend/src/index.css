@@ -1,29 +1,33 @@
 @import "tailwindcss";
 
 @theme {
-  /* Forest Green and Sage Green aesthetic requested by user */
+  /* Forest Green and Sage Green palette */
   --color-brand-dark:          #143D2B; /* Dark Green */
   --color-brand:               #1B4332; /* Forest Green */
-  --color-brand-head:          #143D2B; /* Dark Green */
+  --color-brand-head:          #173D2E; /* Primary dark text on light backgrounds */
   --color-brand-sage:          #A3BFA8; /* Sage Green */
   --color-brand-lightsage:     #DDE8DC; /* Light Sage */
-  --color-brand-offwhite:      #F5F7F2; /* Off-white */
+  --color-brand-offwhite:      #F4F7F2; /* Primary light text on dark backgrounds */
   --color-brand-tint:          #DDE8DC; /* Light Sage for backgrounds/tints */
-  --color-brand-hero:          #F5F7F2; /* Off-white */
+  --color-brand-hero:          #F5F7F2; /* Off-white page background */
   --color-brand-line:          #DDE8DC; /* Light Sage border */
   --color-brand-accent:        #2D6A4F; /* Deep Forest Green Accent */
-  --color-brand-muted:         #52796F; /* Deep Sage text muted */
+  --color-brand-muted:         #557466; /* Secondary muted text on light backgrounds */
+  --color-brand-sage-muted:    #C4D8CC; /* Secondary text on dark backgrounds */
 }
 
 body {
   font-family: "Noto Sans Bengali", "Noto Sans", system-ui, sans-serif;
   background: #F5F7F2;
-  color: #143D2B;
+  color: #173D2E;
   color-scheme: light;
 }
 
-h1, h2, h3, h4 {
-  color: var(--color-brand-head);
+@layer base {
+  /* Default heading color that yields to utility classes */
+  h1, h2, h3, h4, h5, h6 {
+    color: inherit;
+  }
 }
 
 /* Page fade-in */

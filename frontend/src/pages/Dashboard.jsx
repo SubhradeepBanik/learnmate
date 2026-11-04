@@ -68,21 +68,21 @@ export default function Dashboard() {
   return (
     <div className="space-y-7 page-enter">
       {/* ── 1. Welcome Section with Streak & Motivation ── */}
-      <div className="rounded-3xl bg-gradient-to-br from-[#143D2B] via-[#1B4332] to-[#143D2B] p-6 sm:p-8 text-[#F5F7F2] relative overflow-hidden shadow-md shadow-[#143D2B]/15 border border-[#A3BFA8]/20">
+      <div className="rounded-3xl bg-gradient-to-br from-[#143D2B] via-[#1B4332] to-[#143D2B] p-6 sm:p-8 text-[#F4F7F2] relative overflow-hidden shadow-md shadow-[#143D2B]/15 border border-[#A3BFA8]/20">
         {/* Subtle geometric glass rings */}
         <div className="absolute -top-10 -right-10 w-44 h-44 rounded-full bg-[#A3BFA8]/10 blur-xl pointer-events-none" />
         <div className="absolute -bottom-12 -left-8 w-40 h-40 rounded-full bg-[#DDE8DC]/5 blur-2xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-1.5 max-w-xl">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#A3BFA8]/20 border border-[#A3BFA8]/30 text-[#DDE8DC] text-[11px] font-bold uppercase tracking-wider mb-1">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#A3BFA8]/20 border border-[#A3BFA8]/30 text-[#C4D8CC] text-[11px] font-bold uppercase tracking-wider mb-1">
               <span className="w-2 h-2 rounded-full bg-[#A3BFA8] animate-pulse" />
               <span>AI Study Portal Active</span>
             </div>
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-black !text-[#F4F7F2] tracking-tight" style={{ color: '#F4F7F2' }}>
               Welcome Back, {firstName}!
             </h1>
-            <p className="text-[#DDE8DC]/90 text-sm font-medium leading-relaxed">
+            <p className="text-[#C4D8CC] text-sm font-medium leading-relaxed">
               Your personal AI-powered learning companion. Understand concepts, review lecture materials, and ace your university exams.
             </p>
             <p className="text-[#A3BFA8] text-xs font-semibold">
@@ -111,7 +111,7 @@ export default function Dashboard() {
               <button
                 onClick={() => setLang("en")}
                 className={`px-2.5 py-1 text-xs font-bold rounded-lg transition ${
-                  lang === "en" ? "bg-[#A3BFA8] text-[#143D2B]" : "text-[#DDE8DC] hover:text-white"
+                  lang === "en" ? "bg-[#A3BFA8] text-[#143D2B]" : "text-[#C4D8CC] hover:text-white"
                 }`}
               >
                 EN
@@ -119,7 +119,7 @@ export default function Dashboard() {
               <button
                 onClick={() => setLang("as")}
                 className={`px-2.5 py-1 text-xs font-bold rounded-lg transition ${
-                  lang === "as" ? "bg-[#A3BFA8] text-[#143D2B]" : "text-[#DDE8DC] hover:text-white"
+                  lang === "as" ? "bg-[#A3BFA8] text-[#143D2B]" : "text-[#C4D8CC] hover:text-white"
                 }`}
               >
                 অসমীয়া
@@ -135,10 +135,10 @@ export default function Dashboard() {
       {/* ── 3. Overview Metric Tiles ── */}
       <div>
         <div className="flex items-center justify-between mb-3.5">
-          <h2 className="text-sm font-black uppercase tracking-wider text-[#143D2B]">
+          <h2 className="text-sm font-black uppercase tracking-wider text-[#173D2E]">
             {t("dash.overview")}
           </h2>
-          <span className="text-xs font-bold text-[#52796F]">Updated Live</span>
+          <span className="text-xs font-bold text-[#557466]">Updated Live</span>
         </div>
         <div className="grid grid-cols-2 gap-3.5 sm:gap-4 lg:grid-cols-4">
           <Metric
@@ -178,10 +178,10 @@ export default function Dashboard() {
         <div className="rounded-3xl border border-[#DDE8DC] bg-white/95 backdrop-blur-sm p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <h3 className="text-sm font-black text-[#143D2B] uppercase tracking-wide">
+              <h3 className="text-sm font-black text-[#173D2E] uppercase tracking-wide">
                 {t("dash.progress")}
               </h3>
-              <p className="text-xs text-[#52796F] mt-0.5">Semester 3 Curriculum Milestones</p>
+              <p className="text-xs text-[#557466] mt-0.5">Semester 3 Curriculum Milestones</p>
             </div>
             <span className="text-base font-black text-[#1B4332] bg-[#DDE8DC] px-3 py-1 rounded-full">
               {stats.progressPercent}%
@@ -196,12 +196,12 @@ export default function Dashboard() {
             />
           </div>
 
-          <div className="flex items-center justify-between text-[11px] font-bold text-[#52796F] mt-2">
+          <div className="flex items-center justify-between text-[11px] font-bold text-[#557466] mt-2">
             <span>Core Units: 14/20 Complete</span>
             <span>Target: 100% by Mid-Terms</span>
           </div>
 
-          <p className="mt-4 pt-3.5 border-t border-[#DDE8DC] text-xs text-[#52796F] leading-relaxed">
+          <p className="mt-4 pt-3.5 border-t border-[#DDE8DC] text-xs text-[#557466] leading-relaxed">
             You are pacing 12% faster than last month. Keep reviewing your RAG citations and revision summaries.
           </p>
         </div>
@@ -210,10 +210,10 @@ export default function Dashboard() {
         <div className="rounded-3xl border border-[#DDE8DC] bg-white/95 backdrop-blur-sm p-5 sm:p-6 shadow-sm hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between mb-3">
             <div>
-              <h3 className="text-sm font-black text-[#143D2B] uppercase tracking-wide">
+              <h3 className="text-sm font-black text-[#173D2E] uppercase tracking-wide">
                 Daily Learning Goals
               </h3>
-              <p className="text-xs text-[#52796F] mt-0.5">
+              <p className="text-xs text-[#557466] mt-0.5">
                 {completedGoalsCount} of {dailyGoals.length} completed today
               </p>
             </div>
@@ -229,8 +229,8 @@ export default function Dashboard() {
                 onClick={() => toggleGoal(goal.id)}
                 className={`flex items-center justify-between p-2.5 rounded-xl border transition-all duration-200 cursor-pointer ${
                   goal.completed
-                    ? "bg-[#DDE8DC]/40 border-[#A3BFA8]/40 text-[#143D2B]"
-                    : "bg-white border-[#DDE8DC] text-[#52796F] hover:border-[#A3BFA8]"
+                    ? "bg-[#DDE8DC]/40 border-[#A3BFA8]/40 text-[#173D2E]"
+                    : "bg-white border-[#DDE8DC] text-[#557466] hover:border-[#A3BFA8]"
                 }`}
               >
                 <div className="flex items-center gap-2.5 text-xs font-semibold">
@@ -247,11 +247,11 @@ export default function Dashboard() {
                       </svg>
                     )}
                   </div>
-                  <span className={goal.completed ? "line-through text-[#52796F]" : "text-[#143D2B]"}>
+                  <span className={goal.completed ? "line-through text-[#557466]" : "text-[#173D2E]"}>
                     {goal.text}
                   </span>
                 </div>
-                <span className="text-[10px] font-bold text-[#52796F] uppercase">
+                <span className="text-[10px] font-bold text-[#557466] uppercase">
                   {goal.completed ? "Done" : "Pending"}
                 </span>
               </div>
@@ -263,7 +263,7 @@ export default function Dashboard() {
       {/* ── 5. Subject-Wise Learning Modules ── */}
       <div>
         <div className="flex items-center justify-between mb-3.5">
-          <h2 className="text-sm font-black uppercase tracking-wider text-[#143D2B]">
+          <h2 className="text-sm font-black uppercase tracking-wider text-[#173D2E]">
             Subject Study Modules
           </h2>
           <Link to="/student/materials" className="text-xs font-bold text-[#1B4332] hover:underline">
@@ -315,12 +315,12 @@ export default function Dashboard() {
                 <span className="text-[10px] font-bold uppercase tracking-wider text-[#1B4332] bg-[#DDE8DC] px-2 py-0.5 rounded-md">
                   {item.tag}
                 </span>
-                <span className="text-xs font-bold text-[#143D2B]">{item.progress}%</span>
+                <span className="text-xs font-bold text-[#173D2E]">{item.progress}%</span>
               </div>
-              <h4 className="text-sm font-bold text-[#143D2B] group-hover:text-[#1B4332] transition-colors truncate">
+              <h4 className="text-sm font-bold text-[#173D2E] group-hover:text-[#1B4332] transition-colors truncate">
                 {item.subject}
               </h4>
-              <p className="text-xs text-[#52796F] truncate mt-0.5">{item.unit}</p>
+              <p className="text-xs text-[#557466] truncate mt-0.5">{item.unit}</p>
 
               <div className="h-1.5 w-full rounded-full bg-[#DDE8DC] overflow-hidden mt-3">
                 <div
@@ -329,7 +329,7 @@ export default function Dashboard() {
                 />
               </div>
 
-              <div className="mt-2.5 flex items-center justify-between text-[10px] font-semibold text-[#52796F]">
+              <div className="mt-2.5 flex items-center justify-between text-[10px] font-semibold text-[#557466]">
                 <span>{item.chunks}</span>
                 <span className="text-[#1B4332] font-bold group-hover:underline">Study →</span>
               </div>
@@ -340,7 +340,7 @@ export default function Dashboard() {
 
       {/* ── 6. Feature Exploration Cards ── */}
       <div>
-        <h2 className="text-sm font-black uppercase tracking-wider text-[#143D2B] mb-3.5">
+        <h2 className="text-sm font-black uppercase tracking-wider text-[#173D2E] mb-3.5">
           {t("dash.explore")}
         </h2>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -370,10 +370,10 @@ export default function Dashboard() {
         <div className="rounded-3xl border border-[#DDE8DC] bg-white/95 backdrop-blur-sm p-5 sm:p-6 shadow-sm">
           <div className="flex items-center justify-between mb-3.5">
             <div>
-              <h3 className="text-sm font-black uppercase tracking-wider text-[#143D2B]">
+              <h3 className="text-sm font-black uppercase tracking-wider text-[#173D2E]">
                 Recently Accessed Faculty Materials
               </h3>
-              <p className="text-xs text-[#52796F] mt-0.5">Dibrugarh University department publications</p>
+              <p className="text-xs text-[#557466] mt-0.5">Dibrugarh University department publications</p>
             </div>
             <Link to="/student/materials" className="text-xs font-bold text-[#1B4332] hover:underline">
               Browse All
@@ -384,14 +384,14 @@ export default function Dashboard() {
             {recentMaterials.map((mat) => (
               <div key={mat.id} className="py-3 first:pt-0 last:pb-0 flex items-center justify-between gap-3">
                 <div className="min-w-0">
-                  <div className="text-xs font-bold text-[#143D2B] truncate">{mat.title}</div>
-                  <div className="text-[11px] text-[#52796F] mt-0.5 truncate">
+                  <div className="text-xs font-bold text-[#173D2E] truncate">{mat.title}</div>
+                  <div className="text-[11px] text-[#557466] mt-0.5 truncate">
                     {mat.subject} · {mat.author} · {mat.size}
                   </div>
                 </div>
                 <Link
                   to="/student/materials"
-                  className="px-3 py-1.5 rounded-xl border border-[#A3BFA8]/50 bg-[#DDE8DC]/40 text-[#143D2B] hover:bg-[#1B4332] hover:text-white text-xs font-bold transition flex-shrink-0"
+                  className="px-3 py-1.5 rounded-xl border border-[#A3BFA8]/50 bg-[#DDE8DC]/40 text-[#173D2E] hover:bg-[#1B4332] hover:text-white text-xs font-bold transition flex-shrink-0"
                 >
                   View
                 </Link>

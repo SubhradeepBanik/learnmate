@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { API_BASE_URL, askQuestion, deleteDocument, fetchWithTimeout, listDocuments, uploadDocument } from "../api/client";
 import { useLanguage } from "../context/LanguageContext";
+import MarkdownRenderer from "../components/MarkdownRenderer";
 
 const inputCls =
   "w-full rounded-xl border border-[#DDE8DC] bg-white px-3.5 py-2.5 text-sm text-[#143D2B] placeholder-[#52796F]/60 focus:border-[#1B4332] focus:outline-none focus:ring-2 focus:ring-[#A3BFA8]/40 transition shadow-sm";
@@ -310,19 +311,19 @@ export default function AskPdf() {
 
             {!asking && result && (
               <div className="space-y-4">
-                <div className="rounded-xl bg-brand-hero border border-brand-line p-4">
-                  <div className="whitespace-pre-wrap leading-relaxed text-brand-head text-sm">{result.answer}</div>
+                <div className="rounded-2xl bg-white border border-[#A3BFA8]/40 p-5 shadow-sm">
+                  <MarkdownRenderer content={result.answer} />
                 </div>
                 {result.sources && result.sources.length > 0 && (
                   <div>
-                    <h5 className="text-[11px] font-bold text-brand-muted uppercase tracking-widest mb-2">
+                    <h5 className="text-[11px] font-bold text-[#557466] uppercase tracking-widest mb-2">
                       {t("pdf.sources")}
                     </h5>
                     <ul className="grid gap-2 sm:grid-cols-2">
                       {result.sources.map((s) => (
-                        <li key={s.n} className="rounded-xl border border-brand-line bg-white p-3 text-xs hover:border-brand/30 transition">
-                          <div className="font-bold text-brand-head">[{s.n}] {s.filename} · {t("pdf.page")} {s.page}</div>
-                          <div className="mt-1 text-brand-muted line-clamp-2">{s.snippet}…</div>
+                        <li key={s.n} className="rounded-xl border border-[#DDE8DC] bg-[#F5F7F2] p-3 text-xs hover:border-[#A3BFA8] transition shadow-sm">
+                          <div className="font-bold text-[#143D2B]">[{s.n}] {s.filename} · {t("pdf.page")} {s.page}</div>
+                          <div className="mt-1 text-[#557466] line-clamp-2 leading-relaxed">{s.snippet}…</div>
                         </li>
                       ))}
                     </ul>

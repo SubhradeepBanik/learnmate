@@ -114,11 +114,11 @@ def _generate_with_gemini(
 
     # Cascade through active high-quota models verified for this API key
     candidate_models = []
-    configured_model = getattr(settings, "GEMINI_CHAT_MODEL", "gemini-3.5-flash")
+    configured_model = getattr(settings, "GEMINI_CHAT_MODEL", "gemini-2.5-flash")
     if configured_model and configured_model not in candidate_models:
         candidate_models.append(configured_model)
 
-    for m in ["gemini-3.5-flash", "gemini-3.6-flash", "gemini-3.5-flash-lite", "gemini-3.1-flash-lite", "gemini-3.8-flash"]:
+    for m in ["gemini-2.5-flash", "gemini-3.5-flash", "gemini-2.5-flash-lite", "gemini-3.5-flash-lite", "gemini-flash-latest"]:
         if m not in candidate_models:
             candidate_models.append(m)
 

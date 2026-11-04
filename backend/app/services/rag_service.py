@@ -7,7 +7,7 @@ from app.services import vector_store
 from app.services.chunking import chunk_page
 from app.services.embeddings import embed_texts
 from app.services.llm import generate_text
-from app.services.pdf_service import extract_pages
+from app.services.pdf_service import extract_pages, extract_pages_from_bytes
 
 
 class RagError(Exception):
@@ -52,12 +52,16 @@ LANGUAGE_RULES = {
 
 def ingest_pdf(pdf_bytes: bytes, filename: str, subject: str, topic: str) -> dict:
     doc_id = uuid.uuid4().hex[:12]
+    settings.UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
     pdf_path = settings.UPLOAD_DIR / f"{doc_id}.pdf"
-    pdf_path.write_bytes(pdf_bytes)
+    try:
+        pdf_path.write_bytes(pdf_bytes)
+    except Exception:
+        pass  # Proceed even if disk write fails on restricted environments
 
     try:
         try:
-            total_pages, pages = extract_pages(pdf_path)
+            total_pages, pages = extract_pages_from_bytes(pdf_bytes)
         except ValueError:
             raise RagError("This PDF is password-protected. Remove the password and retry.")
         except Exception:

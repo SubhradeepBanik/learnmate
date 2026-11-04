@@ -17,7 +17,8 @@ dist/
 # Future local data
 backend/*.db
 backend/chroma_db/
-backend/uploads/
+backend/uploads/*
+!backend/uploads/.gitkeep
 
 # OS and editor files
 .DS_Store

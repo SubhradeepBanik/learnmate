@@ -28,7 +28,7 @@ def _to_http_error(exc: Exception) -> HTTPException:
                 detail="Gemini rate limit reached. Wait a minute and try again.",
             )
         return HTTPException(status_code=502, detail=f"Gemini API error ({exc.code}): {exc.message}")
-    raise exc
+    return HTTPException(status_code=500, detail=f"{type(exc).__name__}: {str(exc)}")
 
 
 class AskRequest(BaseModel):

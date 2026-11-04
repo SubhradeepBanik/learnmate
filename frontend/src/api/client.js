@@ -3,21 +3,27 @@ const rawUrl =
   (typeof window !== "undefined" && window.location.hostname !== "localhost"
     ? "https://learnmate-wova.onrender.com"
     : "http://localhost:8000");
-const API_BASE_URL = rawUrl.trim().replace(/\/+$/, "");
+export const API_BASE_URL = rawUrl.trim().replace(/\/+$/, "");
+
+export async function fetchWithTimeout(url, options = {}, timeoutMs = 60000) {
+  const controller = new AbortController();
+  const id = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const res = await fetch(url, { ...options, signal: controller.signal });
+    clearTimeout(id);
+    return res;
+  } catch (err) {
+    clearTimeout(id);
+    throw err;
+  }
+}
 
 // Health Check with retry and timeout support
-export async function getHealth() {
+export async function getHealth(timeoutMs = 15000) {
   try {
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 9000);
-
-    const res = await fetch(`${API_BASE_URL}/api/health`, {
-      signal: controller.signal,
-    }).catch(() =>
-      fetch(`${API_BASE_URL}/health`, { signal: controller.signal })
+    const res = await fetchWithTimeout(`${API_BASE_URL}/api/health`, {}, timeoutMs).catch(() =>
+      fetchWithTimeout(`${API_BASE_URL}/health`, {}, timeoutMs)
     );
-
-    clearTimeout(timeoutId);
 
     if (!res || !res.ok) {
       throw new Error(`Health check failed: ${res ? res.status : "Network error"}`);
@@ -172,7 +178,8 @@ export async function recordPdfAccess(accessLogData) {
 
 // Shared request helper for the RAG, AI Tutor, and generated quiz endpoints.
 async function request(path, options = {}) {
-  const fullUrl = path.startsWith("http") ? path : `${API_BASE_URL}${path}`;
+  const cleanPath = path.startsWith("/") ? path : `/${path}`;
+  const fullUrl = path.startsWith("http") ? path : `${API_BASE_URL}${cleanPath}`;
   const response = await fetch(fullUrl, options);
   if (!response.ok) {
     let message = `Request failed: ${response.status}`;

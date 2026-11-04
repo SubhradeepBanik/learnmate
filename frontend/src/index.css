@@ -1,40 +1,63 @@
 @import "tailwindcss";
 
 @theme {
-  /* Green brand palette */
-  --color-brand:               #087A45;
-  --color-brand-dark:          #06452D;
-  --color-brand-head:          #033B27;
-  --color-brand-tint:          #DDF5E6;
-  --color-brand-hero:          #F5FAF6;
-  --color-brand-line:          #DCEBE1;
-  --color-brand-accent:        #20B86A;
-  --color-brand-muted:         #668274;
+  /* Forest Green and Sage Green aesthetic requested by user */
+  --color-brand-dark:          #143D2B; /* Dark Green */
+  --color-brand:               #1B4332; /* Forest Green */
+  --color-brand-head:          #143D2B; /* Dark Green */
+  --color-brand-sage:          #A3BFA8; /* Sage Green */
+  --color-brand-lightsage:     #DDE8DC; /* Light Sage */
+  --color-brand-offwhite:      #F5F7F2; /* Off-white */
+  --color-brand-tint:          #DDE8DC; /* Light Sage for backgrounds/tints */
+  --color-brand-hero:          #F5F7F2; /* Off-white */
+  --color-brand-line:          #DDE8DC; /* Light Sage border */
+  --color-brand-accent:        #2D6A4F; /* Deep Forest Green Accent */
+  --color-brand-muted:         #52796F; /* Deep Sage text muted */
 }
 
 body {
   font-family: "Noto Sans Bengali", "Noto Sans", system-ui, sans-serif;
-  background: #F5FAF6;
-  color: #102C20;
+  background: #F5F7F2;
+  color: #143D2B;
   color-scheme: light;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   color: var(--color-brand-head);
 }
 
 /* Page fade-in */
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(10px); }
+  from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 .page-enter {
-  animation: fadeInUp 0.22s ease-out both;
+  animation: fadeInUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Subtle glow animation for interactive elements */
+@keyframes greenPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(163, 191, 168, 0.4); }
+  50% { box-shadow: 0 0 12px 3px rgba(163, 191, 168, 0.25); }
+}
+.glow-on-hover:hover {
+  animation: greenPulse 2s infinite ease-in-out;
+}
+
+/* Progress bar shimmer effect */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.progress-shimmer {
+  background: linear-gradient(90deg, #1B4332 0%, #2D6A4F 50%, #1B4332 100%);
+  background-size: 200% 100%;
+  animation: shimmer 3s infinite linear;
 }
 
 /* Global focus ring */
 *:focus-visible {
-  outline: 2px solid #087A45;
+  outline: 2px solid #1B4332;
   outline-offset: 2px;
   border-radius: 4px;
 }

@@ -39,7 +39,7 @@ export default function BackendStatus() {
 
   return (
     <div
-      className="flex items-center gap-2 text-xs text-slate-500 font-medium"
+      className="flex items-center gap-2 text-[11px] text-[#A3BFA8] font-medium"
       title={
         state === "demo"
           ? "Running in cloud demo mode with built-in data. Connect a deployed FastAPI backend to enable live AI RAG."
@@ -48,7 +48,7 @@ export default function BackendStatus() {
     >
       <span className={`inline-block h-2 w-2 rounded-full ${color}`} />
       <span>{t("sidebar.backend")}:</span>
-      <span className="capitalize">{label}</span>
+      <span className="capitalize font-semibold text-[#F5F7F2]">{label}</span>
     </div>
   );
 }

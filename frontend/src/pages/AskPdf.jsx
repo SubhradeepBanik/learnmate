@@ -3,9 +3,9 @@ import { API_BASE_URL, askQuestion, deleteDocument, fetchWithTimeout, listDocume
 import { useLanguage } from "../context/LanguageContext";
 
 const inputCls =
-  "w-full rounded-xl border border-brand-line bg-white px-3.5 py-2.5 text-sm text-brand-head placeholder:text-brand-muted/60 focus:border-brand focus:outline-none focus:ring-1 focus:ring-brand/20 transition";
+  "w-full rounded-xl border border-[#DDE8DC] bg-white px-3.5 py-2.5 text-sm text-[#143D2B] placeholder-[#52796F]/60 focus:border-[#1B4332] focus:outline-none focus:ring-2 focus:ring-[#A3BFA8]/40 transition shadow-sm";
 const btnCls =
-  "rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white shadow-sm transition-all duration-200 hover:bg-brand-dark hover:shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed";
+  "rounded-xl bg-gradient-to-r from-[#143D2B] to-[#1B4332] hover:from-[#1B4332] hover:to-[#2D6A4F] px-5 py-2.5 text-sm font-bold text-[#F5F7F2] shadow-sm transition-all duration-200 hover:shadow-md active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed";
 
 export default function AskPdf() {
   const { lang, t } = useLanguage();

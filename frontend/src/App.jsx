@@ -1,4 +1,4 @@
-﻿import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import Layout from "./components/Layout";
 import { STUDENT_NAV, TEACHER_NAV } from "./config/navigation";
@@ -68,6 +68,7 @@ export default function App() {
           "/student/ask-pdf", "/student/tutor",
         ])}
         <Route path="/teacher" element={<TeacherDashboard />} />
+        <Route path="/teacher/ask-pdf" element={<AskPdf />} />
         <Route path="/teacher/materials" element={<TeacherMaterials />} />
         <Route path="/teacher/upload" element={<TeacherMaterials />} />
         <Route path="/teacher/create-quiz" element={<TeacherCreateQuiz />} />
@@ -75,7 +76,7 @@ export default function App() {
         <Route path="/teacher/profile" element={<TeacherProfile />} />
         <Route path="/teacher/account" element={<Account />} />
         {placeholders(TEACHER_NAV, [
-          "/teacher", "/teacher/materials", "/teacher/upload", "/teacher/create-quiz",
+          "/teacher", "/teacher/ask-pdf", "/teacher/materials", "/teacher/upload", "/teacher/create-quiz",
           "/teacher/performance", "/teacher/profile", "/teacher/account",
         ])}
         <Route path="*" element={<Navigate to="/student" replace />} />

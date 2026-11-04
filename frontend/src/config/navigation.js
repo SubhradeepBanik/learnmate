@@ -1,4 +1,4 @@
-﻿export const STUDENT_NAV = [
+export const STUDENT_NAV = [
   { path: "/student", key: "nav.dashboard", icon: "dashboard", end: true },
   { path: "/student/materials", key: "nav.materials", icon: "materials" },
   { path: "/student/tutor", key: "nav.tutor", icon: "tutor" },
@@ -13,6 +13,7 @@
 
 export const TEACHER_NAV = [
   { path: "/teacher", key: "nav.teacherDashboard", icon: "teacher", end: true },
+  { path: "/teacher/ask-pdf", key: "nav.askPdf", icon: "askPdf" },
   { path: "/teacher/materials", key: "nav.materials", icon: "materials" },
   { path: "/teacher/create-quiz", key: "nav.createQuiz", icon: "quiz" },
   { path: "/teacher/performance", key: "nav.performance", icon: "results" },
